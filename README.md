@@ -1,6 +1,6 @@
-# Lisk
+# Rise-Core
 
-Lisk is a next generation crypto-currency and decentralized application platform, written entirely in JavaScript. For more information please refer to our website: https://lisk.io/.
+Rise-Core is a next generation crypto-currency and decentralized application interface, written in Javascript. It runs best on the Rise Hosting Platform, a Docker based platform for hosting Rise-core and Dapps.
 
 ## Installation
 
@@ -16,28 +16,24 @@ sudo apt-get install curl build-essential python
 Install PostgreSQL (version 9.5.2):
 
 ```
-curl -sL "https://downloads.lisk.io/scripts/setup_postgresql.Linux" | bash -
-sudo -u postgres createuser --createdb --password $USER
-createdb lisk_test
+sudo apt-get install postgresql
+sudo -u postgres psql
+CREATE DATABASE Rise_Test;
+CREATE USER Rise with password 'RISETESTPASSWORD';
+GRANT ALL PRIVILEGES ON DATABASE Rise_Test TO Rise;
 ```
 
-Install Node.js (version 0.12.x) + npm:
+Install Node.js (version 6.x.x) + npm:
 
 ```
-curl -sL https://deb.nodesource.com/setup_0.12 | sudo -E bash -
+curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
 sudo apt-get install -y nodejs
 ```
 
-Install grunt-cli (globally):
+Install grunt-cli and bower(globally):
 
 ```
-sudo npm install grunt-cli -g
-```
-
-Install bower (globally):
-
-```
-sudo npm install bower -g
+sudo npm install grunt-cli bower -g
 ```
 
 Install node modules:
@@ -46,16 +42,8 @@ Install node modules:
 npm install
 ```
 
-Install Lisk Node, a specialized version of Node.js used to execute dapps within a virtual machine:
 
-```
-wget https://downloads.lisk.io/lisk-node/lisk-node-Linux-x86_64.tar.gz
-tar -zxvf lisk-node-Linux-x86_64.tar.gz
-```
-
-Lisk Node has to be in `[LISK_DIR]/nodejs/node`.
-
-Load git submodules ([lisk-ui](https://github.com/LiskHQ/lisk-ui) and [lisk-js](https://github.com/LiskHQ/lisk-js)):
+Load git submodules ([web-ui](https://bitbucket.org/risevisionfoundation/web-ui)
 
 ```
 git submodule init
@@ -70,10 +58,11 @@ npm install
 bower install
 grunt release
 ```
+** In a future release, the UI will be in a seperate application to be run separately.
 
 ## Launch
 
-To launch Lisk:
+To launch Rise:
 
 ```
 node app.js
@@ -87,7 +76,7 @@ node app.js -p [port] -a [address] -c [config-path]
 
 ## Tests
 
-Before running any tests, please ensure Lisk is configured to run on the same testnet as used by the test-suite.
+Before running any tests, please ensure Rise is configured to run on the same testnet as used by the test-suite.
 
 Replace **config.json** and **genesisBlock.json** with the corresponding files under the **test** directory:
 
@@ -107,7 +96,7 @@ Install mocha (globally):
 sudo npm install mocha -g
 ```
 
-Launch lisk (runs on port 4000):
+Launch Rise (runs on port 4000):
 
 ```
 node app.js
@@ -128,16 +117,14 @@ mocha test/lib/transactions.js
 
 ## Authors
 
-- Boris Povod <boris@crypti.me>
-- Pavel Nekrasov <landgraf.paul@gmail.com>
-- Sebastian Stupurac <stupurac.sebastian@gmail.com>
-- Oliver Beddows <oliver@lisk.io>
+- Justin R. Donnaruma <justin@rise.vision>
 
 ## License
 
 The MIT License (MIT)
 
-Copyright (c) 2016 Lisk  
+Copyright (c) 2016 Rise Vision Foundation
+Copyright (c) 2016 Lisk
 Copyright (c) 2014-2015 Crypti
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:  
