@@ -1,13 +1,13 @@
 {
-  "name": "lisk",
-  "version": "0.2.3",
+  "name": "rise",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "start": "node app.js",
     "test": "mocha",
     "cov": "mocha --require blanket -R html-cov test/helpers test/logic > tmp/coverage.html"
   },
-  "author": "Boris Povod <boris@crypti.me>, Pavel Nekrasov <landgraf.paul@gmail.com>",
+  "author": "Justin R. Donnaruma <justin@rise.vision",
   "dependencies": {
     "async": "=1.5.2",
     "basic-auth": "=1.0.3",
@@ -34,7 +34,6 @@
     "json-schema": "=0.2.2",
     "json-sql": "https://github.com/LiskHQ/json-sql/tarball/master",
     "knuth-shuffle": "=1.0.1",
-    "lisk-sandbox": "https://github.com/LiskHQ/lisk-sandbox/tarball/master",
     "long": "=3.1.0",
     "method-override": "=2.3.5",
     "node-schedule": "=1.1.0",
@@ -48,7 +47,7 @@
     "request": "=2.72.0",
     "rimraf": "=2.5.2",
     "rmdir": "=1.1.0",
-    "socket.io": "=1.4.5",
+    "socket.io": "latest",
     "stack-trace": "=0.0.9",
     "strftime": "=0.9.2",
     "toposort": "=0.2.12",
