@@ -9,7 +9,6 @@ var extend = require("extend");
 var Router = require("../helpers/router.js");
 var async = require("async");
 var transactionTypes = require("../helpers/transactionTypes.js");
-var sandboxHelper = require("../helpers/sandbox.js");
 var sql = require("../sql/transactions.js");
 
 // Private fields
@@ -488,10 +487,6 @@ Transactions.prototype.receiveTransactions = function (transactions, cb) {
 	}, function (err) {
 		cb(err, transactions);
 	});
-}
-
-Transactions.prototype.sandboxApi = function (call, args, cb) {
-	sandboxHelper.callMethod(shared, call, args, cb);
 }
 
 // Events

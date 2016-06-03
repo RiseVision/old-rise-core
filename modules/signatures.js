@@ -7,7 +7,6 @@ var Router = require("../helpers/router.js");
 var async = require("async");
 var transactionTypes = require("../helpers/transactionTypes.js");
 var MilestoneBlocks = require("../helpers/milestoneBlocks.js");
-var sandboxHelper = require("../helpers/sandbox.js");
 
 // Private fields
 var modules, library, self, private = {}, shared = {};
@@ -203,11 +202,6 @@ private.attachApi = function () {
 		library.logger.error(req.url, err);
 		res.status(500).send({success: false, error: err});
 	});
-}
-
-// Public methods
-Signatures.prototype.sandboxApi = function (call, args, cb) {
-	sandboxHelper.callMethod(shared, call, args, cb);
 }
 
 // Events

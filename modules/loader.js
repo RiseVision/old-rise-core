@@ -4,7 +4,6 @@ var util = require("util");
 var ip = require("ip");
 var bignum = require("../helpers/bignum.js");
 var constants = require("../helpers/constants.js");
-var sandboxHelper = require("../helpers/sandbox.js");
 var sql = require("../sql/loader.js");
 
 require("colors");
@@ -502,10 +501,6 @@ private.loadBlockChain = function () {
 // Public methods
 Loader.prototype.syncing = function () {
 	return !!private.syncIntervalId;
-}
-
-Loader.prototype.sandboxApi = function (call, args, cb) {
-	sandboxHelper.callMethod(shared, call, args, cb);
 }
 
 // Events

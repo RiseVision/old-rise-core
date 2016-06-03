@@ -5,7 +5,6 @@ var Router = require('../helpers/router.js');
 var extend = require('extend');
 var fs = require('fs');
 var path = require('path');
-var sandboxHelper = require('../helpers/sandbox.js');
 var sql = require('../sql/peer.js');
 var _ = require('underscore');
 
@@ -392,10 +391,6 @@ Peer.prototype.update = function (peer, cb) {
 		err && library.logger.error(err);
 		cb && cb();
 	})
-}
-
-Peer.prototype.sandboxApi = function (call, args, cb) {
-	sandboxHelper.callMethod(shared, call, args, cb);
 }
 
 // Events

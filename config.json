@@ -10,9 +10,9 @@
     "db": {
         "host": "localhost",
         "port": 5432,
-        "database": "lisk_test",
-        "user": "lisktest",
-        "password": "lisktestpassword",
+        "database": "rise_testnet",
+        "user": "risetest",
+        "password": "risetestpassword",
         "poolSize": 20,
         "poolIdleTimeout": 30000,
         "reapIntervalMillis": 1000,
@@ -156,11 +156,6 @@
             "key": "./ssl/lisk.key",
             "cert": "./ssl/lisk.crt"
         }
-    },
-    "dapp": {
-        "masterrequired": true,
-        "masterpassword": "vHoQbQg6jDLX",
-        "autoexec": []
     },
     "nethash": "410f7d96a65932feb3b288c27c890135bf44846b08de6c3e9d77d675a6c695ce"
 }

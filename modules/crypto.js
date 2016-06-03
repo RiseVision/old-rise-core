@@ -3,7 +3,6 @@ var request = require("request");
 var fs = require("fs");
 var crypto = require("crypto");
 var ed = require("ed25519");
-var sandboxHelper = require("../helpers/sandbox.js");
 
 // Private fields
 var modules, library, self, private = {}, shared = {};
@@ -17,11 +16,6 @@ function Crypto(cb, scope) {
 	self.__private = private;
 
 	setImmediate(cb, null, self);
-}
-
-// Public methods
-Crypto.prototype.sandboxApi = function (call, args, cb) {
-	sandboxHelper.callMethod(shared, call, args, cb);
 }
 
 // Events

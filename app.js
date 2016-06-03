@@ -102,12 +102,7 @@ d.run(function () {
 				throw Error(e);
 			}
 
-				fs.writeFile("./config.json", JSON.stringify(appConfig, null, 4), "utf8", function (err) {
-					cb(err, appConfig);
-				});
-			} else {
-				cb(null, appConfig);
-			}
+			cb(null, appConfig);
 		},
 
 		logger: function (cb) {

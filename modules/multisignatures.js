@@ -11,7 +11,6 @@ var async = require('async');
 var RequestSanitizer = require('../helpers/request-sanitizer.js');
 var transactionTypes = require('../helpers/transactionTypes.js');
 var Diff = require('../helpers/diff.js');
-var sandboxHelper = require('../helpers/sandbox.js');
 var sql = require('../sql/multisignatures.js');
 
 // Private fields
@@ -347,11 +346,6 @@ private.attachApi = function () {
 		library.logger.error(req.url, err);
 		res.status(500).send({success: false, error: err});
 	});
-}
-
-// Public methods
-Multisignatures.prototype.sandboxApi = function (call, args, cb) {
-	sandboxHelper.callMethod(shared, call, args, cb);
 }
 
 // Events

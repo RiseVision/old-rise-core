@@ -12,7 +12,6 @@ var blockReward = require("../helpers/blockReward.js");
 var constants = require("../helpers/constants.js");
 var transactionTypes = require("../helpers/transactionTypes.js");
 var MilestoneBlocks = require("../helpers/milestoneBlocks.js");
-var sandboxHelper = require("../helpers/sandbox.js");
 var sql = require("../sql/delegates.js");
 var _ = require("underscore");
 
@@ -814,10 +813,6 @@ Delegates.prototype.validateBlockSlot = function (block, cb) {
 			return cb("Failed to verify slot: " + currentSlot);
 		}
 	});
-}
-
-Delegates.prototype.sandboxApi = function (call, args, cb) {
-	sandboxHelper.callMethod(shared, call, args, cb);
 }
 
 // Events

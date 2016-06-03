@@ -2,7 +2,6 @@ var util = require("util");
 var async = require("async");
 var path = require("path");
 var Router = require("../helpers/router.js");
-var sandboxHelper = require("../helpers/sandbox.js");
 
 // Private fields
 var modules, library, self, private = {}, shared = {};
@@ -48,10 +47,6 @@ private.attachApi = function() {
 }
 
 // Public methods
-
-Server.prototype.sandboxApi = function (call, args, cb) {
-	sandboxHelper.callMethod(shared, call, args, cb);
-}
 
 // Events
 Server.prototype.onBind = function (scope) {

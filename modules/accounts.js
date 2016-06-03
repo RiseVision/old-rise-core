@@ -10,7 +10,6 @@ var transactionTypes = require("../helpers/transactionTypes.js");
 var Diff = require("../helpers/diff.js");
 var util = require("util");
 var extend = require("extend");
-var sandboxHelper = require("../helpers/sandbox.js");
 
 // Private fields
 var modules, library, self, private = {}, shared = {};
@@ -345,10 +344,6 @@ Accounts.prototype.mergeAccountAndGet = function (data, cb) {
 	}
 
 	return library.logic.account.merge(address, data, cb);
-}
-
-Accounts.prototype.sandboxApi = function (call, args, cb) {
-	sandboxHelper.callMethod(shared, call, args, cb);
 }
 
 // Events

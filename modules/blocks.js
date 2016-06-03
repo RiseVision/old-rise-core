@@ -12,7 +12,6 @@ var slots = require("../helpers/slots.js");
 var util = require("util");
 var async = require("async");
 var transactionTypes = require("../helpers/transactionTypes.js");
-var sandboxHelper = require("../helpers/sandbox.js");
 var sql = require("../sql/blocks.js");
 var _ = require("underscore");
 
@@ -1123,10 +1122,6 @@ Blocks.prototype.generateBlock = function (keypair, timestamp, cb) {
 
 		self.processBlock(block, true, cb);
 	});
-}
-
-Blocks.prototype.sandboxApi = function (call, args, cb) {
-	sandboxHelper.callMethod(shared, call, args, cb);
 }
 
 // Events

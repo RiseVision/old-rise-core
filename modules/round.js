@@ -3,7 +3,6 @@ var util = require("util");
 var pgp = require("pg-promise");
 var slots = require("../helpers/slots.js");
 var constants = require("../helpers/constants.js");
-var sandboxHelper = require("../helpers/sandbox.js");
 var sql = require("../sql/round.js");
 
 // Private fields
@@ -297,10 +296,6 @@ Round.prototype.tick = function (block, done) {
 	], function (err) {
 		return done(err);
 	});
-}
-
-Round.prototype.sandboxApi = function (call, args, cb) {
-	sandboxHelper.callMethod(shared, call, args, cb);
 }
 
 // Events

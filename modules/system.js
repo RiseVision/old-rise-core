@@ -1,5 +1,4 @@
 var os = require("os");
-var sandboxHelper = require('../helpers/sandbox.js');
 
 // Private fields
 var modules, library, self, private = {}, shared = {};
@@ -37,10 +36,6 @@ System.prototype.getPort = function () {
 
 System.prototype.getNethash = function () {
 	return private.nethash;
-}
-
-System.prototype.sandboxApi = function (call, args, cb) {
-	sandboxHelper.callMethod(shared, call, args, cb);
 }
 
 // Events

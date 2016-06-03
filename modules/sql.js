@@ -2,7 +2,6 @@ var async = require("async");
 var jsonSql = require("json-sql")();
     jsonSql.setDialect("postgresql");
 var extend = require("extend");
-var sandboxHelper = require("../helpers/sandbox.js");
 
 // Private fields
 var modules, library, self, private = {}, shared = {};
@@ -207,10 +206,6 @@ Sql.prototype.dropTables = function (dappid, config, cb) {
 			setImmediate(cb);
 		}
 	}, cb);
-}
-
-Sql.prototype.sandboxApi = function (call, args, cb) {
-	sandboxHelper.callMethod(shared, call, args, cb);
 }
 
 // Events

@@ -8,7 +8,6 @@ var zlib = require("zlib");
 var extend = require("extend");
 var crypto = require("crypto");
 var bignum = require("../helpers/bignum.js");
-var sandboxHelper = require("../helpers/sandbox.js");
 var sql = require("../sql/transport.js");
 
 // Private fields
@@ -609,10 +608,6 @@ Transport.prototype.getFromPeer = function (peer, options, cb) {
 
 		cb && cb(null, {body: body, peer: peer});
 	});
-}
-
-Transport.prototype.sandboxApi = function (call, args, cb) {
-	sandboxHelper.callMethod(shared, call, args, cb);
 }
 
 // Events
