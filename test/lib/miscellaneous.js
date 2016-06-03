@@ -14,6 +14,7 @@ var block = {
 var testBlocksUnder101 = 0;
 
 describe("POST /accounts/open", function () {
+
     it("When payload is over 2Mb. Should fail", function (done) {
         var data = "qs";
         for (var i = 0; i < 20; i++) {
@@ -409,6 +410,53 @@ describe("GET /blocks", function () {
                         node.expect(res.body.blocks[i].height).to.be.above(res.body.blocks[i+1].height);
                     }
                 }
+                done();
+            });
+    });
+});
+
+describe("GET /blocks/get?id=", function () {
+
+    it("Using genesisblock id. Should be ok", function (done) {
+        var genesisblockId = "6524861224470851795";
+
+        node.api.get("/blocks/get?id=" + genesisblockId)
+            .set("Accept", "application/json")
+            .expect("Content-Type", /json/)
+            .expect(200)
+            .end(function (err, res) {
+                // console.log(JSON.stringify(res.body));
+                node.expect(res.body).to.have.property("success").to.be.true;
+                node.expect(res.body).to.have.property("block").to.be.a("object");
+                node.expect(res.body.block).to.have.property("id").to.be.a("string");
+                done();
+            });
+    });
+
+    it("Using unknown id. Should be fail", function (done) {
+        var unknownId = "9928719876370886655";
+
+        node.api.get("/blocks/get?id=" + unknownId)
+            .set("Accept", "application/json")
+            .expect("Content-Type", /json/)
+            .expect(200)
+            .end(function (err, res) {
+                // console.log(JSON.stringify(res.body));
+                node.expect(res.body).to.have.property("success").to.be.false;
+                node.expect(res.body).to.have.property("error").to.be.a("string");
+                done();
+            });
+    });
+
+    it("Using no id. Should be fail", function (done) {
+        node.api.get("/blocks/get?id=" + null)
+            .set("Accept", "application/json")
+            .expect("Content-Type", /json/)
+            .expect(200)
+            .end(function (err, res) {
+                // console.log(JSON.stringify(res.body));
+                node.expect(res.body).to.have.property("success").to.be.false;
+                node.expect(res.body).to.have.property("error").to.be.a("string");
                 done();
             });
     });

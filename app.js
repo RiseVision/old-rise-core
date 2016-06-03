@@ -77,6 +77,7 @@ var config = {
 		"delegates": "./modules/delegates.js",
 		"round": "./modules/round.js",
 		"multisignatures": "./modules/multisignatures.js",
+		"dapps": "./modules/dapps.js",
 		"crypto": "./modules/crypto.js",
 		"sql": "./modules/sql.js"
 	}
@@ -101,8 +102,22 @@ d.run(function () {
 				logger.error("Failed to assign nethash from genesis block");
 				throw Error(e);
 			}
-			
-			cb(null, appConfig);
+
+			if (appConfig.dapp.masterrequired && !appConfig.dapp.masterpassword) {
+				var randomstring = require("randomstring");
+
+				appConfig.dapp.masterpassword = randomstring.generate({
+					length: 12,
+					readable: true,
+					charset: "alphanumeric"
+				});
+
+				fs.writeFile("./config.json", JSON.stringify(appConfig, null, 4), "utf8", function (err) {
+					cb(err, appConfig);
+				});
+			} else {
+				cb(null, appConfig);
+			}
 		},
 
 		logger: function (cb) {

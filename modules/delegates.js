@@ -69,7 +69,7 @@ function Delegate() {
  			return cb("Username should be lowercase");
  		}
 
-		var isAddress = /^[0-9]+[L|l]$/g;
+		var isAddress = /^[0-9]{1,21}[L|l]$/g
 		var allowSymbols = /^[a-z0-9!@$&_.]+$/g;
 
 		var username = String(trs.asset.delegate.username).toLowerCase().trim();
@@ -289,6 +289,7 @@ private.attachApi = function () {
 	});
 
 	router.map(shared, {
+		"get /count": "count",
 		"get /voters": "getVoters",
 		"get /get": "getDelegate",
 		"get /": "getDelegates",
@@ -506,8 +507,10 @@ private.loop = function (cb) {
 		return setImmediate(cb);
 	}
 
+	// When client is not loaded, is syncing or round is ticking
+	// Do not try to forge new blocks as client is not ready
 	if (!private.loaded || modules.loader.syncing() || !modules.round.loaded() || modules.round.ticking()) {
-		library.logger.debug('Loop:', 'node not ready');
+		library.logger.debug('Loop:', 'client not ready');
 		return setImmediate(cb);
 	}
 
@@ -892,6 +895,15 @@ shared.getDelegate = function (req, cb) {
 	});
 }
 
+shared.count = function (req, cb) {
+	library.db.one(sql.count).then(function (row) {
+		return cb(null, { count: row.count });
+	}).catch(function (err) {
+		library.logger.error(err.toString());
+		return cb("Failed to count delegates");
+	});
+}
+
 shared.getVoters = function (req, cb) {
 	var query = req.body;
 	library.scheme.validate(query, {
@@ -958,16 +970,12 @@ shared.getDelegates = function (req, cb) {
 			}
 
 			result.delegates.sort(function compare(a, b) {
+				var sorta=parseInt(a[result.orderBy]);
+				var sortb=parseInt(b[result.orderBy]);
 				if (result.sortMode == 'asc') {
-					if (a[result.orderBy] < b[result.orderBy])
-						return -1;
-					if (a[result.orderBy] > b[result.orderBy])
-						return 1;
+					return sorta < sortb ? -1 : 1;
 				} else if (result.sortMode == 'desc') {
-					if (a[result.orderBy] > b[result.orderBy])
-						return -1;
-					if (a[result.orderBy] < b[result.orderBy])
-						return 1;
+					return sorta > sortb ? -1 : 1
 				}
 				return 0;
 			});
@@ -1022,7 +1030,7 @@ private.disableForging = function (req, cb) {
 
 }
 
-private.statusForging = function (req, cb) {
+private.forgingStatus = function (req, cb) {
 
 }
 

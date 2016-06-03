@@ -254,7 +254,7 @@ private.list = function (filter, cb) {
 }
 
 private.getById = function (id, cb) {
-	library.db.query(sql.getbyId, { id: id }).then(function (rows) {
+	library.db.query(sql.getById, { id: id }).then(function (rows) {
 		if (!rows.length) {
 			return cb("Block not found");
 		}
@@ -1131,6 +1131,8 @@ Blocks.prototype.sandboxApi = function (call, args, cb) {
 
 // Events
 Blocks.prototype.onReceiveBlock = function (block) {
+	// When client is not loaded, is syncing or round is ticking
+	// Do not receive new blocks as client is not ready to receive them
 	if (!private.loaded || modules.loader.syncing() || modules.round.ticking()) {
 		return;
 	}
