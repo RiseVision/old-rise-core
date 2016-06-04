@@ -336,8 +336,8 @@ msgstr "DÍJ"
 #: partials/modals/registrationDelegateModal.html:23
 #: partials/modals/secondPassphraseModal.html:28
 #: partials/modals/sendTransaction.html:31 partials/modals/vote.html:25
-msgid "Fee: {{fee | riseFilter}} LSK"
-msgstr "Díj: {{fee | riseFilter}} LSK"
+msgid "Fee: {{fee | riseFilter}} RSE"
+msgstr "Díj: {{fee | riseFilter}} RSE"
 
 #: partials/forging.html:74
 msgid "Forged Blocks"
@@ -514,12 +514,12 @@ msgid "Logout"
 msgstr "Kijelentkezés"
 
 #: partials/modals/sendTransaction.html:29
-msgid "LSK Amount"
-msgstr "LSK Összeg"
+msgid "RSE Amount"
+msgstr "RSE Összeg"
 
 #: partials/forging.html:11
-msgid "LSK Earned"
-msgstr "Szerzett LSK"
+msgid "RSE Earned"
+msgstr "Szerzett RSE"
 
 #: partials/modals/newUser.html:72
 msgid ""
@@ -555,7 +555,7 @@ msgstr ""
 
 #: partials/modals/sendTransaction.html:41
 msgid ""
-"Make sure you're sending LSK to the right address. This action can't be "
+"Make sure you're sending RSE to the right address. This action can't be "
 "undone later."
 msgstr ""
 "Győződjön meg arról hogy a megfelelő címre küld RISE-et. Ezt a műveletet "
@@ -693,10 +693,10 @@ msgstr "Függőben lévő tranzakciók"
 #: partials/modals/multisignatureModal.html:107
 msgid ""
 "Please check your input below and go back if necessary. Double-check the "
-"group members, else you risk losing your LSK balance!"
+"group members, else you risk losing your RSE balance!"
 msgstr ""
 "Kérjük hogy ellenőrizze a bemenetet és menjen vissza ha szükséges. "
-"Ellenőrizze még-egyszer a csoport tagjait vagy másképp kockáztatja LSK "
+"Ellenőrizze még-egyszer a csoport tagjait vagy másképp kockáztatja RSE "
 "egyenlegét."
 
 #: partials/modals/registrationDelegateModal.html:15
@@ -721,10 +721,10 @@ msgstr "Kérjük, írja be a mester jelmondatot ehhez a csomóponthoz."
 
 #: partials/modals/sendTransaction.html:15
 msgid ""
-"Please enter the Recipient Address and LSK Amount that you would like send "
+"Please enter the Recipient Address and RSE Amount that you would like send "
 "below."
 msgstr ""
-"Kérjük, írja be az alábbiakban a Címzett(Átvevő) Címét és a LSK Összeget az "
+"Kérjük, írja be az alábbiakban a Címzett(Átvevő) Címét és a RSE Összeget az "
 "amit elszeretne küldeni."
 
 #: partials/modals/addDappModal.html:142 partials/modals/forgingModal.html:16
@@ -900,8 +900,8 @@ msgstr "rise küldése"
 #: partials/delegates.html:120 partials/delegates.html:51
 #: partials/modals/sendTransaction.html:13 partials/modals/userInfo.html:28
 #: partials/votes.html:49
-msgid "Send LSK"
-msgstr "LSK küldése"
+msgid "Send RSE"
+msgstr "RSE küldése"
 
 #: js/controllers/transactionsController.js:63 partials/account.html:70
 msgid "Sender"
@@ -1032,7 +1032,7 @@ msgstr ""
 msgid ""
 "This walkthrough will guide you through the necessary steps to create a "
 "multi-signature group. It's very important that you know what multi-"
-"signatures are, else you risk loosing your LSK balance.<br><br>A multi-"
+"signatures are, else you risk loosing your RSE balance.<br><br>A multi-"
 "signature group consists of N accounts, the one who created the group is the "
 "group owner. When the owner wants to make a transaction, M of N accounts "
 "within the group need to confirm it, otherwise the transaction will not be "
@@ -1044,7 +1044,7 @@ msgid ""
 msgstr ""
 "Ez a útmutató végig fogja vezetni a szükséges lépeseken ahhoz hogy Ön "
 "létrehozzon egy multi-signature csoportot. Nagyon fontos hogy tudja mi egy "
-"multi-signature csoport különben kockáztatja LSK összegét.<br><br>Egy multi-"
+"multi-signature csoport különben kockáztatja RSE összegét.<br><br>Egy multi-"
 "signature csoport N megadott fiókból áll, a csoport tulajdonosa az aki "
 "megalkotta ezt a csoportot. Amikor a csoporttulaj akar egy tranzakciót "
 "létrehozni, M a N fiókból a csoportban el kell fogadja a tranzakciót, "

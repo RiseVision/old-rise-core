@@ -135,7 +135,7 @@ angular.module('riseApp').controller('sendTransactionController', ['$scope', 'se
         if (!throwError) throwError = false;
 
         function error () {
-            $scope.errorMessage.amount = 'Invalid LSK amount';
+            $scope.errorMessage.amount = 'Invalid RSE amount';
 
             if (throwError) {
               throw $scope.errorMessage.amount;
@@ -194,7 +194,7 @@ angular.module('riseApp').controller('sendTransactionController', ['$scope', 'se
         }
 
         if (($scope.amount + '').indexOf('.') != -1 && $scope.amount.split('.')[1].length > 8) {
-            $scope.errorMessage.amount = 'LSK amount must not have more than 8 decimal places';
+            $scope.errorMessage.amount = 'RSE amount must not have more than 8 decimal places';
             return;
         }
 

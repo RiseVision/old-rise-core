@@ -337,8 +337,8 @@ msgstr "FRAIS"
 #: partials/modals/registrationDelegateModal.html:23
 #: partials/modals/secondPassphraseModal.html:28
 #: partials/modals/sendTransaction.html:31 partials/modals/vote.html:25
-msgid "Fee: {{fee | riseFilter}} LSK"
-msgstr "Frais : {{frais | riseFilter}} LSK"
+msgid "Fee: {{fee | riseFilter}} RSE"
+msgstr "Frais : {{frais | riseFilter}} RSE"
 
 #: partials/forging.html:74
 msgid "Forged Blocks"
@@ -515,12 +515,12 @@ msgid "Logout"
 msgstr "Déconnexion"
 
 #: partials/modals/sendTransaction.html:29
-msgid "LSK Amount"
-msgstr "LSK Montant"
+msgid "RSE Amount"
+msgstr "RSE Montant"
 
 #: partials/forging.html:11
-msgid "LSK Earned"
-msgstr "LSK gagnés"
+msgid "RSE Earned"
+msgstr "RSE gagnés"
 
 #: partials/modals/newUser.html:72
 msgid ""
@@ -559,10 +559,10 @@ msgstr ""
 
 #: partials/modals/sendTransaction.html:41
 msgid ""
-"Make sure you're sending LSK to the right address. This action can't be "
+"Make sure you're sending RSE to the right address. This action can't be "
 "undone later."
 msgstr ""
-"Assurez-vous d’envoyez vos LSK à la bonne adresse . Cette action ne peut "
+"Assurez-vous d’envoyez vos RSE à la bonne adresse . Cette action ne peut "
 "être annulée par la suite."
 
 #: js/controllers/modals/masterPassphraseModalController.js:9
@@ -698,11 +698,11 @@ msgstr "Transactions en attente"
 #: partials/modals/multisignatureModal.html:107
 msgid ""
 "Please check your input below and go back if necessary. Double-check the "
-"group members, else you risk losing your LSK balance!"
+"group members, else you risk losing your RSE balance!"
 msgstr ""
 "Veuillez vérifier votre saisie ci-dessous et revenir en arrière si "
 "nécessaire. Revivifier les membres du groupe sinon vous risquez de perdre "
-"définitivement votre solde LSK !"
+"définitivement votre solde RSE !"
 
 #: partials/modals/registrationDelegateModal.html:15
 msgid "Please choose a delegate name."
@@ -726,10 +726,10 @@ msgstr "Veuillez saisir la phrase secrète principale pour ce noeud."
 
 #: partials/modals/sendTransaction.html:15
 msgid ""
-"Please enter the Recipient Address and LSK Amount that you would like send "
+"Please enter the Recipient Address and RSE Amount that you would like send "
 "below."
 msgstr ""
-"Veuillez saisir l’adresse du destinataire et le montant LSK que vous "
+"Veuillez saisir l’adresse du destinataire et le montant RSE que vous "
 "souhaitez envoyer ci-dessous."
 
 #: partials/modals/addDappModal.html:142 partials/modals/forgingModal.html:16
@@ -908,8 +908,8 @@ msgstr "envoyer rise"
 #: partials/delegates.html:120 partials/delegates.html:51
 #: partials/modals/sendTransaction.html:13 partials/modals/userInfo.html:28
 #: partials/votes.html:49
-msgid "Send LSK"
-msgstr "Envoyer LSK"
+msgid "Send RSE"
+msgstr "Envoyer RSE"
 
 #: js/controllers/transactionsController.js:63 partials/account.html:70
 msgid "Sender"
@@ -1041,7 +1041,7 @@ msgstr ""
 msgid ""
 "This walkthrough will guide you through the necessary steps to create a "
 "multi-signature group. It's very important that you know what multi-"
-"signatures are, else you risk loosing your LSK balance.<br><br>A multi-"
+"signatures are, else you risk loosing your RSE balance.<br><br>A multi-"
 "signature group consists of N accounts, the one who created the group is the "
 "group owner. When the owner wants to make a transaction, M of N accounts "
 "within the group need to confirm it, otherwise the transaction will not be "
@@ -1054,7 +1054,7 @@ msgstr ""
 "Cette procédure vous guider pas à pas à travers les étapes nécessaires pour "
 "créer un groupe multi-signature. Il est très important que vous compreniez "
 "ce que sont les multi-signatures, sinon vous risquez de perdre votre solde "
-"LSK. <br><br>Un groupe multi-signature se compose de N comptes, celui qui a "
+"RSE. <br><br>Un groupe multi-signature se compose de N comptes, celui qui a "
 "créé le groupe est le propriétaire du groupe. Lorsque le propriétaire veut "
 "effectuer une transaction, M de N comptes au sein du groupe doivent le "
 "confirmer, sinon la transaction ne sera pas traitée. Les valeurs M et N sont "

@@ -333,8 +333,8 @@ msgstr "费用"
 #: partials/modals/registrationDelegateModal.html:23
 #: partials/modals/secondPassphraseModal.html:28
 #: partials/modals/sendTransaction.html:31 partials/modals/vote.html:25
-msgid "Fee: {{fee | riseFilter}} LSK"
-msgstr "费用: {{fee | riseFilter}} LSK"
+msgid "Fee: {{fee | riseFilter}} RSE"
+msgstr "费用: {{fee | riseFilter}} RSE"
 
 #: partials/forging.html:74
 msgid "Forged Blocks"
@@ -506,12 +506,12 @@ msgid "Logout"
 msgstr "退出登陆"
 
 #: partials/modals/sendTransaction.html:29
-msgid "LSK Amount"
-msgstr "LSK 余额"
+msgid "RSE Amount"
+msgstr "RSE 余额"
 
 #: partials/forging.html:11
-msgid "LSK Earned"
-msgstr "赚取的 LSK"
+msgid "RSE Earned"
+msgstr "赚取的 RSE"
 
 #: partials/modals/newUser.html:72
 msgid ""
@@ -519,7 +519,7 @@ msgid ""
 "later on, your account can't be restored and all your funds will be lost."
 msgstr ""
 "请确保您已安全保存主密码，如果您失去您的主密码，您的帐户将永远无法再打开，您"
-"将失去您所有的LSK"
+"将失去您所有的RSE"
 
 #: partials/modals/newUser.html:31
 msgid ""
@@ -534,7 +534,7 @@ msgid ""
 "be lost."
 msgstr ""
 "请确保您已安全保存支付密码，如果您失去您的支付密码，您的帐户将永远无法使用，"
-"您将失去您所有的LSK"
+"您将失去您所有的RSE"
 
 #: partials/modals/secondPassphraseModal.html:35
 msgid ""
@@ -544,9 +544,9 @@ msgstr "请确定您已经安全保存了支付密码，稍后将会要求您重
 
 #: partials/modals/sendTransaction.html:41
 msgid ""
-"Make sure you're sending LSK to the right address. This action can't be "
+"Make sure you're sending RSE to the right address. This action can't be "
 "undone later."
-msgstr "请确保您正在发送LSK给正确的地址，本操作无法撤消。"
+msgstr "请确保您正在发送RSE给正确的地址，本操作无法撤消。"
 
 #: js/controllers/modals/masterPassphraseModalController.js:9
 msgid "Master Passphrase"
@@ -680,10 +680,10 @@ msgstr "待处理交易"
 #: partials/modals/multisignatureModal.html:107
 msgid ""
 "Please check your input below and go back if necessary. Double-check the "
-"group members, else you risk losing your LSK balance!"
+"group members, else you risk losing your RSE balance!"
 msgstr ""
 "请检查您的输入是否正确，并再次核实小组成员，如果操作有误，您将有可能失去你帐"
-"户的所有LSK。"
+"户的所有RSE。"
 
 #: partials/modals/registrationDelegateModal.html:15
 msgid "Please choose a delegate name."
@@ -705,9 +705,9 @@ msgstr "请为该节点配置Dapp安装密码。"
 
 #: partials/modals/sendTransaction.html:15
 msgid ""
-"Please enter the Recipient Address and LSK Amount that you would like send "
+"Please enter the Recipient Address and RSE Amount that you would like send "
 "below."
-msgstr "请输入收币地址，以及您想发送的LSK数量。"
+msgstr "请输入收币地址，以及您想发送的RSE数量。"
 
 #: partials/modals/addDappModal.html:142 partials/modals/forgingModal.html:16
 #: partials/modals/registrationDelegateModal.html:53
@@ -879,8 +879,8 @@ msgstr "发送Rise"
 #: partials/delegates.html:120 partials/delegates.html:51
 #: partials/modals/sendTransaction.html:13 partials/modals/userInfo.html:28
 #: partials/votes.html:49
-msgid "Send LSK"
-msgstr "发送LSK"
+msgid "Send RSE"
+msgstr "发送RSE"
 
 #: js/controllers/transactionsController.js:63 partials/account.html:70
 msgid "Sender"
@@ -1003,7 +1003,7 @@ msgstr "第二次输入的主密码与第一次输入的不符，请返回上一
 msgid ""
 "This walkthrough will guide you through the necessary steps to create a "
 "multi-signature group. It's very important that you know what multi-"
-"signatures are, else you risk loosing your LSK balance.<br><br>A multi-"
+"signatures are, else you risk loosing your RSE balance.<br><br>A multi-"
 "signature group consists of N accounts, the one who created the group is the "
 "group owner. When the owner wants to make a transaction, M of N accounts "
 "within the group need to confirm it, otherwise the transaction will not be "

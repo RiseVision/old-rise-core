@@ -337,8 +337,8 @@ msgstr "FEE"
 #: partials/modals/registrationDelegateModal.html:23
 #: partials/modals/secondPassphraseModal.html:28
 #: partials/modals/sendTransaction.html:31 partials/modals/vote.html:25
-msgid "Fee: {{fee | riseFilter}} LSK"
-msgstr "Fee: {{fee | riseFilter}} LSK"
+msgid "Fee: {{fee | riseFilter}} RSE"
+msgstr "Fee: {{fee | riseFilter}} RSE"
 
 #: partials/forging.html:74
 msgid "Forged Blocks"
@@ -515,12 +515,12 @@ msgid "Logout"
 msgstr "Afmelden"
 
 #: partials/modals/sendTransaction.html:29
-msgid "LSK Amount"
-msgstr "LSK Aantal"
+msgid "RSE Amount"
+msgstr "RSE Aantal"
 
 #: partials/forging.html:11
-msgid "LSK Earned"
-msgstr "LSK Verdiend"
+msgid "RSE Earned"
+msgstr "RSE Verdiend"
 
 #: partials/modals/newUser.html:72
 msgid ""
@@ -558,10 +558,10 @@ msgstr ""
 
 #: partials/modals/sendTransaction.html:41
 msgid ""
-"Make sure you're sending LSK to the right address. This action can't be "
+"Make sure you're sending RSE to the right address. This action can't be "
 "undone later."
 msgstr ""
-"Wees zeker dat u de LSK naar het correcte adres verzendt. Deze actie kan "
+"Wees zeker dat u de RSE naar het correcte adres verzendt. Deze actie kan "
 "niet ongedaan worden gemaakt."
 
 #: js/controllers/modals/masterPassphraseModalController.js:9
@@ -696,10 +696,10 @@ msgstr "Transacties in afwachting"
 #: partials/modals/multisignatureModal.html:107
 msgid ""
 "Please check your input below and go back if necessary. Double-check the "
-"group members, else you risk losing your LSK balance!"
+"group members, else you risk losing your RSE balance!"
 msgstr ""
 "Controleer uw invoer hieronder en ga terug indien nodig. Controleer zeker de "
-"groepsleden, anders loopt u het risico uw volledige LSK balans te verliezen!"
+"groepsleden, anders loopt u het risico uw volledige RSE balans te verliezen!"
 
 #: partials/modals/registrationDelegateModal.html:15
 msgid "Please choose a delegate name."
@@ -723,10 +723,10 @@ msgstr "Voer alstublieft de master wachtwoordzin voor deze node in."
 
 #: partials/modals/sendTransaction.html:15
 msgid ""
-"Please enter the Recipient Address and LSK Amount that you would like send "
+"Please enter the Recipient Address and RSE Amount that you would like send "
 "below."
 msgstr ""
-"Voer alstublieft het adres van de ontvanger en het aantal LSK dat je wil "
+"Voer alstublieft het adres van de ontvanger en het aantal RSE dat je wil "
 "verzenden hieronder in."
 
 #: partials/modals/addDappModal.html:142 partials/modals/forgingModal.html:16
@@ -899,8 +899,8 @@ msgstr "stuur rise"
 #: partials/delegates.html:120 partials/delegates.html:51
 #: partials/modals/sendTransaction.html:13 partials/modals/userInfo.html:28
 #: partials/votes.html:49
-msgid "Send LSK"
-msgstr "Verzend LSK"
+msgid "Send RSE"
+msgstr "Verzend RSE"
 
 #: js/controllers/transactionsController.js:63 partials/account.html:70
 msgid "Sender"
@@ -1031,7 +1031,7 @@ msgstr ""
 msgid ""
 "This walkthrough will guide you through the necessary steps to create a "
 "multi-signature group. It's very important that you know what multi-"
-"signatures are, else you risk loosing your LSK balance.<br><br>A multi-"
+"signatures are, else you risk loosing your RSE balance.<br><br>A multi-"
 "signature group consists of N accounts, the one who created the group is the "
 "group owner. When the owner wants to make a transaction, M of N accounts "
 "within the group need to confirm it, otherwise the transaction will not be "
@@ -1043,7 +1043,7 @@ msgid ""
 msgstr ""
 "Deze walkthrough zal u gidsen door de nodige stappen om een multi-signature "
 "groep aan te maken. Het is zeer belangrijk dat u weet wat multi-signatures "
-"zijn, anders loopt u kans om uw gehele LSK balans te verliezen. <br><br>Een "
+"zijn, anders loopt u kans om uw gehele RSE balans te verliezen. <br><br>Een "
 "multi-signature groep bestaat uit N accounts, diegene die de groep heeft "
 "aangemaakt is meteen ook beheerder van de groep. Wanneer de eigenaar een "
 "transactie wil maken, moeten M van de N accounts binnen de groep deze "
