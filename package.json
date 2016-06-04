@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "private": true,
   "scripts": {
-    "start": "node app.js",
+    "start": "forever app.js",
     "test": "mocha",
     "cov": "mocha --require blanket -R html-cov test/helpers test/logic > tmp/coverage.html"
   },
