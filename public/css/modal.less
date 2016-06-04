@@ -134,7 +134,7 @@
                 border-radius: 2px;
                 background-color: #5F696E;
               }
-              .rise {
+              .lisk {
                 margin-left: 15px;
                 float: right;
                 display: inline-block;
@@ -171,7 +171,7 @@
                 background-color: white;
                 border-radius: 2px;
                 width: 302px;
-                .rise {
+                .lisk {
                   display: inline-block;
                   float: right;
                 }
@@ -336,11 +336,11 @@
       background-color: @white;
     }
     .modal-body {
-      &.voting-fee {    
-        .fee-text {   
-          position: relative;   
-          right: 40px;    
-        }   
+      &.voting-fee {
+        .fee-text {
+          position: relative;
+          right: 40px;
+        }
       }
       &.voting-error {
         .pass-error {
@@ -394,7 +394,7 @@
                 border-radius: 2px;
                 background-color: #5F696E;
               }
-              .rise {
+              .lisk {
                 margin-left: 15px;
                 float: right;
                 display: inline-block;
@@ -431,7 +431,7 @@
                 background-color: white;
                 border-radius: 2px;
                 width: 302px;
-                .rise {
+                .lisk {
                   display: inline-block;
                   float: right;
                 }
@@ -564,18 +564,28 @@
 
 .blue-link {
   color: @blue;
+  font-weight: 500;
   &:hover, &:active, &:focus {
     background-color: @grey;
     color: @orange;
   }
 }
 
-.fee-text {   
-  position: relative;   
-  top: -10px;   
-  line-height: @content-text + 2;   
-  font-size: @content-text;   
-  color: @fee-text;   
+.red-link {
+  color: @red;
+  font-weight: 500;
+  &:hover, &:active, &:focus {
+    background-color: @grey;
+    color: @blue;
+  }
+}
+
+.fee-text {
+  position: relative;
+  top: -10px;
+  line-height: @content-text + 2;
+  font-size: @content-text;
+  color: @fee-text;
 }
 
 .fee-second-passphrase {

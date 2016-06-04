@@ -1,6 +1,6 @@
 require('angular');
 
-angular.module('riseApp').controller('settingsController', ['$scope', '$rootScope', '$http', "userService", "$interval", "multisignatureModal", 'gettextCatalog', function ($rootScope, $scope, $http, userService, $interval, multisignatureModal, gettextCatalog) {
+angular.module('liskApp').controller('settingsController', ['$scope', '$rootScope', '$http', "userService", "$interval", "multisignatureModal", 'gettextCatalog', function ($rootScope, $scope, $http, userService, $interval, multisignatureModal, gettextCatalog) {
 
     var setPage = function () {
         $scope.view.page = {title: gettextCatalog.getString('Settings'), previous: null};
@@ -17,6 +17,9 @@ angular.module('riseApp').controller('settingsController', ['$scope', '$rootScop
         user: userService,
         enabledMultisign: false
     }
+
+    // Enable/Disable multisignature settings
+    $scope.multisignaturesEnabled = false;
 
     $scope.checkEnabledMultisign = function () {
         if (userService.multisignatures && userService.multisignatures.length) {

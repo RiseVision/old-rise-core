@@ -1,6 +1,6 @@
 require('angular');
 
-angular.module('riseApp').controller('transactionsController', ['$scope', '$rootScope', '$http', "userService", "$interval", "sendTransactionModal", "secondPassphraseModal", "delegateService", 'viewFactory', 'transactionsService', 'ngTableParams', 'transactionInfo', '$timeout', 'userInfo', 'gettextCatalog', function ($rootScope, $scope, $http, userService, $interval, sendTransactionModal, secondPassphraseModal, delegateService, viewFactory, transactionsService, ngTableParams, transactionInfo, $timeout, userInfo, gettextCatalog) {
+angular.module('liskApp').controller('transactionsController', ['$scope', '$rootScope', '$http', "userService", "$interval", "sendTransactionModal", "secondPassphraseModal", "delegateService", 'viewFactory', 'transactionsService', 'ngTableParams', 'transactionInfo', '$timeout', 'userInfo', 'gettextCatalog', function ($rootScope, $scope, $http, userService, $interval, sendTransactionModal, secondPassphraseModal, delegateService, viewFactory, transactionsService, ngTableParams, transactionInfo, $timeout, userInfo, gettextCatalog) {
 
     $scope.view = viewFactory;
     $scope.view.inLoading = true;
@@ -59,12 +59,12 @@ angular.module('riseApp').controller('transactionsController', ['$scope', '$root
 
     $scope.tableTransactions.cols = {
         b_height : gettextCatalog.getString('Height'),
-        transactionId : gettextCatalog.getString('Transaction ID'),
+        t_id : gettextCatalog.getString('Transaction ID'),
         t_senderId : gettextCatalog.getString('Sender'),
         t_recipientId : gettextCatalog.getString('Recipient'),
         t_timestamp : gettextCatalog.getString('Time'),
         t_amount : gettextCatalog.getString('Amount'),
-        fee : gettextCatalog.getString('Fee')
+        t_fee : gettextCatalog.getString('Fee')
     };
 
     $scope.tableTransactions.settings().$scope = $scope;

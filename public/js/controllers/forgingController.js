@@ -1,6 +1,6 @@
 require('angular');
 
-angular.module('riseApp').controller('forgingController', ['$scope', '$rootScope', '$http', "userService", "$interval", "forgingModal", "delegateService", "viewFactory", "blockInfo", "ngTableParams", "blockService", 'gettextCatalog', function ($rootScope, $scope, $http, userService, $interval, forgingModal, delegateService, viewFactory, blockInfo, ngTableParams, blockService, gettextCatalog) {
+angular.module('liskApp').controller('forgingController', ['$scope', '$rootScope', '$http', "userService", "$interval", "forgingModal", "delegateService", "viewFactory", "blockInfo", "ngTableParams", "blockService", 'gettextCatalog', function ($rootScope, $scope, $http, userService, $interval, forgingModal, delegateService, viewFactory, blockInfo, ngTableParams, blockService, gettextCatalog) {
 
     $scope.showAllColumns = false;
     $scope.showFullTime = false;
@@ -130,9 +130,10 @@ angular.module('riseApp').controller('forgingController', ['$scope', '$rootScope
     // end Blocks
 
     $scope.updateGraphs = function () {
-        delegateService.getDelegate(userService.publicKey, function (response) {
-            var totalDelegates = 108;
+        delegateService.getCountedDelegate(userService.publicKey, function (response) {
+            var totalDelegates = response.totalCount;
             var rank = response.rate;
+
             if (!rank || rank == 0) {
                 $scope.graphs.rank.values = [0, 100];
             } else {

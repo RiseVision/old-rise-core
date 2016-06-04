@@ -1,10 +1,10 @@
 require('angular');
 
-angular.module('riseApp').controller('forgingModalController', ["$scope", "forgingModal", "$http", "userService", 'gettextCatalog', function ($scope, forgingModal, $http, userService, gettextCatalog) {
+angular.module('liskApp').controller('forgingModalController', ["$scope", "forgingModal", "$http", "userService", 'gettextCatalog', function ($scope, forgingModal, $http, userService, gettextCatalog) {
 
     $scope.error = null;
+    $scope.sending = false;
     $scope.forging = userService.forging;
-    $scope.fee = 0;
     $scope.focus = 'secretPhrase';
 
     if ($scope.forging) {
@@ -36,41 +36,53 @@ angular.module('riseApp').controller('forgingModalController', ["$scope", "forgi
             return $scope.stopForging();
         }
 
-        $http.post("/api/delegates/forging/enable", {secret: $scope.secretPhrase, publicKey: userService.publicKey})
-            .then(function (resp) {
-                userService.setForging(resp.data.success);
-                $scope.forging = resp.data.success;
+        if (!$scope.sending) {
+            $scope.sending = true;
 
-                if (resp.data.success) {
-                    if ($scope.destroy) {
-                        $scope.destroy(resp.data.success);
+            $http.post("/api/delegates/forging/enable", {secret: $scope.secretPhrase, publicKey: userService.publicKey})
+                .then(function (resp) {
+                    userService.setForging(resp.data.success);
+                    $scope.forging = resp.data.success;
+                    $scope.sending = false;
+
+                    if (resp.data.success) {
+                        if ($scope.destroy) {
+                            $scope.destroy(resp.data.success);
+                        }
+
+                        Materialize.toast('Forging enabled', 3000, 'green white-text');
+                        forgingModal.deactivate();
+                    } else {
+                        $scope.error = resp.data.error;
                     }
-
-                    forgingModal.deactivate();
-                } else {
-                    $scope.error = resp.data.error;
-                }
-            });
+                });
+        }
     }
 
     $scope.stopForging = function () {
         $scope.error = null;
 
-        $http.post("/api/delegates/forging/disable", {secret: $scope.secretPhrase, publicKey: userService.publicKey})
-            .then(function (resp) {
-                userService.setForging(!resp.data.success);
-                $scope.forging = !resp.data.success;
+        if (!$scope.sending) {
+            $scope.sending = true;
 
-                if (resp.data.success) {
-                    if ($scope.destroy) {
-                        $scope.destroy(!resp.data.success);
+            $http.post("/api/delegates/forging/disable", {secret: $scope.secretPhrase, publicKey: userService.publicKey})
+                .then(function (resp) {
+                    userService.setForging(!resp.data.success);
+                    $scope.forging = !resp.data.success;
+                    $scope.sending = false;
+
+                    if (resp.data.success) {
+                        if ($scope.destroy) {
+                            $scope.destroy(!resp.data.success);
+                        }
+
+                        Materialize.toast('Forging disabled', 3000, 'red white-text');
+                        forgingModal.deactivate();
+                    } else {
+                        $scope.error = resp.data.error;
                     }
-
-                    forgingModal.deactivate();
-                } else {
-                    $scope.error = resp.data.error;
-                }
-            });
+                });
+        }
     }
 
 }]);

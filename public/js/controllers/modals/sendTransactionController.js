@@ -1,6 +1,6 @@
 require('angular');
 
-angular.module('riseApp').controller('sendTransactionController', ['$scope', 'sendTransactionModal', '$http', 'userService', '$timeout', '$filter', function ($scope, sendTransactionModal, $http, userService, $timeout, $filter) {
+angular.module('liskApp').controller('sendTransactionController', ['$scope', 'sendTransactionModal', '$http', 'userService', 'feeService', '$timeout', '$filter', function ($scope, sendTransactionModal, $http, userService, feeService, $timeout, $filter) {
 
     $scope.sending = false;
     $scope.passmode = false;
@@ -12,7 +12,6 @@ angular.module('riseApp').controller('sendTransactionController', ['$scope', 'se
     $scope.address = userService.address;
     $scope.focus = $scope.to ? 'amount' : 'to';
     $scope.presendError = false;
-    $scope.fee = 0;
 
     $scope.submit = function () {
         console.log('Transaction sent');
@@ -136,7 +135,7 @@ angular.module('riseApp').controller('sendTransactionController', ['$scope', 'se
         if (!throwError) throwError = false;
 
         function error () {
-            $scope.errorMessage.amount = 'Invalid LISK amount';
+            $scope.errorMessage.amount = 'Invalid LSK amount';
 
             if (throwError) {
               throw $scope.errorMessage.amount;
@@ -195,7 +194,7 @@ angular.module('riseApp').controller('sendTransactionController', ['$scope', 'se
         }
 
         if (($scope.amount + '').indexOf('.') != -1 && $scope.amount.split('.')[1].length > 8) {
-            $scope.errorMessage.amount = 'LISK amount must not have more than 8 decmial places';
+            $scope.errorMessage.amount = 'LSK amount must not have more than 8 decimal places';
             return;
         }
 
@@ -217,21 +216,26 @@ angular.module('riseApp').controller('sendTransactionController', ['$scope', 'se
 
         if (!$scope.sending) {
             $scope.sending = true;
+
             $http.put('/api/transactions', data).then(function (resp) {
                 $scope.sending = false;
+
                 if (resp.data.error) {
+                    Materialize.toast('Transaction error', 3000, 'red white-text');
                     $scope.errorMessage.fromServer = resp.data.error;
                 } else {
                     if ($scope.destroy) {
                         $scope.destroy();
                     }
+                    Materialize.toast('Transaction sent', 3000, 'green white-text');
                     sendTransactionModal.deactivate();
                 }
             });
-
         }
     }
 
-    $scope.getCurrentFee();
+    feeService(function (fees) {
+        $scope.fee = fees.send;
+    });
 
 }]);

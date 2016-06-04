@@ -1,6 +1,6 @@
 require('angular');
 
-angular.module('riseApp').filter('cut', function () {
+angular.module('liskApp').filter('cut', function () {
     return function (value, wordwise, max, tail, enabled) {
         if (!value) return '';
 

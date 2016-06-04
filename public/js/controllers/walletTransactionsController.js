@@ -1,6 +1,6 @@
 require('angular');
 
-angular.module('riseApp').controller('walletTransactionsController', ['$scope', '$rootScope', '$http', "userService", "$interval", "sendTransactionModal", "secondPassphraseModal", "delegateService", 'viewFactory', 'transactionsService', 'ngTableParams', 'transactionInfo', '$timeout', 'userInfo', '$filter', 'multiMembersModal', '$stateParams', 'multiService', 'gettextCatalog', function ($rootScope, $scope, $http, userService, $interval, sendTransactionModal, secondPassphraseModal, delegateService, viewFactory, transactionsService, ngTableParams, transactionInfo, $timeout, userInfo, $filter, multiMembersModal, $stateParams, multiService, gettextCatalog) {
+angular.module('liskApp').controller('walletTransactionsController', ['$scope', '$rootScope', '$http', "userService", "$interval", "sendTransactionModal", "secondPassphraseModal", "delegateService", 'viewFactory', 'transactionsService', 'ngTableParams', 'transactionInfo', '$timeout', 'userInfo', '$filter', 'multiMembersModal', '$stateParams', 'multiService', 'gettextCatalog', function ($rootScope, $scope, $http, userService, $interval, sendTransactionModal, secondPassphraseModal, delegateService, viewFactory, transactionsService, ngTableParams, transactionInfo, $timeout, userInfo, $filter, multiMembersModal, $stateParams, multiService, gettextCatalog) {
 
     $scope.view = viewFactory;
     $scope.view.page = {title: gettextCatalog.getString('Transactions'), previous: 'main.multi'};
@@ -68,7 +68,7 @@ angular.module('riseApp').controller('walletTransactionsController', ['$scope', 
         t_recipientId : gettextCatalog.getString('Recipient'),
         t_timestamp : gettextCatalog.getString('Time'),
         t_amount : gettextCatalog.getString('Amount'),
-        fee : gettextCatalog.getString('Fee'),
+        t_fee : gettextCatalog.getString('Fee'),
         confirmations : gettextCatalog.getString('Confirmations')
     };
 

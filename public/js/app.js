@@ -12,9 +12,9 @@ require('../node_modules/ng-table/dist/ng-table.js');
 
 Mnemonic = require('bitcore-mnemonic');
 
-riseApp = angular.module('riseApp', ['ui.router', 'btford.modal', 'ngTable', 'ngAnimate',  'chart.js', 'btford.socket-io', 'ui.bootstrap', 'ngClipboard', 'angular.filter', 'gettext']);
+liskApp = angular.module('liskApp', ['ui.router', 'btford.modal', 'ngTable', 'ngAnimate',  'chart.js', 'btford.socket-io', 'ui.bootstrap', 'ngClipboard', 'angular.filter', 'gettext']);
 
-riseApp.config(["ngClipProvider",
+liskApp.config(["ngClipProvider",
     "$locationProvider",
     "$stateProvider",
     "$urlRouterProvider",
@@ -36,21 +36,36 @@ riseApp.config(["ngClipProvider",
                 templateUrl: "/partials/account.html",
                 controller: "accountController"
             })
-            .state('main.multi', {
-                url: "/wallets",
-                templateUrl: "/partials/multi.html",
-                controller: "walletsController"
+            // .state('main.multi', {
+            //     url: "/wallets",
+            //     templateUrl: "/partials/multi.html",
+            //     controller: "walletsController"
+            // })
+            .state('main.dappstore', {
+                url: "/dappstore",
+                templateUrl: "/partials/dapps.html",
+                controller: "dappsController"
             })
-            .state('main.multiPendings', {
-                url: "/wallets/pendings",
-                templateUrl: "/partials/wallet-pendings.html",
-                controller: "walletPendingsController"
+            .state('main.dappsCategory', {
+                url: "/dappstore/:categoryId",
+                templateUrl: "/partials/dapps-category.html",
+                controller: "dappsCategoryController"
             })
-            .state('main.walletTransactions', {
-                url: "/wallets/:walletId",
-                templateUrl: "/partials/wallet-transactions.html",
-                controller: "walletTransactionsController"
+            .state('main.dappentry', {
+                url: "/dapp/:dappId",
+                templateUrl: "/partials/dapp-entry.html",
+                controller: "dappController"
             })
+            // .state('main.multiPendings', {
+            //     url: "/wallets/pendings",
+            //     templateUrl: "/partials/wallet-pendings.html",
+            //     controller: "walletPendingsController"
+            // })
+            // .state('main.walletTransactions', {
+            //     url: "/wallets/:walletId",
+            //     templateUrl: "/partials/wallet-transactions.html",
+            //     controller: "walletTransactionsController"
+            // })
             .state('main.settings', {
                 url: "/settings",
                 templateUrl: "/partials/settings.html",

@@ -1,9 +1,9 @@
 require('angular');
 
-angular.module('riseApp').service('delegateService', function ($http, $filter) {
+angular.module('liskApp').service('delegateService', function ($http, $filter, $q) {
 
     function filterData(data, filter) {
-        return $filter('filter')(data, filter)
+        return $filter('filter')(data, filter);
     }
 
     function orderData(data, params) {
@@ -11,7 +11,7 @@ angular.module('riseApp').service('delegateService', function ($http, $filter) {
     }
 
     function sliceData(data, params) {
-        return data.slice((params.page() - 1) * params.count(), params.page() * params.count())
+        return data.slice((params.page() - 1) * params.count(), params.page() * params.count());
     }
 
     function transformData(data, filter, params) {
@@ -24,11 +24,13 @@ angular.module('riseApp').service('delegateService', function ($http, $filter) {
         gettingTop: false,
         gettingVoted: false,
         cachedTOP: {data: [], time: new Date()},
-        cachedStundby: {data: [], time: new Date()},
+        cachedStandby: {data: [], time: new Date()},
         cachedVotedDelegates: {data: [], time: new Date()},
+
         isActiveRate: function (rate) {
             return rate <= this.topRate;
         },
+
         getTopList: function ($defer, params, filter, cb) {
             if (!this.gettingTop) {
                 this.gettingTop = !this.gettingTop;
@@ -39,8 +41,7 @@ angular.module('riseApp').service('delegateService', function ($http, $filter) {
                     this.gettingTop = !this.gettingTop;
                     cb();
                     $defer.resolve(transformedData);
-                }
-                else {
+                } else {
                     $http.get("/api/delegates/", {params: {orderBy: "rate:asc", limit: this.topRate, offset: 0}})
                         .then(function (response) {
                             angular.copy(response.data.delegates, delegates.cachedTOP.data);
@@ -58,8 +59,8 @@ angular.module('riseApp').service('delegateService', function ($http, $filter) {
         getStandbyList: function ($defer, params, filter, cb) {
             if (!this.gettingStandBy) {
                 this.gettingStandBy = !this.gettingStandBy;
-                if (delegates.cachedStundby.data.length > 0 && new Date() - delegates.cachedStundby.time < 1000 * 10) {
-                    var filteredData = filterData(delegates.cachedStundby.data, filter);
+                if (delegates.cachedStandby.data.length > 0 && new Date() - delegates.cachedStandby.time < 1000 * 10) {
+                    var filteredData = filterData(delegates.cachedStandby.data, filter);
                     var transformedData = sliceData(orderData(filteredData, params), params);
                     params.total(filteredData.length);
                     this.gettingStandBy = !this.gettingStandBy;
@@ -67,19 +68,18 @@ angular.module('riseApp').service('delegateService', function ($http, $filter) {
                     $defer.resolve(transformedData);
                 }
                 else {
-                    this.cachedStundby.data = [];
+                    this.cachedStandby.data = [];
                     var getPart = function (limit, offset) {
                         $http.get("/api/delegates/", {params: {orderBy: "rate:asc", limit: limit, offset: offset}})
                             .then(function (response) {
                                 if (response.data.delegates.length > 0) {
-                                    delegates.cachedStundby.data = delegates.cachedStundby.data.concat(response.data.delegates);
+                                    delegates.cachedStandby.data = delegates.cachedStandby.data.concat(response.data.delegates);
                                     getPart(limit, limit + offset);
-                                }
-                                else {
-                                    delegates.cachedStundby.time = new Date();
-                                    params.total(delegates.cachedStundby.data.length);
-                                    var filteredData = $filter('filter')(delegates.cachedStundby.data, filter);
-                                    var transformedData = transformData(delegates.cachedStundby.data, filter, params)
+                                } else {
+                                    delegates.cachedStandby.time = new Date();
+                                    params.total(delegates.cachedStandby.data.length);
+                                    var filteredData = $filter('filter')(delegates.cachedStandby.data, filter);
+                                    var transformedData = transformData(delegates.cachedStandby.data, filter, params);
                                     delegates.gettingStandBy = !delegates.gettingStandBy;
                                     cb();
                                     $defer.resolve(transformedData);
@@ -100,8 +100,7 @@ angular.module('riseApp').service('delegateService', function ($http, $filter) {
                     this.gettingVoted = !this.gettingVoted;
                     $defer.resolve(transformedData);
                     cb();
-                }
-                else {
+                } else {
                     $http.get("/api/accounts/delegates/", {params: {address: address}})
                         .then(function (response) {
                             angular.copy(response.data.delegates ? response.data.delegates : [], delegates.cachedVotedDelegates.data);
@@ -113,7 +112,6 @@ angular.module('riseApp').service('delegateService', function ($http, $filter) {
                             $defer.resolve(transformedData);
                             cb();
                         });
-
                 }
             }
         },
@@ -123,12 +121,31 @@ angular.module('riseApp').service('delegateService', function ($http, $filter) {
                     if (response.data.success) {
                         response.data.delegate.active = delegates.isActiveRate(response.data.delegate.rate);
                         cb(response.data.delegate);
+                    } else {
+                        cb({noDelegate: true, rate: 0, productivity: 0, vote: 0});
                     }
-                    else {
-                        cb({noDelegate: true, rate: 0, productivity: 0, vote: 0})
+                });
+        },
+        getCountedDelegate: function (publicKey, cb) {
+            $q.all([
+                $http.get("/api/delegates/get/", {params: {publicKey: publicKey}}),
+                $http.get("/api/delegates/count")
+            ]).then(function(results) {
+                if (results[0].data.success) {
+                    var response = results[0];
+
+                    if (results[1].data.success) {
+                        response.data.delegate.totalCount = parseInt(results[1].data.count) || 0;
+                    } else {
+                        response.data.delegate.totalCount = 0;
                     }
 
-                });
+                    response.data.delegate.active = delegates.isActiveRate(response.data.delegate.rate);
+                    cb(response.data.delegate);
+                } else {
+                    cb({noDelegate: true, rate: 0, productivity: 0, vote: 0, totalCount: 0});
+                }
+            });
         }
     };
 

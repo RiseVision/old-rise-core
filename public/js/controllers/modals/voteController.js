@@ -1,14 +1,13 @@
 require('angular');
 
-angular.module('riseApp').controller('voteController', ["$scope", "voteModal", "$http", "userService", "$timeout", function ($scope, voteModal, $http, userService, $timeout) {
+angular.module('liskApp').controller('voteController', ["$scope", "voteModal", "$http", "userService", "feeService", "$timeout", function ($scope, voteModal, $http, userService, feeService, $timeout) {
 
-    $scope.voting = false;
-    $scope.fromServer = '';
+    $scope.sending = false;
     $scope.passmode = false;
+    $scope.fromServer = '';
     $scope.rememberedPassphrase = userService.rememberPassphrase ? userService.rememberedPassphrase : false;
     $scope.secondPassphrase = userService.secondPassphrase;
     $scope.focus = 'secretPhrase';
-    $scope.fee = 0;
 
     Object.size = function (obj) {
         var size = 0, key;
@@ -17,16 +16,6 @@ angular.module('riseApp').controller('voteController', ["$scope", "voteModal", "
         }
         return size;
     };
-
-    $scope.getFee = function () {
-        $http.get("/api/accounts/delegates/fee").then(function (resp) {
-            if (resp.data.success) {
-                $scope.fee = resp.data.fee;
-            } else {
-                $scope.fee = 0;
-            }
-        });
-    }
 
     $scope.passcheck = function (fromSecondPass) {
         $scope.fromServer=null;
@@ -52,8 +41,6 @@ angular.module('riseApp').controller('voteController', ["$scope", "voteModal", "
     }
 
     $scope.secondPassphrase = userService.secondPassphrase;
-
-    $scope.getFee();
 
     $scope.close = function () {
         if ($scope.destroy) {
@@ -92,18 +79,28 @@ angular.module('riseApp').controller('voteController', ["$scope", "voteModal", "
             }
         }
 
-        $scope.voting = !$scope.voting;
-        $http.put("/api/accounts/delegates", data).then(function (resp) {
-            $scope.voting = !$scope.voting;
-            if (resp.data.error) {
-                $scope.fromServer = resp.data.error;
-            } else {
-                if ($scope.destroy) {
-                    $scope.destroy();
+        if (!$scope.sending) {
+            $scope.sending = true;
+
+            $http.put("/api/accounts/delegates", data).then(function (resp) {
+                $scope.sending = false;
+
+                if (resp.data.error) {
+                    Materialize.toast('Transaction error', 3000, 'red white-text');
+                    $scope.fromServer = resp.data.error;
+                } else {
+                    if ($scope.destroy) {
+                        $scope.destroy();
+                    }
+                    Materialize.toast('Transaction sent', 3000, 'green white-text');
+                    voteModal.deactivate();
                 }
-                voteModal.deactivate();
-            }
-        });
+            });
+        }
     }
+
+    feeService(function (fees) {
+        $scope.fee = fees.vote;
+    });
 
 }]);

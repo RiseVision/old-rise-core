@@ -1,24 +1,12 @@
 require('angular');
 
-angular.module('riseApp').controller('secondPassphraseModalController', ["$scope", "secondPassphraseModal", "$http", "userService", function ($scope, secondPassphraseModal, $http, userService) {
+angular.module('liskApp').controller('secondPassphraseModalController', ["$scope", "secondPassphraseModal", "$http", "userService", "feeService", function ($scope, secondPassphraseModal, $http, userService, feeService) {
 
+    $scope.sending = false;
     $scope.rememberedPassphrase = userService.rememberPassphrase ? userService.rememberedPassphrase : false;
     $scope.passmode = false;
     $scope.focus = 'secondPass';
-    $scope.fee = 0;
     $scope.step = 1;
-
-    $scope.getFee = function () {
-        $http.get("/api/signatures/fee").then(function (resp) {
-            if (resp.data.success) {
-                $scope.fee = resp.data.fee;
-            } else {
-                $scope.fee = 0;
-            }
-        });
-    }
-
-    $scope.getFee();
 
     $scope.goToStep = function (step) {
         $scope.passmode = false;
@@ -43,7 +31,7 @@ angular.module('riseApp').controller('secondPassphraseModalController', ["$scope
 
     $scope.savePassToFile = function (pass) {
         var blob = new Blob([pass], { type: "text/plain;charset=utf-8" });
-        FS.saveAs(blob, "RiseSecondPassphrase.txt");
+        FS.saveAs(blob, "LiskSecondPassphrase.txt");
     }
 
     $scope.confirmNewPassphrase = function () {
@@ -72,21 +60,33 @@ angular.module('riseApp').controller('secondPassphraseModalController', ["$scope
     }
 
     $scope.addNewPassphrase = function (pass) {
-        $http.put("/api/signatures", {
-            secret: pass,
-            secondSecret: $scope.newPassphrase,
-            publicKey: userService.publicKey
-        }).then(function (resp) {
-            if (resp.data.error) {
-                $scope.fromServer = resp.data.error;
-            } else {
-                if ($scope.destroy) {
-                    $scope.destroy(true);
-                }
+        if (!$scope.sending) {
+            $scope.sending = true;
 
-                secondPassphraseModal.deactivate();
-            }
-        });
+            $http.put("/api/signatures", {
+                secret: pass,
+                secondSecret: $scope.newPassphrase,
+                publicKey: userService.publicKey
+            }).then(function (resp) {
+                $scope.sending = false;
+
+                if (resp.data.error) {
+                    Materialize.toast('Transaction error', 3000, 'red white-text');
+                    $scope.fromServer = resp.data.error;
+                } else {
+                    if ($scope.destroy) {
+                        $scope.destroy(true);
+                    }
+
+                    Materialize.toast('Transaction sent', 3000, 'green white-text');
+                    secondPassphraseModal.deactivate();
+                }
+            });
+        }
     }
+
+    feeService(function (fees) {
+        $scope.fee = fees.secondsignature;
+    });
 
 }]);

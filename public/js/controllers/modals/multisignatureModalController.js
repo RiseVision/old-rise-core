@@ -1,7 +1,8 @@
 require('angular');
 
-angular.module('riseApp').controller('multisignatureModalController', ["$scope", "$http", "multisignatureModal", "viewFactory", "userService", 'gettextCatalog', function ($scope, $http, multisignatureModal, viewFactory, userService, gettextCatalog) {
+angular.module('liskApp').controller('multisignatureModalController', ["$scope", "$http", "multisignatureModal", "viewFactory", "userService", "feeService", "gettextCatalog", function ($scope, $http, multisignatureModal, viewFactory, userService, feeService, gettextCatalog) {
 
+    $scope.sending = false;
     $scope.view = viewFactory;
     $scope.view.loadingText = gettextCatalog.getString('Configuring multi-signature group');
     $scope.secondPassphrase = userService.secondPassphrase;
@@ -12,7 +13,6 @@ angular.module('riseApp').controller('multisignatureModalController', ["$scope",
     }
     $scope.addingError = '';
     $scope.currentAddress = userService.address;
-    $scope.fee = 5;
 
     $scope.close = function () {
         if ($scope.destroy) {
@@ -56,8 +56,8 @@ angular.module('riseApp').controller('multisignatureModalController', ["$scope",
 
             }
             if (buffer.length == 32) {
-                var crypto = require('crypto');
-                var address = rise.crypto.getAddress($scope.member);
+                var lisk = require('lisk-js');
+                var address = lisk.crypto.getAddress($scope.member);
                 if ($scope.members[$scope.address] || address == userService.address) {
                     return;
                 }
@@ -118,18 +118,28 @@ angular.module('riseApp').controller('multisignatureModalController', ["$scope",
             data.secondSecret = $scope.authData.secondPassphrase;
         }
 
-        $scope.view.inLoading = true;
-        $http.put('/api/multisignatures', data).then(function (response) {
-            $scope.view.inLoading = false;
-            if (response.data.error) {
-                $scope.errorMessage = response.data.error;
-            } else {
-                if ($scope.destroy) {
-                    $scope.destroy(true);
+        if (!$scope.sending) {
+            $scope.sending = true;
+
+            $http.put('/api/multisignatures', data).then(function (response) {
+                $scope.sending = false;
+
+                if (response.data.error) {
+                    Materialize.toast('Transaction error', 3000, 'red white-text');
+                    $scope.errorMessage = response.data.error;
+                } else {
+                    if ($scope.destroy) {
+                        $scope.destroy(true);
+                    }
+                    Materialize.toast('Transaction sent', 3000, 'green white-text');
+                    multisignatureModal.deactivate();
                 }
-                multisignatureModal.deactivate();
-            }
-        });
+            });
+        }
     }
+
+    feeService(function (fees) {
+        $scope.fee = fees.multisignature;
+    });
 
 }]);

@@ -1,5 +1,5 @@
 require('angular');
 
-angular.module('riseApp').factory('userFactory',["userService", function (userService) {
+angular.module('liskApp').factory('userFactory',["userService", function (userService) {
     return {};
 }]);

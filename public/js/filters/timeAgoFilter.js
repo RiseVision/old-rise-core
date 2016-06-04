@@ -1,11 +1,13 @@
 require('angular');
 
-angular.module('riseApp').filter('timeAgoFilter', function ($filter) {
+angular.module('liskApp').filter('timeAgoFilter', function ($filter) {
     return function (time, fullTime) {
         if (fullTime) {
             return $filter('timestampFilter')(time);
         }
-        var d = new Date(Date.UTC(2015, 3, 9, 0, 0, 0, 0));
+
+        // Epoch time
+        var d = new Date(Date.UTC(2016, 4, 24, 17, 0, 0, 0));
         var t = parseInt(d.getTime() / 1000);
 
         time = new Date((time + t) * 1000);

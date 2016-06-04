@@ -24,13 +24,13 @@
                                     <span class="pull-right small-text">{{block.height}}</span>
                                 </li>
                                 <li class="list-group-item bordered"><translate>Reward</translate>
-                                    <span class="pull-right small-text">{{block.reward | riseFilter}}</span>
+                                    <span class="pull-right small-text">{{block.reward | liskFilter}}</span>
                                 </li>
                                 <li class="list-group-item bordered"><translate>Total Fee</translate>
-                                    <span class="pull-right small-text">{{block.totalFee | riseFilter}}</span>
+                                    <span class="pull-right small-text">{{block.totalFee | liskFilter}}</span>
                                 </li>
                                 <li class="list-group-item"><translate>Total Amount</translate>
-                                    <span class="pull-right small-text">{{block.totalAmount | riseFilter}}</span>
+                                    <span class="pull-right small-text">{{block.totalAmount | liskFilter}}</span>
                                 </li>
                                 <li class="list-group-item"><translate>USD Equivalent</translate>
                                     <span class="pull-right small-text">${{convertToUSD(block.totalAmount) || 0 | number: 2}}</span>
@@ -60,17 +60,17 @@
                                     <div class="transaction-path">
                                         <div class="transaction-part pull-left">
                                             <a href="#" ng-click="userInfo(transaction.senderId)">{{transaction.senderId}}</a>
-                                            <span class="rise">{{transaction.amount | riseFilter}} LISK</span>
+                                            <span class="lisk">{{transaction.amount | liskFilter}} LSK</span>
                                         </div>
                                         <div class="transaction-direction"></div>
                                         <div class="transaction-part pull-right">
                                             <a href="#" ng-click="userInfo(transaction.recipientId)">{{transaction.recipientId || "-"}}</a>
-                                            <span class="rise">{{transaction.amount | riseFilter}} LISK</span>
+                                            <span class="lisk">{{transaction.amount | liskFilter}} LSK</span>
                                         </div>
                                     </div>
                                     <div class="transaction-bottom">
-                                        <div class="fee"><translate>FEE</translate>: {{transaction.fee | riseFilter}} LISK</div>
-                                        <div class="rise">{{transaction.amount | riseFilter}} LISK </div>
+                                        <div class="fee"><translate>FEE</translate>: {{transaction.fee | liskFilter}} LSK</div>
+                                        <div class="lisk">{{transaction.amount | liskFilter}} LSK </div>
                                         <div class="confirmations">{{transaction.confirmations || 0}} <translate>CONFIRMATIONS</translate></div>
                                     </div>
                                 </li>

@@ -1,13 +1,10 @@
-# Rise UI
+# Lisk UI
 
-Rise is a next generation crypto-currency and decentralized application platform, written entirely in JavaScript. For more information please refer to our website: https://rise.vision/.
+Lisk is a next generation crypto-currency and blockchain application platform, written entirely in JavaScript. For more information please refer to our website: https://lisk.io/.
 
-This repository contains the [AngularJS](https://angularjs.org/) based user-interface submodule of the Rise client. This will be replaced by a React based UI in the near future.
+This repository contains the [AngularJS](https://angularjs.org/) based user-interface submodule of the Lisk client.
 
 ## Installation
-TL;DR:
-``` npm install && bower install && grunt release ```
-
 
 Install node modules:
 
@@ -29,13 +26,15 @@ grunt release
 
 ## Authors
 
-- Justin Donnaruma <justin@rise.vision>
+- Vera Nekrasova <vera.limita@gmail.com>
+- Boris Povod <boris@crypti.me>
+- Oliver Beddows <oliver@lisk.io>
+- Max Kordek <max@lisk.io>
 
 ## License
 
 The MIT License (MIT)  
 
-Copyright (c) 2016 Rise  
 Copyright (c) 2016 Lisk  
 Copyright (c) 2014-2015 Crypti  
 

@@ -1,6 +1,6 @@
 require('angular');
 
-angular.module('riseApp').directive('voteTitle', function (gettextCatalog, riseFilterFilter) {
+angular.module('liskApp').directive('voteTitle', function (gettextCatalog, liskFilterFilter) {
     return {
         restrict: 'E',
         template: '<h2>{{action}}</h2>',

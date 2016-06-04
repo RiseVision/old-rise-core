@@ -1,15 +1,16 @@
 require('angular');
 
-angular.module('riseApp').controller('addDappModalController', ["$scope", "$http", "addDappModal", "userService", "viewFactory", 'gettextCatalog', function ($scope, $http, addDappModal, userService, viewFactory, gettextCatalog) {
+angular.module('liskApp').controller('addDappModalController', ["$scope", "$http", "addDappModal", "userService", "feeService", "viewFactory", 'gettextCatalog', function ($scope, $http, addDappModal, userService, feeService, viewFactory, gettextCatalog) {
 
+    $scope.sending = false;
     $scope.view = viewFactory;
-    $scope.view.loadingText = gettextCatalog.getString('Saving new dapp');
+    $scope.view.inLoading = false;
+    $scope.view.loadingText = gettextCatalog.getString('Saving new application');
     $scope.secondPassphrase = userService.secondPassphrase;
     $scope.rememberedPassphrase = userService.rememberPassphrase ? userService.rememberedPassphrase : false;
     $scope.passmode = false;
     $scope.errorMessage = "";
     $scope.checkSecondPass = false;
-    $scope.fee = 50000000000;
 
     $scope.close = function () {
         addDappModal.deactivate();
@@ -17,6 +18,7 @@ angular.module('riseApp').controller('addDappModalController', ["$scope", "$http
 
     $scope.passcheck = function (fromSecondPass) {
         $scope.errorMessage = "";
+
         if (fromSecondPass) {
             $scope.checkSecondPass = false;
             $scope.passmode = $scope.rememberedPassphrase ? false : true;
@@ -24,6 +26,7 @@ angular.module('riseApp').controller('addDappModalController', ["$scope", "$http
             $scope.secretPhrase = '';
             return;
         }
+
         if ($scope.rememberedPassphrase) {
             $scope.sendData($scope.rememberedPassphrase);
         } else {
@@ -38,7 +41,7 @@ angular.module('riseApp').controller('addDappModalController', ["$scope", "$http
     $scope.newDapp = {
         name: "",
         description: "",
-        category: 0,
+        category: 4, // Miscellaneous
         type: 0,
         tags: "",
         link: "",
@@ -70,8 +73,6 @@ angular.module('riseApp').controller('addDappModalController', ["$scope", "$http
         }
         pass = pass || $scope.secretPhrase;
 
-        $scope.view.inLoading = true;
-
         data.secret = pass;
         data.category = $scope.newDapp.category || 0;
 
@@ -82,17 +83,24 @@ angular.module('riseApp').controller('addDappModalController', ["$scope", "$http
             }
         }
 
-        $http.put('/api/dapps', data).then(function (response) {
-            $scope.view.inLoading = false;
-            if (response.data.error) {
-                $scope.errorMessage = response.data.error;
-            } else {
-                if ($scope.destroy) {
-                    $scope.destroy();
+        if (!$scope.sending) {
+            $scope.view.inLoading = $scope.sending = true;
+
+            $http.put('/api/dapps', data).then(function (response) {
+                $scope.view.inLoading = $scope.sending = false;
+
+                if (response.data.error) {
+                    Materialize.toast('Transaction error', 3000, 'red white-text');
+                    $scope.errorMessage = response.data.error;
+                } else {
+                    if ($scope.destroy) {
+                        $scope.destroy();
+                    }
+                    Materialize.toast('Transaction sent', 3000, 'green white-text');
+                    addDappModal.deactivate();
                 }
-                addDappModal.deactivate();
-            }
-        });
+            });
+        }
     }
 
     $scope.step = 1;
@@ -121,5 +129,9 @@ angular.module('riseApp').controller('addDappModalController', ["$scope", "$http
             $scope.form.storage_data.submitted = false;
         }
     }
+
+    feeService(function (fees) {
+        $scope.fee = fees.dapp;
+    });
 
 }]);

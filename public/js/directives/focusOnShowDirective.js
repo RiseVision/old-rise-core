@@ -1,5 +1,5 @@
 require('angular');
-angular.module('riseApp').directive('focusOn', function ($timeout) {
+angular.module('liskApp').directive('focusOn', function ($timeout) {
     return {
         restrict: 'A',
         link: function ($scope, $element, $attr) {

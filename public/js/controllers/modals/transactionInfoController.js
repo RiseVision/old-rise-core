@@ -1,6 +1,6 @@
 require('angular');
 
-angular.module('riseApp').controller('transactionInfoController', ["$scope", "$http", "transactionInfo", "userInfo", function ($scope, $http, transactionInfo, userInfo) {
+angular.module('liskApp').controller('transactionInfoController', ["$scope", "$http", "transactionInfo", "userInfo", function ($scope, $http, transactionInfo, userInfo) {
 
     $scope.userInfo = function (userId) {
         transactionInfo.deactivate();

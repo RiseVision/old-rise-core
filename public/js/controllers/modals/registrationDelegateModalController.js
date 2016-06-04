@@ -1,30 +1,16 @@
 require('angular');
 
-angular.module('riseApp').controller('registrationDelegateModalController', ["$scope", "registrationDelegateModal", "$http", "userService", "delegateService", function ($scope, registrationDelegateModal, $http, userService, delegateService) {
+angular.module('liskApp').controller('registrationDelegateModalController', ["$scope", "registrationDelegateModal", "$http", "userService", "feeService", "delegateService", function ($scope, registrationDelegateModal, $http, userService, feeService, delegateService) {
 
     $scope.error = null;
-    $scope.delegate = userService.delegate;
-    $scope.action = false;
-    $scope.isSecondPassphrase = userService.secondPassphrase;
+    $scope.sending = false;
     $scope.passmode = false;
+    $scope.delegate = userService.delegate;
+    $scope.isSecondPassphrase = userService.secondPassphrase;
     $scope.delegateData = {username: ''};
     $scope.secondPassphrase = userService.secondPassphrase;
     $scope.rememberedPassphrase = userService.rememberPassphrase ? userService.rememberedPassphrase : false;
-
-    $scope.fee = 0;
     $scope.focus = 'username';
-
-    $scope.getFee = function () {
-        $http.get("/api/delegates/fee").then(function (resp) {
-            if (resp.data.success) {
-                $scope.fee = resp.data.fee;
-            } else {
-                $scope.fee = 0;
-            }
-        });
-    }
-
-    $scope.getFee();
 
     $scope.close = function () {
         if ($scope.destroy) {
@@ -93,39 +79,53 @@ angular.module('riseApp').controller('registrationDelegateModalController', ["$s
             $scope.checkSecondPass = true;
             return;
         }
+
         pass = pass || $scope.secretPhrase;
 
-        $scope.action = true;
         $scope.error = null;
+
         var data = {
             secret: pass,
             secondSecret: $scope.secondPhrase,
             publicKey: userService.publicKey
         };
+
         if ($scope.delegateData.username.trim() != '') {
             data.username = $scope.delegateData.username.trim()
         }
+
         if ($scope.secondPassphrase) {
             data.secondSecret = $scope.secondPhrase;
             if ($scope.rememberedPassphrase) {
                 data.secret = $scope.rememberedPassphrase;
             }
         }
-        $http.put("/api/delegates/", data)
-            .then(function (resp) {
-                $scope.action = false;
-                userService.setDelegateProcess(resp.data.success);
 
-                if (resp.data.success) {
-                    if ($scope.destroy) {
-                        $scope.destroy();
+        if (!$scope.sending) {
+            $scope.sending = true;
+
+            $http.put("/api/delegates/", data)
+                .then(function (resp) {
+                    $scope.sending = false;
+                    userService.setDelegateProcess(resp.data.success);
+
+                    if (resp.data.success) {
+                        if ($scope.destroy) {
+                            $scope.destroy();
+                        }
+
+                        Materialize.toast('Transaction sent', 3000, 'green white-text');
+                        registrationDelegateModal.deactivate();
+                    } else {
+                        Materialize.toast('Transaction error', 3000, 'red white-text');
+                        $scope.error = resp.data.error;
                     }
-
-                    registrationDelegateModal.deactivate();
-                } else {
-                    $scope.error = resp.data.error;
-                }
-            });
+                });
+        }
     }
+
+    feeService(function (fees) {
+        $scope.fee = fees.delegate;
+    });
 
 }]);

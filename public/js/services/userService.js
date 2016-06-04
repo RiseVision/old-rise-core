@@ -1,6 +1,6 @@
 require('angular');
 
-angular.module('riseApp').service('userService', function () {
+angular.module('liskApp').service('userService', function () {
 
     this.rememberPassphrase = false;
     this.rememberedPassphrase = '';
