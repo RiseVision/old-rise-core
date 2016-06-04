@@ -52,7 +52,7 @@ msgid "Account Verification"
 msgstr ""
 
 #: partials/modals/multisignatureModal.html:46
-msgid "Add group members by typing in their Lisk address and pressing enter."
+msgid "Add group members by typing in their Rise address and pressing enter."
 msgstr ""
 
 #: partials/modals/secondPassphraseModal.html:126
@@ -129,10 +129,6 @@ msgstr ""
 
 #: partials/template.html:260
 msgid "CATEGORIES"
-msgstr ""
-
-#: partials/dapp-entry.html:61
-msgid "Category:"
 msgstr ""
 
 #: partials/modals/addDappModal.html:101
@@ -280,10 +276,6 @@ msgstr ""
 msgid "Delegates"
 msgstr ""
 
-#: partials/dapp-entry.html:85
-msgid "Description"
-msgstr ""
-
 #: js/controllers/modals/errorModalController.js:10
 #: js/controllers/modals/forgingModalController.js:11
 msgid "Disable Forging"
@@ -291,12 +283,6 @@ msgstr ""
 
 #: js/controllers/appController.js:315
 msgid "Disabled"
-msgstr ""
-
-#: partials/dapp-entry.html:21
-#: partials/dapp-entry.html:31
-#: partials/dapp-entry.html:40
-msgid "DOWNLOAD"
 msgstr ""
 
 #: partials/modals/masterPassphraseModal.html:24
@@ -347,7 +333,7 @@ msgstr ""
 #: partials/modals/secondPassphraseModal.html:28
 #: partials/modals/sendTransaction.html:31
 #: partials/modals/vote.html:25
-msgid "Fee: {{fee | liskFilter}} LSK"
+msgid "Fee: {{fee | riseFilter}} LSK"
 msgstr ""
 
 #: partials/forging.html:74
@@ -426,16 +412,8 @@ msgstr ""
 msgid "If you are confident the application can be deemed trustworthy, click <strong>Open Anyway</strong>, otherwise click <strong>Cancel</strong> now."
 msgstr ""
 
-#: partials/dapp-entry.html:20
-msgid "INSTALL"
-msgstr ""
-
 #: partials/template.html:282
 msgid "INSTALLED"
-msgstr ""
-
-#: partials/dapps.html:223
-msgid "Installed Applications"
 msgstr ""
 
 #: partials/settings.html:9
@@ -457,29 +435,6 @@ msgstr ""
 
 #: partials/account.html:36
 msgid "Latest version"
-msgstr ""
-
-#: partials/dapp-entry.html:30
-msgid "LAUNCH"
-msgstr ""
-
-#: wallet.html:22
-msgid "Lisk - Blockchain Application Platform"
-msgstr ""
-
-#: js/controllers/delegatesController.js:158
-#: js/controllers/votedDelegatesController.js:117
-#: js/controllers/walletPendingsController.js:43
-#: partials/modals/multisignatureModal.html:52
-msgid "Lisk Address"
-msgstr ""
-
-#: partials/account.html:33
-msgid "Lisk Client"
-msgstr ""
-
-#: partials/account.html:43
-msgid "Lisk Client Outdated"
 msgstr ""
 
 #: js/controllers/dappController.js:7
@@ -561,8 +516,6 @@ msgid "Members"
 msgstr ""
 
 #: partials/account.html:60
-#: partials/dapps.html:165
-#: partials/dapps.html:225
 msgid "More"
 msgstr ""
 
@@ -632,11 +585,6 @@ msgstr ""
 msgid "NO"
 msgstr ""
 
-#: partials/dapps-category.html:6
-#: partials/dapps-category.html:7
-msgid "No applications matching your search criteria were found."
-msgstr ""
-
 #: partials/blockchain.html:35
 msgid "No blockchain"
 msgstr ""
@@ -665,10 +613,6 @@ msgstr ""
 
 #: partials/template.html:251
 msgid "On"
-msgstr ""
-
-#: partials/dapp-entry.html:39
-msgid "OPEN"
 msgstr ""
 
 #: partials/modals/openDappModal.html:30
@@ -790,10 +734,6 @@ msgstr ""
 msgid "Rank"
 msgstr ""
 
-#: partials/dapp-entry.html:90
-msgid "READ MORE"
-msgstr ""
-
 #: js/controllers/transactionsController.js:64
 #: js/controllers/walletPendingsController.js:45
 #: js/controllers/walletsController.js:146
@@ -846,6 +786,25 @@ msgstr ""
 msgid "Reward"
 msgstr ""
 
+#: wallet.html:22
+msgid "Rise - Blockchain Application Platform"
+msgstr ""
+
+#: js/controllers/delegatesController.js:158
+#: js/controllers/votedDelegatesController.js:117
+#: js/controllers/walletPendingsController.js:43
+#: partials/modals/multisignatureModal.html:52
+msgid "Rise Address"
+msgstr ""
+
+#: partials/account.html:33
+msgid "Rise Client"
+msgstr ""
+
+#: partials/account.html:43
+msgid "Rise Client Outdated"
+msgstr ""
+
 #: partials/modals/newUser.html:36
 #: partials/modals/secondPassphraseModal.html:40
 msgid "SAVE PASSPHRASE"
@@ -880,18 +839,18 @@ msgstr ""
 msgid "SEND"
 msgstr ""
 
-#: partials/modals/sendTransaction.html:119
-#: partials/modals/sendTransaction.html:49
-#: partials/modals/sendTransaction.html:84
-msgid "send lisk"
-msgstr ""
-
 #: partials/delegates.html:120
 #: partials/delegates.html:51
 #: partials/modals/sendTransaction.html:13
 #: partials/modals/userInfo.html:28
 #: partials/votes.html:49
 msgid "Send LSK"
+msgstr ""
+
+#: partials/modals/sendTransaction.html:119
+#: partials/modals/sendTransaction.html:49
+#: partials/modals/sendTransaction.html:84
+msgid "send rise"
 msgstr ""
 
 #: js/controllers/transactionsController.js:63
@@ -922,13 +881,6 @@ msgstr ""
 
 #: partials/passphrase.html:27
 msgid "SIGN IN"
-msgstr ""
-
-#: partials/dapp-entry.html:25
-#: partials/dapp-entry.html:34
-#: partials/dapp-entry.html:43
-#: partials/dapp-entry.html:50
-msgid "SOURCE CODE"
 msgstr ""
 
 #: partials/delegates.html:92
@@ -985,16 +937,16 @@ msgstr ""
 msgid "Summary"
 msgstr ""
 
-#: partials/modals/openDappModal.html:19
-msgid "The Lisk apps platform currently does not provide any protection against any unauthorized system calls made from the running application. Therefore opening any untrusted applications is not yet advisable, and could potentially lead to loss of funds."
-msgstr ""
-
 #: partials/modals/masterPassphraseModal.html:30
-msgid "The master passphrase is auto-generated upon first launching the Lisk client. It can be found at the end of the config.json file. Therefore only node operators can install, launch or uninstall applications. Once applications are in a launched state, anyone is free to open and use them."
+msgid "The master passphrase is auto-generated upon first launching the Rise client. It can be found at the end of the config.json file. Therefore only node operators can install, launch or uninstall applications. Once applications are in a launched state, anyone is free to open and use them."
 msgstr ""
 
 #: partials/modals/newUser.html:68
 msgid "The passphrase entered doesn't match with the one generated before. Please go back and generate a new one."
+msgstr ""
+
+#: partials/modals/openDappModal.html:19
+msgid "The Rise apps platform currently does not provide any protection against any unauthorized system calls made from the running application. Therefore opening any untrusted applications is not yet advisable, and could potentially lead to loss of funds."
 msgstr ""
 
 #: partials/modals/secondPassphraseModal.html:72
@@ -1002,7 +954,7 @@ msgid "The second passphrase entered doesn't match with the one generated before
 msgstr ""
 
 #: partials/modals/multisignatureModal.html:21
-msgid "This walkthrough will guide you through the necessary steps to create a multi-signature group. It's very important that you know what multi-signatures are, else you risk loosing your LSK balance.<br><br>A multi-signature group consists of N accounts, the one who created the group is the group owner. When the owner wants to make a transaction, M of N accounts within the group need to confirm it, otherwise the transaction will not be processed. The values M and N are specified in this walkthrough.<br><br><b>Things you need to know for the multi-signature group setup:</b><br><br>• The number of group members (N).<br>• The number of needed confirmations (M).<br>• The addresses of the Lisk accounts you want to add to the group."
+msgid "This walkthrough will guide you through the necessary steps to create a multi-signature group. It's very important that you know what multi-signatures are, else you risk loosing your LSK balance.<br><br>A multi-signature group consists of N accounts, the one who created the group is the group owner. When the owner wants to make a transaction, M of N accounts within the group need to confirm it, otherwise the transaction will not be processed. The values M and N are specified in this walkthrough.<br><br><b>Things you need to know for the multi-signature group setup:</b><br><br>• The number of group members (N).<br>• The number of needed confirmations (M).<br>• The addresses of the Rise accounts you want to add to the group."
 msgstr ""
 
 #: js/controllers/blockchainController.js:43
@@ -1067,10 +1019,6 @@ msgstr ""
 msgid "Transactions"
 msgstr ""
 
-#: partials/dapp-entry.html:56
-msgid "UNINSTALL"
-msgstr ""
-
 #: partials/account.html:46
 msgid "UPDATE"
 msgstr ""
@@ -1119,11 +1067,6 @@ msgstr ""
 
 #: partials/modals/vote.html:33
 msgid "You can select up to 33 delegates in one voting turn. Up to 101 delegates in total."
-msgstr ""
-
-#: partials/dapps.html:153
-#: partials/dapps.html:230
-msgid "You do not have any applications installed yet."
 msgstr ""
 
 #: partials/forging.html:106

@@ -25,7 +25,7 @@ module.exports = function (grunt) {
         nggettext_compile: {
             all: {
                 options: {
-                    module: 'liskApp'
+                    module: 'riseApp'
                 },
                 files: {
                     'static/js/translations.js': ['po/*.po']

@@ -64,9 +64,9 @@ msgid "Add a new application"
 msgstr "Nieuwe applicatie toevoegen"
 
 #: partials/modals/multisignatureModal.html:46
-msgid "Add group members by typing in their Lisk address and pressing enter."
+msgid "Add group members by typing in their Rise address and pressing enter."
 msgstr ""
-"Voeg groepsleden toe door hun Lisk adres in te geven en door op enter te "
+"Voeg groepsleden toe door hun Rise adres in te geven en door op enter te "
 "drukken."
 
 #: partials/modals/secondPassphraseModal.html:126
@@ -337,8 +337,8 @@ msgstr "FEE"
 #: partials/modals/registrationDelegateModal.html:23
 #: partials/modals/secondPassphraseModal.html:28
 #: partials/modals/sendTransaction.html:31 partials/modals/vote.html:25
-msgid "Fee: {{fee | liskFilter}} LSK"
-msgstr "Fee: {{fee | liskFilter}} LSK"
+msgid "Fee: {{fee | riseFilter}} LSK"
+msgstr "Fee: {{fee | riseFilter}} LSK"
 
 #: partials/forging.html:74
 msgid "Forged Blocks"
@@ -455,23 +455,23 @@ msgid "LAUNCH"
 msgstr "STARTEN"
 
 #: wallet.html:20
-msgid "Lisk - Blockchain Application Platform"
-msgstr "Lisk - Blockchain Applicatie Platform"
+msgid "Rise - Blockchain Application Platform"
+msgstr "Rise - Blockchain Applicatie Platform"
 
 #: js/controllers/delegatesController.js:158
 #: js/controllers/votedDelegatesController.js:117
 #: js/controllers/walletPendingsController.js:43
 #: partials/modals/multisignatureModal.html:52
-msgid "Lisk Address"
-msgstr "Lisk Adres"
+msgid "Rise Address"
+msgstr "Rise Adres"
 
 #: partials/account.html:33
-msgid "Lisk Client"
-msgstr "Lisk Cliënt"
+msgid "Rise Client"
+msgstr "Rise Cliënt"
 
 #: partials/account.html:43
-msgid "Lisk Client Outdated"
-msgstr "Lisk Cliënt Verouderd"
+msgid "Rise Client Outdated"
+msgstr "Rise Cliënt Verouderd"
 
 #: js/controllers/dappController.js:7
 #: js/controllers/dappsCategoryController.js:7
@@ -893,8 +893,8 @@ msgstr "VERZEND"
 #: partials/modals/sendTransaction.html:119
 #: partials/modals/sendTransaction.html:49
 #: partials/modals/sendTransaction.html:84
-msgid "send lisk"
-msgstr "stuur lisk"
+msgid "send rise"
+msgstr "stuur rise"
 
 #: partials/delegates.html:120 partials/delegates.html:51
 #: partials/modals/sendTransaction.html:13 partials/modals/userInfo.html:28
@@ -988,25 +988,25 @@ msgstr "Samenvatting"
 
 #: partials/modals/openDappModal.html:19
 msgid ""
-"The Lisk apps platform currently does not provide any protection against any "
+"The Rise apps platform currently does not provide any protection against any "
 "unauthorized system calls made from the running application. Therefore "
 "opening any untrusted applications is not yet advisable, and could "
 "potentially lead to loss of funds."
 msgstr ""
-"Het Lisk applicatie platform biedt momenteel nog geen ondersteuning tegen "
+"Het Rise applicatie platform biedt momenteel nog geen ondersteuning tegen "
 "niet geauthorizeerde system calls van de lopende applicatie. Hierdoor "
 "adviseren wij om niet-vertrouwde applicaties niet te openen, deze kunnen "
 "leiden tot het verlies van uw balans."
 
 #: partials/modals/masterPassphraseModal.html:30
 msgid ""
-"The master passphrase is auto-generated upon first launching the Lisk "
+"The master passphrase is auto-generated upon first launching the Rise "
 "client. It can be found at the end of the config.json file. Therefore only "
 "node operators can install, launch or uninstall applications. Once "
 "applications are in a launched state, anyone is free to open and use them."
 msgstr ""
 "De master wachtwoordzin is automatisch gegenereerd bij het eerst opstarten van "
-"de Lisk cliënt. Deze kan worden teruggevonden op het einde van het config."
+"de Rise cliënt. Deze kan worden teruggevonden op het einde van het config."
 "json bestand. Hierdoor kunnen enkel node operatoren een applicatie "
 "installeren, opstaren of verijwderen. Eens dat applicaties in hun draaiende "
 "staat zijn, is iedereen vrij om deze te openen en te gebruiken."
@@ -1038,7 +1038,7 @@ msgid ""
 "processed. The values M and N are specified in this walkthrough."
 "<br><br><b>Things you need to know for the multi-signature group setup:</"
 "b><br><br>• The number of group members (N).<br>• The number of needed "
-"confirmations (M).<br>• The addresses of the Lisk accounts you want to add "
+"confirmations (M).<br>• The addresses of the Rise accounts you want to add "
 "to the group."
 msgstr ""
 "Deze walkthrough zal u gidsen door de nodige stappen om een multi-signature "
@@ -1051,7 +1051,7 @@ msgstr ""
 "worden gespecifieerd doorheen deze walkthrough.<br><br><b>Dingen die u moet "
 "weten voor de multi-signature groep op te zetten:</b><br><br>• Het aantal "
 "groepsleden (N).<br>• Het aantal benodigde bevestigingen (M).<br>• De "
-"adressen van de Lisk profielen die u aan de groep wil toevoegen."
+"adressen van de Rise profielen die u aan de groep wil toevoegen."
 
 #: js/controllers/blockchainController.js:43
 #: js/controllers/forgingController.js:116
@@ -1222,13 +1222,13 @@ msgstr "Uw Tweede Wachtwoordzin"
 #~ "Becoming a delegate requires registration. You may choose your own "
 #~ "delegate name, which can be used to promote your delegate. Only the top "
 #~ "101 delegates are eligible to forge. All fees are shared equally between "
-#~ "the top 101 delegates. Registration costs: {{fee | liskFilter}} LISK."
+#~ "the top 101 delegates. Registration costs: {{fee | riseFilter}} RISE."
 #~ msgstr ""
 #~ "Om een delegate te worden is registratie vereist. U mag uw eigen "
 #~ "afgevaardigde naam kiezen die kan worden gebruikt om uw afgevaardigde te "
 #~ "promoten. Enkel de top 101 afgevaardigden komen in aanmerking om te "
 #~ "forgen. Alle verheffingen (fees) worden verdeeld tussen de top 101 "
-#~ "afgevaardigden. Registratie kosten: {{fee | liskFilter}} LISK."
+#~ "afgevaardigden. Registratie kosten: {{fee | riseFilter}} RISE."
 
 #~ msgid "Dapp Store"
 #~ msgstr "Dapp Store"
@@ -1236,13 +1236,13 @@ msgstr "Uw Tweede Wachtwoordzin"
 #~ msgid ""
 #~ "Further protect your account with an optional second passphrase! Please "
 #~ "allow some time for the changes to take effect. Service cost: <b>{{fee | "
-#~ "liskFilter}} LISK</b>. Your balance: <b>{{totalBalance | liskFilter}} "
-#~ "LISK</b>."
+#~ "riseFilter}} RISE</b>. Your balance: <b>{{totalBalance | riseFilter}} "
+#~ "RISE</b>."
 #~ msgstr ""
 #~ "U kan uw account beter beveiligen met een optionele tweede wachtwoordzin! "
 #~ "Het kan even duren voordat de veranderingen zijn verwerkt. "
-#~ "Kosten van deze dienst: <b>{{fee | liskFilter}} LISK</b>. Uw balans: "
-#~ "<b>{{totalBalance | liskFilter}} LISK</b>."
+#~ "Kosten van deze dienst: <b>{{fee | riseFilter}} RISE</b>. Uw balans: "
+#~ "<b>{{totalBalance | riseFilter}} RISE</b>."
 
 #~ msgid "GET STARTED"
 #~ msgstr "BEGINNEN"
@@ -1253,14 +1253,14 @@ msgstr "Uw Tweede Wachtwoordzin"
 #~ msgid "Installed Dapps"
 #~ msgstr "Geïnstalleerde Dapps"
 
-#~ msgid "Lisk - Decentralized Application Platform"
-#~ msgstr "Lisk - Gedecentraliseerde Applicaties Platform"
+#~ msgid "Rise - Decentralized Application Platform"
+#~ msgstr "Rise - Gedecentraliseerde Applicaties Platform"
 
-#~ msgid "LISK Amount"
-#~ msgstr "Aantal LISK"
+#~ msgid "RISE Amount"
+#~ msgstr "Aantal RISE"
 
-#~ msgid "LISK Earned"
-#~ msgstr "Lisk Verdiend"
+#~ msgid "RISE Earned"
+#~ msgstr "Rise Verdiend"
 
 #~ msgid "Loading dapp"
 #~ msgstr "Dapp aan het laden"
@@ -1279,11 +1279,11 @@ msgstr "Uw Tweede Wachtwoordzin"
 
 #~ msgid ""
 #~ "Please check your input below and go back if necessary. Double-check the "
-#~ "group members, else you risk losing your LISK balance!"
+#~ "group members, else you risk losing your RISE balance!"
 #~ msgstr ""
 #~ "Controleer alstublieft onderstaande invoer en ga terug indien nodig. "
 #~ "controleer degroepsleden dubbel, anders loop je het risico "
-#~ "om je LISK balans te verliezen!"
+#~ "om je RISE balans te verliezen!"
 
 #~ msgid "Saving new dapp"
 #~ msgstr "Nieuwe dapp aan het opslaan"
@@ -1291,11 +1291,11 @@ msgstr "Uw Tweede Wachtwoordzin"
 #~ msgid "Search for Dapps"
 #~ msgstr "Zoeken naar Dapps"
 
-#~ msgid "Send LISK"
-#~ msgstr "Verzend LISK"
+#~ msgid "Send RISE"
+#~ msgstr "Verzend RISE"
 
-#~ msgid "SEND LISK"
-#~ msgstr "VERZEND LISK"
+#~ msgid "SEND RISE"
+#~ msgstr "VERZEND RISE"
 
 #~ msgid "This action will cost"
 #~ msgstr "Deze actie zal kosten"

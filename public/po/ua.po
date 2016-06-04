@@ -64,7 +64,7 @@ msgid "Add a new application"
 msgstr "Додати новий додаток"
 
 #: partials/modals/multisignatureModal.html:46
-msgid "Add group members by typing in their Lisk address and pressing enter."
+msgid "Add group members by typing in their Rise address and pressing enter."
 msgstr "Щоб додати членів групи введіть їх адресу та натисніть кнопку ENTER."
 
 #: partials/modals/secondPassphraseModal.html:126
@@ -335,8 +335,8 @@ msgstr "ВИНАГОРОДA"
 #: partials/modals/registrationDelegateModal.html:23
 #: partials/modals/secondPassphraseModal.html:28
 #: partials/modals/sendTransaction.html:31 partials/modals/vote.html:25
-msgid "Fee: {{fee | liskFilter}} LSK"
-msgstr "Винагорода: {{fee | liskFilter}} LSK"
+msgid "Fee: {{fee | riseFilter}} LSK"
+msgstr "Винагорода: {{fee | riseFilter}} LSK"
 
 #: partials/forging.html:74
 msgid "Forged Blocks"
@@ -452,23 +452,23 @@ msgid "LAUNCH"
 msgstr "ЗАПУСТИТИ"
 
 #: wallet.html:20
-msgid "Lisk - Blockchain Application Platform"
-msgstr "Lisk - платформа для Blockchain додатків"
+msgid "Rise - Blockchain Application Platform"
+msgstr "Rise - платформа для Blockchain додатків"
 
 #: js/controllers/delegatesController.js:158
 #: js/controllers/votedDelegatesController.js:117
 #: js/controllers/walletPendingsController.js:43
 #: partials/modals/multisignatureModal.html:52
-msgid "Lisk Address"
-msgstr "Lisk Адреса"
+msgid "Rise Address"
+msgstr "Rise Адреса"
 
 #: partials/account.html:33
-msgid "Lisk Client"
-msgstr "Lisk Клієнт"
+msgid "Rise Client"
+msgstr "Rise Клієнт"
 
 #: partials/account.html:43
-msgid "Lisk Client Outdated"
-msgstr "Версія Lisk Клієнта застаріла"
+msgid "Rise Client Outdated"
+msgstr "Версія Rise Клієнта застаріла"
 
 #: js/controllers/dappController.js:7
 #: js/controllers/dappsCategoryController.js:7
@@ -892,8 +892,8 @@ msgstr "ВІДПРАВИТИ"
 #: partials/modals/sendTransaction.html:119
 #: partials/modals/sendTransaction.html:49
 #: partials/modals/sendTransaction.html:84
-msgid "send lisk"
-msgstr "відправити lisk"
+msgid "send rise"
+msgstr "відправити rise"
 
 #: partials/delegates.html:120 partials/delegates.html:51
 #: partials/modals/sendTransaction.html:13 partials/modals/userInfo.html:28
@@ -987,24 +987,24 @@ msgstr "Підсумок"
 
 #: partials/modals/openDappModal.html:19
 msgid ""
-"The Lisk apps platform currently does not provide any protection against any "
+"The Rise apps platform currently does not provide any protection against any "
 "unauthorized system calls made from the running application. Therefore "
 "opening any untrusted applications is not yet advisable, and could "
 "potentially lead to loss of funds."
 msgstr ""
-"Платформа додатків Lisk в даний час не забезпечує захист від будь-яких "
+"Платформа додатків Rise в даний час не забезпечує захист від будь-яких "
 "несанкціонованих системних викликів, зроблених з запущеного додатку. Тому "
 "відкриття будь-яких ненадійних додатків ще не рекомендується, і потенційно "
 "може призвести до втрати коштів."
 
 #: partials/modals/masterPassphraseModal.html:30
 msgid ""
-"The master passphrase is auto-generated upon first launching the Lisk "
+"The master passphrase is auto-generated upon first launching the Rise "
 "client. It can be found at the end of the config.json file. Therefore only "
 "node operators can install, launch or uninstall applications. Once "
 "applications are in a launched state, anyone is free to open and use them."
 msgstr ""
-"Майстер пароль генерується автоматично при першому запуску клієнта Lisk. "
+"Майстер пароль генерується автоматично при першому запуску клієнта Rise. "
 "Його можна знайти в кінці файлу config.json. Тому тільки оператори вузлів "
 "можуть встановлювати, запускати або видаляти додатки. Після того, як додатки "
 "знаходяться в запущеному стані, будь-хто може вільно відкривати і "
@@ -1037,7 +1037,7 @@ msgid ""
 "processed. The values M and N are specified in this walkthrough."
 "<br><br><b>Things you need to know for the multi-signature group setup:</"
 "b><br><br>• The number of group members (N).<br>• The number of needed "
-"confirmations (M).<br>• The addresses of the Lisk accounts you want to add "
+"confirmations (M).<br>• The addresses of the Rise accounts you want to add "
 "to the group."
 msgstr ""
 "Цей покроковий посібник проведе вас через необхідні кроки для створення "
@@ -1048,7 +1048,7 @@ msgstr ""
 "підтвердити його, в іншому випадку угода не буде оброблятися. Значення М та "
 "N вказані в цьому посібнику <br><br><b>Речі, які потрібно знати для "
 "установки групи з мульти-підписом:</b><br><br>• Число членів групи (N).<br>• "
-"Кількість необхідних підтверджень (М).<br>• Адреси рахунків Lisk які ви "
+"Кількість необхідних підтверджень (М).<br>• Адреси рахунків Rise які ви "
 "хочете додати до групи."
 
 #: js/controllers/blockchainController.js:43
@@ -1219,14 +1219,14 @@ msgstr "Ваш другий пароль"
 #~ "Becoming a delegate requires registration. You may choose your own "
 #~ "delegate name, which can be used to promote your delegate. Only the top "
 #~ "101 delegates are eligible to forge. All fees are shared equally between "
-#~ "the top 101 delegates. Registration costs: {{fee | liskFilter}} LISK."
+#~ "the top 101 delegates. Registration costs: {{fee | riseFilter}} RISE."
 #~ msgstr ""
 #~ "Необхідна реєстрація, щоб стати делегатом. Ви можете вибрати ім'я для "
 #~ "делегата, яке можна буде використовувати для просування вашого делегата. "
 #~ "Винагорода за форджінг отримують ті хто перебувають в списку 101 кращий "
 #~ "делегат. Всі винагороди діляться порівну між учасниками знаходяться в "
 #~ "списку 101 кращий делегат.\n"
-#~ "Вартість реєстрації: {{fee | liskFilter}} LISK."
+#~ "Вартість реєстрації: {{fee | riseFilter}} RISE."
 
 #~ msgid "Dapp Store"
 #~ msgstr "Dapp Магазин"
@@ -1234,13 +1234,13 @@ msgstr "Ваш другий пароль"
 #~ msgid ""
 #~ "Further protect your account with an optional second passphrase! Please "
 #~ "allow some time for the changes to take effect. Service cost: <b>{{fee | "
-#~ "liskFilter}} LISK</b>. Your balance: <b>{{totalBalance | liskFilter}} "
-#~ "LISK</b>."
+#~ "riseFilter}} RISE</b>. Your balance: <b>{{totalBalance | riseFilter}} "
+#~ "RISE</b>."
 #~ msgstr ""
 #~ "Посилити захист вашого облікового запису за допомогою другого пароля! "
 #~ "Будь ласка врахуйте, що потрібен певний час для вступу змін в силу.\n"
-#~ "Вартість: <b>{{fee | liskFilter}} LISK</b>. Ваш баланс: <b>{{totalBalance "
-#~ "| liskFilter}} LISK</b>."
+#~ "Вартість: <b>{{fee | riseFilter}} RISE</b>. Ваш баланс: <b>{{totalBalance "
+#~ "| riseFilter}} RISE</b>."
 
 #~ msgid "GET STARTED"
 #~ msgstr "ПОЧАТИ"
@@ -1251,14 +1251,14 @@ msgstr "Ваш другий пароль"
 #~ msgid "Installed Dapps"
 #~ msgstr "Встановлені Dapp"
 
-#~ msgid "Lisk - Decentralized Application Platform"
-#~ msgstr "Lisk - Платформа для децентралізованих додатків"
+#~ msgid "Rise - Decentralized Application Platform"
+#~ msgstr "Rise - Платформа для децентралізованих додатків"
 
-#~ msgid "LISK Amount"
-#~ msgstr "Кількість LISK"
+#~ msgid "RISE Amount"
+#~ msgstr "Кількість RISE"
 
-#~ msgid "LISK Earned"
-#~ msgstr "Зароблено LISK"
+#~ msgid "RISE Earned"
+#~ msgstr "Зароблено RISE"
 
 #~ msgid "Loading dapp"
 #~ msgstr "Завантаження dapp"
@@ -1278,11 +1278,11 @@ msgstr "Ваш другий пароль"
 
 #~ msgid ""
 #~ "Please check your input below and go back if necessary. Double-check the "
-#~ "group members, else you risk losing your LISK balance!"
+#~ "group members, else you risk losing your RISE balance!"
 #~ msgstr ""
 #~ "Будь ласка перевірте введені дані і при необхідності поверніться назад. "
 #~ "Двічі перевірте членів групи, в іншому випадку ви ризикуєте втратити всі "
-#~ "ваші LISK."
+#~ "ваші RISE."
 
 #~ msgid "Saving new dapp"
 #~ msgstr "Збереження нового  dapp"
@@ -1290,11 +1290,11 @@ msgstr "Ваш другий пароль"
 #~ msgid "Search for Dapps"
 #~ msgstr "Пошук Dapp"
 
-#~ msgid "Send LISK"
-#~ msgstr "Відправити LISK"
+#~ msgid "Send RISE"
+#~ msgstr "Відправити RISE"
 
-#~ msgid "SEND LISK"
-#~ msgstr "ВІДПРАВИТИ LISK"
+#~ msgid "SEND RISE"
+#~ msgstr "ВІДПРАВИТИ RISE"
 
 #~ msgid "This action will cost"
 #~ msgstr "Вартість даної дії"

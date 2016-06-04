@@ -1,14 +1,14 @@
 require('angular');
 var compareVersion = require('../../node_modules/compare-version/index.js');
 
-angular.module('liskApp').controller('appController', ['dappsService', '$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", 'viewFactory', '$state', 'blockService', 'sendTransactionModal', 'registrationDelegateModal', 'serverSocket', 'delegateService', '$window', 'forgingModal', 'errorModal', 'userInfo', 'transactionsService', 'secondPassphraseModal', 'focusFactory', 'gettextCatalog', function (dappsService, $rootScope, $scope, $http, userService, $interval, $timeout, viewFactory, $state, blockService, sendTransactionModal, registrationDelegateModal, serverSocket, delegateService, $window, forgingModal, errorModal, userInfo, transactionsService, secondPassphraseModal, focusFactory, gettextCatalog) {
+angular.module('riseApp').controller('appController', ['dappsService', '$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", 'viewFactory', '$state', 'blockService', 'sendTransactionModal', 'registrationDelegateModal', 'serverSocket', 'delegateService', '$window', 'forgingModal', 'errorModal', 'userInfo', 'transactionsService', 'secondPassphraseModal', 'focusFactory', 'gettextCatalog', function (dappsService, $rootScope, $scope, $http, userService, $interval, $timeout, viewFactory, $state, blockService, sendTransactionModal, registrationDelegateModal, serverSocket, delegateService, $window, forgingModal, errorModal, userInfo, transactionsService, secondPassphraseModal, focusFactory, gettextCatalog) {
 
     $scope.searchTransactions = transactionsService;
     $scope.searchDapp = dappsService;
     $scope.searchBlocks = blockService;
     $scope.toggled = false;
     $scope.rememberedPassphrase = userService.rememberPassphrase ? userService.rememberedPassphrase : false;
-    $scope.lisk_usd = 0;
+    $scope.rise_usd = 0;
     $scope.version = 'version load';
     $scope.diffVersion = 0;
     $scope.subForgingCollapsed = true;
@@ -106,11 +106,11 @@ angular.module('liskApp').controller('appController', ['dappsService', '$scope',
     ];
 
     $scope.getPriceTicker = function () {
-        $http.get("https://explorer.lisk.io/api/getPriceTicker")
+        $http.get("https://explorer.rise.io/api/getPriceTicker")
             .then(function (response) {
                 $scope.btc_usd = response.data.btc_usd;
-                $scope.lisk_btc = response.data.lisk_btc;
-                $scope.lisk_usd = response.data.lisk_usd;
+                $scope.rise_btc = response.data.rise_btc;
+                $scope.rise_usd = response.data.rise_usd;
             });
     };
 
@@ -118,7 +118,7 @@ angular.module('liskApp').controller('appController', ['dappsService', '$scope',
         $http.get("/api/peers/version").then(function (response) {
             if (response.data.success) {
                 $scope.version = response.data.version;
-                $http.get("https://login.lisk.io/api/peers/version").then(function (response) {
+                $http.get("https://login.rise.io/api/peers/version").then(function (response) {
                     $scope.latest = response.data.version;
                     $scope.diffVersion = compareVersion($scope.version, $scope.latest);
                 });
@@ -129,8 +129,8 @@ angular.module('liskApp').controller('appController', ['dappsService', '$scope',
         });
     };
 
-    $scope.convertToUSD = function (lisk) {
-        return (lisk / 100000000) * $scope.lisk_usd;
+    $scope.convertToUSD = function (rise) {
+        return (rise / 100000000) * $scope.rise_usd;
     };
 
     $scope.clearSearch = function () {

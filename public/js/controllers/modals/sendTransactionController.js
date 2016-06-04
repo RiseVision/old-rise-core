@@ -1,6 +1,6 @@
 require('angular');
 
-angular.module('liskApp').controller('sendTransactionController', ['$scope', 'sendTransactionModal', '$http', 'userService', 'feeService', '$timeout', '$filter', function ($scope, sendTransactionModal, $http, userService, feeService, $timeout, $filter) {
+angular.module('riseApp').controller('sendTransactionController', ['$scope', 'sendTransactionModal', '$http', 'userService', 'feeService', '$timeout', '$filter', function ($scope, sendTransactionModal, $http, userService, feeService, $timeout, $filter) {
 
     $scope.sending = false;
     $scope.passmode = false;
@@ -178,7 +178,7 @@ angular.module('liskApp').controller('sendTransactionController', ['$scope', 'se
         return parseInt(result);
     }
 
-    $scope.convertLISK = function (currency) {
+    $scope.convertRISE = function (currency) {
         return $scope.isCorrectValue(currency, true);
     }
 
@@ -202,7 +202,7 @@ angular.module('liskApp').controller('sendTransactionController', ['$scope', 'se
 
         var data = {
             secret: secretPhrase,
-            amount: $scope.convertLISK($scope.amount),
+            amount: $scope.convertRISE($scope.amount),
             recipientId: $scope.to,
             publicKey: userService.publicKey
         };

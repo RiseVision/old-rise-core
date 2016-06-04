@@ -1,6 +1,6 @@
 require('angular');
 
-angular.module('liskApp').controller('newUserController', ["$scope", "$http", "newUser", "userService", "$state", "viewFactory", 'gettextCatalog', function ($scope, $http, newUser, userService, $state, viewFactory, gettextCatalog) {
+angular.module('riseApp').controller('newUserController', ["$scope", "$http", "newUser", "userService", "$state", "viewFactory", 'gettextCatalog', function ($scope, $http, newUser, userService, $state, viewFactory, gettextCatalog) {
 
     $scope.step = 1;
     $scope.noMatch = false;
@@ -27,7 +27,7 @@ angular.module('liskApp').controller('newUserController', ["$scope", "$http", "n
 
     $scope.savePassToFile = function (pass) {
         var blob = new Blob([pass], { type: "text/plain;charset=utf-8" });
-        FS.saveAs(blob, "LiskPassphrase.txt");
+        FS.saveAs(blob, "RisePassphrase.txt");
     }
 
     $scope.login = function (pass) {

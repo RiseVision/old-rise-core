@@ -1,6 +1,6 @@
 require('angular');
 
-angular.module('liskApp').service('languageService', function ($rootScope, $window, gettextCatalog) {
+angular.module('riseApp').service('languageService', function ($rootScope, $window, gettextCatalog) {
 
     $rootScope.languages = [
         { id: 'en', name: 'English' },

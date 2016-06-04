@@ -1,6 +1,6 @@
 require('angular');
 
-angular.module('liskApp').controller('forgingPanelController', ['$scope', '$http', function ($scope, $http) {
+angular.module('riseApp').controller('forgingPanelController', ['$scope', '$http', function ($scope, $http) {
 
     $scope.buttonType = "submit";
 

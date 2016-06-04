@@ -1,6 +1,6 @@
 require('angular');
 
-angular.module('liskApp').filter('feeFilter', function () {
+angular.module('riseApp').filter('feeFilter', function () {
     return function (fee) {
         if (!fee) {
             return 0;

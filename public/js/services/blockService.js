@@ -1,6 +1,6 @@
 require('angular');
 
-angular.module('liskApp').service('blockService', function ($http) {
+angular.module('riseApp').service('blockService', function ($http) {
 
     var blocks = {
         lastBlockId: null,

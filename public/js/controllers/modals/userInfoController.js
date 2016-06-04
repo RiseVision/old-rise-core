@@ -1,6 +1,6 @@
 require('angular');
 
-angular.module('liskApp').controller('userInfoController', ["$scope", "$http", "userInfo", "userService","sendTransactionModal", function ($scope, $http, userInfo, userService, sendTransactionModal) {
+angular.module('riseApp').controller('userInfoController', ["$scope", "$http", "userInfo", "userService","sendTransactionModal", function ($scope, $http, userInfo, userService, sendTransactionModal) {
 
     $scope.userIdOld = '';
     $scope.thisUser = userService;

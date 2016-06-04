@@ -1,6 +1,6 @@
 require('angular');
 
-angular.module('liskApp').controller('dappsCategoryController', ['$scope', 'viewFactory', '$http', '$stateParams', 'dappsService', '$timeout', 'gettextCatalog', function ($scope, viewFactory, $http, $stateParams, dappsService, $timeout, gettextCatalog) {
+angular.module('riseApp').controller('dappsCategoryController', ['$scope', 'viewFactory', '$http', '$stateParams', 'dappsService', '$timeout', 'gettextCatalog', function ($scope, viewFactory, $http, $stateParams, dappsService, $timeout, gettextCatalog) {
 
     $scope.view = viewFactory;
     $scope.view.inLoading = true;

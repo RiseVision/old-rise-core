@@ -1,5 +1,5 @@
 require('angular');
-angular.module('liskApp').directive('targetBlank', function () {
+angular.module('riseApp').directive('targetBlank', function () {
     return {
         compile: function (element) {
             var elems = (element.prop("tagName") === 'A') ? element : element.find('a');

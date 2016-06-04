@@ -1,6 +1,6 @@
 require('angular');
 
-angular.module('liskApp').controller('openDappModalController', ["$scope", "openDappModal", 'gettextCatalog', function ($scope, openDappModal, gettextCatalog) {
+angular.module('riseApp').controller('openDappModalController', ["$scope", "openDappModal", 'gettextCatalog', function ($scope, openDappModal, gettextCatalog) {
 
     $scope.close = function (openAnyway) {
         if ($scope.destroy) {

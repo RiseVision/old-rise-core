@@ -2,7 +2,7 @@
 <div class="row">
   <div class="col-md-6 col-sm-12 col-xs-12">
     <div class="panel widget widget-brown">
-      <div class="lisk-icon"></div>
+      <div class="rise-icon"></div>
       <div class="panel-body">
         <div class="wg-label">
           {{'Balance'|translate}}
@@ -30,7 +30,7 @@
     <div class="panel  widget widget-brown" ng-show="diffVersion!=-1">
       <div class="panel-body">
         <div class="wg-label">
-          {{'Lisk Client'|translate}}
+          {{'Rise Client'|translate}}
         </div>
         <div class="wg-data version">
           <span class="strong">v{{version}}</span><span class="wg-legend"><translate>Latest version</translate></span>
@@ -40,10 +40,10 @@
     <div class="panel  widget widget-red" ng-show="diffVersion==-1">
       <div class="panel-body">
         <div class="wg-label">
-          <translate>Lisk Client Outdated</translate>
+          <translate>Rise Client Outdated</translate>
         </div>
         <div class="wg-data version">
-          <span class="strong">v{{version}}</span> <a href="https://lisk.io/download" target="_blank" class="btn btn-white waves-effect pull-right"><translate>UPDATE</translate></a>
+          <span class="strong">v{{version}}</span> <a href="https://rise.io/download" target="_blank" class="btn btn-white waves-effect pull-right"><translate>UPDATE</translate></a>
         </div>
       </div>
     </div>
@@ -98,7 +98,7 @@
             <td>
               <i ng-if="transaction.recipientId==transaction.senderId" class="vertical-text mdi-image-brightness-1 cloud-font"></i>
               <i ng-if="transaction.recipientId!=transaction.senderId" class="vertical-text" ng-class="{'mdi-content-add-circle dark-meent-font': transaction.recipientId==address, 'mdi-content-remove-circle dark-red-font': transaction.senderId==address}"></i>
-              {{transaction.amount | liskFilter}} ({{transaction.fee | liskFilter}})
+              {{transaction.amount | riseFilter}} ({{transaction.fee | riseFilter}})
             </td>
           </tr>
         </tbody>
@@ -120,7 +120,7 @@
         Return when you have forged at least 100 LSK
       </div>
       <div class="light-graph-body">
-        <canvas id="line" class="chart chart-line" chart-data="graphs.liskPrice.data" chart-colours="graphs.liskPrice.colours" chart-labels="graphs.liskPrice.labels" chart-legend="false" chart-series="graphs.liskPrice.series" chart-options="graphs.liskPrice.options"></canvas>
+        <canvas id="line" class="chart chart-line" chart-data="graphs.risePrice.data" chart-colours="graphs.risePrice.colours" chart-labels="graphs.risePrice.labels" chart-legend="false" chart-series="graphs.risePrice.series" chart-options="graphs.risePrice.options"></canvas>
       </div>
       <div class="light-graph-footer">
         <div class="row">

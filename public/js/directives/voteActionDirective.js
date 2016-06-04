@@ -1,6 +1,6 @@
 require('angular');
 
-angular.module('liskApp').directive('voteAction', function (gettextCatalog) {
+angular.module('riseApp').directive('voteAction', function (gettextCatalog) {
     return {
         restrict: 'A',
         scope: {

@@ -1,6 +1,6 @@
 require('angular');
 
-angular.module('liskApp').controller('secondPassphraseModalController', ["$scope", "secondPassphraseModal", "$http", "userService", "feeService", function ($scope, secondPassphraseModal, $http, userService, feeService) {
+angular.module('riseApp').controller('secondPassphraseModalController', ["$scope", "secondPassphraseModal", "$http", "userService", "feeService", function ($scope, secondPassphraseModal, $http, userService, feeService) {
 
     $scope.sending = false;
     $scope.rememberedPassphrase = userService.rememberPassphrase ? userService.rememberedPassphrase : false;
@@ -31,7 +31,7 @@ angular.module('liskApp').controller('secondPassphraseModalController', ["$scope
 
     $scope.savePassToFile = function (pass) {
         var blob = new Blob([pass], { type: "text/plain;charset=utf-8" });
-        FS.saveAs(blob, "LiskSecondPassphrase.txt");
+        FS.saveAs(blob, "RiseSecondPassphrase.txt");
     }
 
     $scope.confirmNewPassphrase = function () {

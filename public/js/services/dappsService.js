@@ -1,6 +1,6 @@
 require('angular');
 
-angular.module('liskApp').service('dappsService', function () {
+angular.module('riseApp').service('dappsService', function () {
 
     var dapp = {
         searchForDapp: '',

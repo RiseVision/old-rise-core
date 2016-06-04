@@ -1,5 +1,5 @@
 require('angular');
-angular.module('liskApp').directive('eatClickIf', ['$parse', '$rootScope',
+angular.module('riseApp').directive('eatClickIf', ['$parse', '$rootScope',
     function ($parse, $rootScope) {
         return {
             // This ensures eatClickIf is compiled before ngClick

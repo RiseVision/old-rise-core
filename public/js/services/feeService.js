@@ -1,6 +1,6 @@
 require('angular');
 
-angular.module('liskApp').service('feeService', function ($http) {
+angular.module('riseApp').service('feeService', function ($http) {
 
     return function (cb) {
         $http.get('/api/blocks/getFees').then(function (response) {

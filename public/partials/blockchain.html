@@ -25,9 +25,9 @@
                     <td data-title="tableBlocks.cols.generator" ng-show="showAllColumns"><a href="#" ng-click="userInfo(block.generatorId)">{{block.generatorId}}</a></td>
                     <td data-title="tableBlocks.cols.timestamp" sortable="'timestamp'"><span ng-show="block.timestamp > 0">{{block.timestamp | timeAgoFilter : showFullTime}}</span> <span ng-show="block.timestamp == 0">-</span></td>
                     <td data-title="tableBlocks.cols.numberOfTransactions" ng-click="showBlock(block)" class="pointer"><a href="#">{{block.numberOfTransactions}}</a></td>
-                    <td data-title="tableBlocks.cols.totalAmount" sortable="'totalAmount'">{{block.totalAmount  | liskFilter}}</td>
-                    <td data-title="tableBlocks.cols.totalFee" sortable="'totalFee'">{{block.totalFee  | liskFilter}}</td>
-                    <td data-title="tableBlocks.cols.reward" sortable="'reward'">{{block.reward | liskFilter}}</td>
+                    <td data-title="tableBlocks.cols.totalAmount" sortable="'totalAmount'">{{block.totalAmount  | riseFilter}}</td>
+                    <td data-title="tableBlocks.cols.totalFee" sortable="'totalFee'">{{block.totalFee  | riseFilter}}</td>
+                    <td data-title="tableBlocks.cols.reward" sortable="'reward'">{{block.reward | riseFilter}}</td>
                     <td data-title="''" class="width-80"></td>
                 </tr>
                 <tr ng-show="!loading && (!$data || $data.length == 0) && !searchBlocks.searchForBlock">

@@ -1,6 +1,6 @@
 require('angular');
 
-angular.module('liskApp').directive('validLink', function () {
+angular.module('riseApp').directive('validLink', function () {
     return {
         require: 'ngModel',
         restrict: 'A',

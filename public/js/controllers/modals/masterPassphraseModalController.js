@@ -1,6 +1,6 @@
 require('angular');
 
-angular.module('liskApp').controller('masterPassphraseModalController', ["$scope", "masterPassphraseModal", 'gettextCatalog', function ($scope, masterPassphraseModal, gettextCatalog) {
+angular.module('riseApp').controller('masterPassphraseModalController', ["$scope", "masterPassphraseModal", 'gettextCatalog', function ($scope, masterPassphraseModal, gettextCatalog) {
 
     $scope.masterPass = '';
     $scope.emptyPass = false;

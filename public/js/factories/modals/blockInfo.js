@@ -1,6 +1,6 @@
 require('angular');
 
-angular.module('liskApp').factory('blockInfo', function (btfModal) {
+angular.module('riseApp').factory('blockInfo', function (btfModal) {
     return btfModal({
         controller: 'blockInfoController',
         templateUrl: '/partials/modals/blockInfo.html'

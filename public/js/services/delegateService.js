@@ -1,6 +1,6 @@
 require('angular');
 
-angular.module('liskApp').service('delegateService', function ($http, $filter, $q) {
+angular.module('riseApp').service('delegateService', function ($http, $filter, $q) {
 
     function filterData(data, filter) {
         return $filter('filter')(data, filter);

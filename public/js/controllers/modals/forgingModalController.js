@@ -1,6 +1,6 @@
 require('angular');
 
-angular.module('liskApp').controller('forgingModalController', ["$scope", "forgingModal", "$http", "userService", 'gettextCatalog', function ($scope, forgingModal, $http, userService, gettextCatalog) {
+angular.module('riseApp').controller('forgingModalController', ["$scope", "forgingModal", "$http", "userService", 'gettextCatalog', function ($scope, forgingModal, $http, userService, gettextCatalog) {
 
     $scope.error = null;
     $scope.sending = false;

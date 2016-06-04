@@ -52,8 +52,8 @@ msgid "Add as Contact"
 msgstr "Adauga la Contacte"
 
 #: partials/modals/multisignatureModal.html:46
-msgid "Add group members by typing in their LISK address and pressing enter."
-msgstr "Adauga membri in grup tastand adresa lor LISK si apasa tasta enter."
+msgid "Add group members by typing in their RISE address and pressing enter."
+msgstr "Adauga membri in grup tastand adresa lor RISE si apasa tasta enter."
 
 #: js/controllers/blockchainController.js:45
 #: js/controllers/transactionsController.js:66
@@ -87,7 +87,7 @@ msgid ""
 "Becoming a delegate requires registration. You may choose your own delegate "
 "name, which can be used to promote your delegate. Only the top 101 delegates "
 "are eligible to forge. All fees are shared equally between the top 101 "
-"delegates. Registration costs: {{fee | liskFilter}} LISK."
+"delegates. Registration costs: {{fee | riseFilter}} RISE."
 msgstr ""
 "Pentru a deveni delegat este necesar sa te inregistrezi. Vei putea sa iti "
 "alegi numele de delegat, care va fi folosit ulterior pentru a te promova ca "
@@ -313,12 +313,12 @@ msgstr "Forjare"
 msgid ""
 "Further protect your account with an optional second passphrase! Please "
 "allow some time for the changes to take effect. Service cost: <b>{{fee | "
-"liskFilter}} LISK</b>. Your balance: <b>{{totalBalance | liskFilter}} LISK</"
+"riseFilter}} RISE</b>. Your balance: <b>{{totalBalance | riseFilter}} RISE</"
 "b>."
 msgstr ""
 "Protejeza-ti contul cu un al doilea set de cuvinte cheie! Acest proces poate "
-"dura mai mult. Acesta optiune costa <b>{{fee | liskFilter}} LISK</b>. "
-"Disponibil in cont:  <b>{{totalBalance | liskFilter}} LISK</b>."
+"dura mai mult. Acesta optiune costa <b>{{fee | riseFilter}} RISE</b>. "
+"Disponibil in cont:  <b>{{totalBalance | riseFilter}} RISE</b>."
 
 #: partials/modals/newUser.html:67
 msgid "GET STARTED"
@@ -390,16 +390,16 @@ msgid "LAUNCH"
 msgstr "LANSARE"
 
 #: partials/modals/multisignatureModal.html:52
-msgid "LISK Address"
-msgstr "Adresa LISK"
+msgid "RISE Address"
+msgstr "Adresa RISE"
 
 #: partials/modals/sendTransaction.html:26
-msgid "LISK Amount"
-msgstr "Suma LISK"
+msgid "RISE Amount"
+msgstr "Suma RISE"
 
 #: partials/forging.html:11
-msgid "LISK Earned"
-msgstr "LISK Castigati"
+msgid "RISE Earned"
+msgstr "RISE Castigati"
 
 #: partials/settings.html:9
 msgid "Language"
@@ -418,22 +418,22 @@ msgid "Latest version"
 msgstr "Ultima versiune"
 
 #: wallet.html:20
-msgid "Lisk - Decentralized Application Platform"
-msgstr "Lisk - Platforma Aplicatiilor Descentralizate"
+msgid "Rise - Decentralized Application Platform"
+msgstr "Rise - Platforma Aplicatiilor Descentralizate"
 
 #: js/controllers/delegatesController.js:158
 #: js/controllers/votedDelegatesController.js:117
 #: js/controllers/walletPendingsController.js:43
-msgid "Lisk Address"
-msgstr "Adresa Lisk"
+msgid "Rise Address"
+msgstr "Adresa Rise"
 
 #: partials/account.html:33
-msgid "Lisk Client"
-msgstr "Client Lisk"
+msgid "Rise Client"
+msgstr "Client Rise"
 
 #: partials/account.html:43
-msgid "Lisk Client Outdated"
-msgstr "Clinet Lisk invechit"
+msgid "Rise Client Outdated"
+msgstr "Clinet Rise invechit"
 
 #: js/controllers/walletsController.js:7
 msgid "Loading Multi-Signature Groups"
@@ -489,10 +489,10 @@ msgstr ""
 
 #: partials/modals/sendTransaction.html:34
 msgid ""
-"Make sure you're sending LISK to the right address. This action can't be "
+"Make sure you're sending RISE to the right address. This action can't be "
 "undone later."
 msgstr ""
-"Asigura-te ca transferi LISK catre adresa care vrei sa primeasca transferul. "
+"Asigura-te ca transferi RISE catre adresa care vrei sa primeasca transferul. "
 "Aceasta actiune nu poate fi anulata."
 
 #: js/controllers/modals/masterPassphraseModalController.js:9
@@ -632,10 +632,10 @@ msgstr "Trazactii in asteptare"
 #: partials/modals/multisignatureModal.html:106
 msgid ""
 "Please check your input below and go back if necessary. Double-check the "
-"group members, else you risk losing your LISK balance!"
+"group members, else you risk losing your RISE balance!"
 msgstr ""
 "Te rugam sa verifici datele introduse si intorceti-va daca e cazul. "
-"Verificati de 2 ori membrii grupului, altfel riscati sa pierdeti LISK "
+"Verificati de 2 ori membrii grupului, altfel riscati sa pierdeti RISE "
 "disponibil"
 
 #: partials/modals/registrationDelegateModal.html:15
@@ -650,10 +650,10 @@ msgstr ""
 
 #: partials/modals/sendTransaction.html:15
 msgid ""
-"Please enter the Recipient Address and LISK Amount that you would like send "
+"Please enter the Recipient Address and RISE Amount that you would like send "
 "below."
 msgstr ""
-"Te rugam sa introduci mai jos adresa destinatarului si valoarea in LISK pe "
+"Te rugam sa introduci mai jos adresa destinatarului si valoarea in RISE pe "
 "care vrei sa ii transferi"
 
 #: js/controllers/modals/masterPassphraseModalController.js:8
@@ -782,8 +782,8 @@ msgid "SEND"
 msgstr "TRIMITE"
 
 #: partials/modals/addDappModal.html:130
-msgid "SEND LISK"
-msgstr "TRIMITE LISK"
+msgid "SEND RISE"
+msgstr "TRIMITE RISE"
 
 #: partials/passphrase.html:27
 msgid "SIGN IN"
@@ -819,8 +819,8 @@ msgstr "Al 2-lea rand de cuvinte ceheie"
 #: partials/delegates.html:120 partials/delegates.html:51
 #: partials/modals/sendTransaction.html:13 partials/modals/userInfo.html:28
 #: partials/votes.html:49
-msgid "Send LISK"
-msgstr "Trimite LISK"
+msgid "Send RISE"
+msgstr "Trimite RISE"
 
 #: js/controllers/transactionsController.js:63 partials/account.html:70
 msgid "Sender"
@@ -884,7 +884,7 @@ msgstr "Pasul 2/4 - Specificatii"
 msgid "Step 3/3 - Confirmation"
 msgstr "Pasul 3/3 - Confirmare"
 
-# Storage Links or Lisk?
+# Storage Links or Rise?
 #: partials/modals/addDappModal.html:59
 msgid "Step 3/4 - Storage Links"
 msgstr "Pasul 3/4 - Stocheaza Links"
@@ -915,19 +915,19 @@ msgstr "Aceasta actiune este taxata cu"
 msgid ""
 "This walkthrough will guide you through the necessary steps to create a "
 "multi-signature group. It's very important that you know what multi-"
-"signatures are, else you risk loosing your LISK balance.<br><br>A multi-"
+"signatures are, else you risk loosing your RISE balance.<br><br>A multi-"
 "signature group consists of N accounts, the one who created the group is the "
 "group owner. When the owner wants to make a transaction, M of N accounts "
 "within the group need to confirm it, otherwise the transaction will not be "
 "processed. The values M and N are specified in this walkthrough."
 "<br><br><b>Things you need to know for the multi-signature group setup:</"
 "b><br><br>• The number of group members (N).<br>• The number of needed "
-"confirmations (M).<br>• The addresses of the Lisk accounts you want to add "
+"confirmations (M).<br>• The addresses of the Rise accounts you want to add "
 "to the group."
 msgstr ""
 "Acest tutorial vă va ghida prin pașii necesari pentru a crea un grup de "
 "semnaturi multiple. Este foarte important să intelegeti ce inseamna termenul "
-"semnaturi-multiple, altfel riscați să pierdeți Lisk disponibil. <br> Un grup "
+"semnaturi-multiple, altfel riscați să pierdeți Rise disponibil. <br> Un grup "
 "de semnaturi multiple este format din conturi N, unde cel care a creat "
 "grupul este proprietarul grupului. În cazul în care proprietarul dorește să "
 "facă o tranzacție, M a conturilor N în cadrul grupului trebuie să-l "
@@ -935,7 +935,7 @@ msgstr ""
 "sunt specificate în acest tutorial. <br> <b> Lucruri pe care trebuie să "
 "știți pentru configurarea grupului semnatur-multiple:. </ B> <br> • Numărul "
 "de membri ai grupului ( N). <br> • Numărul confirmărilor necesare (M). <fie> "
-"• Adresele Lisk ale conturilor pe care doriți să le adăugați la grup."
+"• Adresele Rise ale conturilor pe care doriți să le adăugați la grup."
 
 #: js/controllers/blockchainController.js:43
 #: js/controllers/forgingController.js:116
@@ -1110,8 +1110,8 @@ msgstr "revoca votul"
 #: partials/modals/sendTransaction.html:112
 #: partials/modals/sendTransaction.html:42
 #: partials/modals/sendTransaction.html:77
-msgid "send lisk"
-msgstr "trimite lisk"
+msgid "send rise"
+msgstr "trimite rise"
 
 #: partials/delegates.html:13
 msgid "vote"

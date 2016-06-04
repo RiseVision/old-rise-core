@@ -64,9 +64,9 @@ msgid "Add a new application"
 msgstr "Añadir nueva aplicación"
 
 #: partials/modals/multisignatureModal.html:46
-msgid "Add group members by typing in their Lisk address and pressing enter."
+msgid "Add group members by typing in their Rise address and pressing enter."
 msgstr ""
-"Añadir miembros de grupo escribiendo su dirección Lisk y pulsando enter."
+"Añadir miembros de grupo escribiendo su dirección Rise y pulsando enter."
 
 #: partials/modals/secondPassphraseModal.html:126
 msgid "ADD SECOND PASSPHRASE"
@@ -336,7 +336,7 @@ msgstr "COMISIÓN "
 #: partials/modals/registrationDelegateModal.html:23
 #: partials/modals/secondPassphraseModal.html:28
 #: partials/modals/sendTransaction.html:31 partials/modals/vote.html:25
-msgid "Fee: {{fee | liskFilter}} LSK"
+msgid "Fee: {{fee | riseFilter}} LSK"
 msgstr "Comision"
 
 #: partials/forging.html:74
@@ -454,23 +454,23 @@ msgid "LAUNCH"
 msgstr "COMENZAR"
 
 #: wallet.html:20
-msgid "Lisk - Blockchain Application Platform"
-msgstr "Lisk - Plataforma de Aplicaciones Blockchain"
+msgid "Rise - Blockchain Application Platform"
+msgstr "Rise - Plataforma de Aplicaciones Blockchain"
 
 #: js/controllers/delegatesController.js:158
 #: js/controllers/votedDelegatesController.js:117
 #: js/controllers/walletPendingsController.js:43
 #: partials/modals/multisignatureModal.html:52
-msgid "Lisk Address"
+msgid "Rise Address"
 msgstr "Dirección LSK"
 
 #: partials/account.html:33
-msgid "Lisk Client"
-msgstr "Cliente Lisk"
+msgid "Rise Client"
+msgstr "Cliente Rise"
 
 #: partials/account.html:43
-msgid "Lisk Client Outdated"
-msgstr "Cliente Lisk Desactualizado"
+msgid "Rise Client Outdated"
+msgstr "Cliente Rise Desactualizado"
 
 #: js/controllers/dappController.js:7
 #: js/controllers/dappsCategoryController.js:7
@@ -899,8 +899,8 @@ msgstr "ENVIAR"
 #: partials/modals/sendTransaction.html:119
 #: partials/modals/sendTransaction.html:49
 #: partials/modals/sendTransaction.html:84
-msgid "send lisk"
-msgstr "enviar lisk"
+msgid "send rise"
+msgstr "enviar rise"
 
 #: partials/delegates.html:120 partials/delegates.html:51
 #: partials/modals/sendTransaction.html:13 partials/modals/userInfo.html:28
@@ -994,12 +994,12 @@ msgstr "Resumen "
 
 #: partials/modals/openDappModal.html:19
 msgid ""
-"The Lisk apps platform currently does not provide any protection against any "
+"The Rise apps platform currently does not provide any protection against any "
 "unauthorized system calls made from the running application. Therefore "
 "opening any untrusted applications is not yet advisable, and could "
 "potentially lead to loss of funds."
 msgstr ""
-"La plataforma Lisk apps actualmente no ofrece ninguna protección contra "
+"La plataforma Rise apps actualmente no ofrece ninguna protección contra "
 "llamadas del sistema no autorizadas realizadas por las aplicaciones en "
 "ejecución. Por lo tanto, abrir una aplicación no confiable aun no es "
 "aconsejable, ya que podría producir una perdida total de fondos.\n"
@@ -1007,13 +1007,13 @@ msgstr ""
 
 #: partials/modals/masterPassphraseModal.html:30
 msgid ""
-"The master passphrase is auto-generated upon first launching the Lisk "
+"The master passphrase is auto-generated upon first launching the Rise "
 "client. It can be found at the end of the config.json file. Therefore only "
 "node operators can install, launch or uninstall applications. Once "
 "applications are in a launched state, anyone is free to open and use them."
 msgstr ""
 "La passphrase maestra es generada automáticamente en el primer lanzamiento "
-"del cliente Lisk. Puede ser encontrada al final del archivo config.json. Por "
+"del cliente Rise. Puede ser encontrada al final del archivo config.json. Por "
 "lo tanto, sólo los operadores de nodos pueden instalar, desinstalar o "
 "ejecutar aplicaciones. Una vez lanzadas las aplicaciones, cualquiera es "
 "libre de abrirlas y utilizarlas."
@@ -1045,7 +1045,7 @@ msgid ""
 "processed. The values M and N are specified in this walkthrough."
 "<br><br><b>Things you need to know for the multi-signature group setup:</"
 "b><br><br>• The number of group members (N).<br>• The number of needed "
-"confirmations (M).<br>• The addresses of the Lisk accounts you want to add "
+"confirmations (M).<br>• The addresses of the Rise accounts you want to add "
 "to the group."
 msgstr ""
 "Este tutorial le guiará a través de los pasos necesarios para crear un grupo "
@@ -1057,7 +1057,7 @@ msgstr ""
 "valores M y N se especifican en este tutorial.<br><br><b> Las cosas que "
 "necesita saber para la configuración de grupo multifirma:</b><br><br>• El "
 "número de miembros del grupo (N).<br>• El numero de confirmaciones "
-"necesarias (M).<br>• Las direcciones de las cuentas Lisk que desea añadir al "
+"necesarias (M).<br>• Las direcciones de las cuentas Rise que desea añadir al "
 "grupo."
 
 #: js/controllers/blockchainController.js:43

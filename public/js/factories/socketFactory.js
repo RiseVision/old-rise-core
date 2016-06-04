@@ -1,6 +1,6 @@
 require('angular');
 
-angular.module('liskApp').factory('serverSocket', ["socketFactory", "$location", function (socketFactory, $location) {
+angular.module('riseApp').factory('serverSocket', ["socketFactory", "$location", function (socketFactory, $location) {
 
     var newIoSocket = io.connect($location.protocol() + '://' + $location.host() + ($location.port() ? ':' + $location.port() : ''));
     serverSocket = socketFactory({

@@ -63,8 +63,8 @@ msgid "Add a new application"
 msgstr "添加新的应用"
 
 #: partials/modals/multisignatureModal.html:46
-msgid "Add group members by typing in their Lisk address and pressing enter."
-msgstr "通过输入好友的Lisk地址并按下回车键来添加小组成员"
+msgid "Add group members by typing in their Rise address and pressing enter."
+msgstr "通过输入好友的Rise地址并按下回车键来添加小组成员"
 
 #: partials/modals/secondPassphraseModal.html:126
 msgid "ADD SECOND PASSPHRASE"
@@ -333,8 +333,8 @@ msgstr "费用"
 #: partials/modals/registrationDelegateModal.html:23
 #: partials/modals/secondPassphraseModal.html:28
 #: partials/modals/sendTransaction.html:31 partials/modals/vote.html:25
-msgid "Fee: {{fee | liskFilter}} LSK"
-msgstr "费用: {{fee | liskFilter}} LSK"
+msgid "Fee: {{fee | riseFilter}} LSK"
+msgstr "费用: {{fee | riseFilter}} LSK"
 
 #: partials/forging.html:74
 msgid "Forged Blocks"
@@ -446,23 +446,23 @@ msgid "LAUNCH"
 msgstr "运行"
 
 #: wallet.html:20
-msgid "Lisk - Blockchain Application Platform"
-msgstr "Lisk - 区块链应用平台(Dapp平台)"
+msgid "Rise - Blockchain Application Platform"
+msgstr "Rise - 区块链应用平台(Dapp平台)"
 
 #: js/controllers/delegatesController.js:158
 #: js/controllers/votedDelegatesController.js:117
 #: js/controllers/walletPendingsController.js:43
 #: partials/modals/multisignatureModal.html:52
-msgid "Lisk Address"
-msgstr "Lisk 地址"
+msgid "Rise Address"
+msgstr "Rise 地址"
 
 #: partials/account.html:33
-msgid "Lisk Client"
-msgstr "Lisk 客户端"
+msgid "Rise Client"
+msgstr "Rise 客户端"
 
 #: partials/account.html:43
-msgid "Lisk Client Outdated"
-msgstr "Lisk 客户端已过期"
+msgid "Rise Client Outdated"
+msgstr "Rise 客户端已过期"
 
 #: js/controllers/dappController.js:7
 #: js/controllers/dappsCategoryController.js:7
@@ -873,8 +873,8 @@ msgstr "发送"
 #: partials/modals/sendTransaction.html:119
 #: partials/modals/sendTransaction.html:49
 #: partials/modals/sendTransaction.html:84
-msgid "send lisk"
-msgstr "发送Lisk"
+msgid "send rise"
+msgstr "发送Rise"
 
 #: partials/delegates.html:120 partials/delegates.html:51
 #: partials/modals/sendTransaction.html:13 partials/modals/userInfo.html:28
@@ -968,22 +968,22 @@ msgstr "摘要"
 
 #: partials/modals/openDappModal.html:19
 msgid ""
-"The Lisk apps platform currently does not provide any protection against any "
+"The Rise apps platform currently does not provide any protection against any "
 "unauthorized system calls made from the running application. Therefore "
 "opening any untrusted applications is not yet advisable, and could "
 "potentially lead to loss of funds."
 msgstr ""
-"Lisk App平台目前未对未经授权的系统调用进行限制，因此，我们不建议您运行任何未"
+"Rise App平台目前未对未经授权的系统调用进行限制，因此，我们不建议您运行任何未"
 "经授信的应用程序，因为这样有可能会导致您的资金损失。"
 
 #: partials/modals/masterPassphraseModal.html:30
 msgid ""
-"The master passphrase is auto-generated upon first launching the Lisk "
+"The master passphrase is auto-generated upon first launching the Rise "
 "client. It can be found at the end of the config.json file. Therefore only "
 "node operators can install, launch or uninstall applications. Once "
 "applications are in a launched state, anyone is free to open and use them."
 msgstr ""
-"在第一次启动Lisk客户端的时候，会自动生成Dapp安装密码，您可以在confing.json文"
+"在第一次启动Rise客户端的时候，会自动生成Dapp安装密码，您可以在confing.json文"
 "件的末尾找到它。因此，只有节点所有者能安装，运行或者卸载Dapp应用，一旦应用被"
 "安装后，任何人都可以开户和运行该应用。"
 
@@ -1010,7 +1010,7 @@ msgid ""
 "processed. The values M and N are specified in this walkthrough."
 "<br><br><b>Things you need to know for the multi-signature group setup:</"
 "b><br><br>• The number of group members (N).<br>• The number of needed "
-"confirmations (M).<br>• The addresses of the Lisk accounts you want to add "
+"confirmations (M).<br>• The addresses of the Rise accounts you want to add "
 "to the group."
 msgstr ""
 "该向导将指导您完成所需的步骤来创建一个多重签名组。第一步您需要先了解清楚什么"
@@ -1019,7 +1019,7 @@ msgstr ""
 "建一条交易的时候，必须得到多重签名组里面的N个帐户里面的M个帐户的确认，否则交"
 "易将不会被通过。M和N的值的设定请看如下示例。<br><br><b>您务必要知道的关于多重"
 "签名的几件事：</b><br><br>• 关于多重签名组成员的数量（N）.<br>• 签名交易需要"
-"的最少确认帐户数量（M）.<br>• 那些您想添加到多重签名组的所有Lisk地址帐户。"
+"的最少确认帐户数量（M）.<br>• 那些您想添加到多重签名组的所有Rise地址帐户。"
 
 #: js/controllers/blockchainController.js:43
 #: js/controllers/forgingController.js:116

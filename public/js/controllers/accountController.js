@@ -1,6 +1,6 @@
 require('angular');
 
-angular.module('liskApp').controller('accountController', ['$state','$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", "sendTransactionModal", "secondPassphraseModal", "delegateService", 'viewFactory', 'transactionInfo', 'userInfo', '$filter', 'gettextCatalog', function ($state, $rootScope, $scope, $http, userService, $interval, $timeout, sendTransactionModal, secondPassphraseModal, delegateService, viewFactory, transactionInfo, userInfo, $filter, gettextCatalog) {
+angular.module('riseApp').controller('accountController', ['$state','$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", "sendTransactionModal", "secondPassphraseModal", "delegateService", 'viewFactory', 'transactionInfo', 'userInfo', '$filter', 'gettextCatalog', function ($state, $rootScope, $scope, $http, userService, $interval, $timeout, sendTransactionModal, secondPassphraseModal, delegateService, viewFactory, transactionInfo, userInfo, $filter, gettextCatalog) {
 
     $scope.view = viewFactory;
     $scope.view.inLoading = true;
@@ -18,7 +18,7 @@ angular.module('liskApp').controller('accountController', ['$state','$scope', '$
     $scope.allVotes = 100 * 1000 * 1000 * 1000 * 1000 * 100;
 
     $scope.graphs = {
-        liskPrice: {
+        risePrice: {
             labels: ['1', '2'],
             series: ['Series B'],
             data: [
@@ -98,9 +98,9 @@ angular.module('liskApp').controller('accountController', ['$state','$scope', '$
     }
 
     $scope.getCandles = function () {
-        $http.get("https://explorer.lisk.io/api/candles/getCandles")
+        $http.get("https://explorer.rise.io/api/candles/getCandles")
             .then(function (response) {
-                $scope.graphs.liskPrice.data = [
+                $scope.graphs.risePrice.data = [
                     response.data.candles.map(
                         function (candle) {
                             return candle.close

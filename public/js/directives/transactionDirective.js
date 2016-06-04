@@ -1,6 +1,6 @@
 require('angular');
 
-angular.module('liskApp').directive('transactionBlock', function () {
+angular.module('riseApp').directive('transactionBlock', function () {
     return {
         templateUrl: '/templates/particials/directives/transactionBlock.html'
     };

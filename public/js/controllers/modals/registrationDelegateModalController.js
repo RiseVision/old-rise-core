@@ -1,6 +1,6 @@
 require('angular');
 
-angular.module('liskApp').controller('registrationDelegateModalController', ["$scope", "registrationDelegateModal", "$http", "userService", "feeService", "delegateService", function ($scope, registrationDelegateModal, $http, userService, feeService, delegateService) {
+angular.module('riseApp').controller('registrationDelegateModalController', ["$scope", "registrationDelegateModal", "$http", "userService", "feeService", "delegateService", function ($scope, registrationDelegateModal, $http, userService, feeService, delegateService) {
 
     $scope.error = null;
     $scope.sending = false;

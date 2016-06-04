@@ -12,9 +12,9 @@ require('../node_modules/ng-table/dist/ng-table.js');
 
 Mnemonic = require('bitcore-mnemonic');
 
-liskApp = angular.module('liskApp', ['ui.router', 'btford.modal', 'ngTable', 'ngAnimate',  'chart.js', 'btford.socket-io', 'ui.bootstrap', 'ngClipboard', 'angular.filter', 'gettext']);
+riseApp = angular.module('riseApp', ['ui.router', 'btford.modal', 'ngTable', 'ngAnimate',  'chart.js', 'btford.socket-io', 'ui.bootstrap', 'ngClipboard', 'angular.filter', 'gettext']);
 
-liskApp.config(["ngClipProvider",
+riseApp.config(["ngClipProvider",
     "$locationProvider",
     "$stateProvider",
     "$urlRouterProvider",

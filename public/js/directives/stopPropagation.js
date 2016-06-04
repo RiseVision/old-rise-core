@@ -1,5 +1,5 @@
 require('angular');
-angular.module('liskApp').directive('stopEvent', function () {
+angular.module('riseApp').directive('stopEvent', function () {
     return {
         restrict: 'A',
         link: function (scope, element, attr) {

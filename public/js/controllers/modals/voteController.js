@@ -1,6 +1,6 @@
 require('angular');
 
-angular.module('liskApp').controller('voteController', ["$scope", "voteModal", "$http", "userService", "feeService", "$timeout", function ($scope, voteModal, $http, userService, feeService, $timeout) {
+angular.module('riseApp').controller('voteController', ["$scope", "voteModal", "$http", "userService", "feeService", "$timeout", function ($scope, voteModal, $http, userService, feeService, $timeout) {
 
     $scope.sending = false;
     $scope.passmode = false;

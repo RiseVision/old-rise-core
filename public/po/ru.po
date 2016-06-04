@@ -64,8 +64,8 @@ msgid "Add a new application"
 msgstr "Добавить новое приложение"
 
 #: partials/modals/multisignatureModal.html:46
-msgid "Add group members by typing in their Lisk address and pressing enter."
-msgstr "Добавьте членов группы, введя их адреса Lisk, а затем нажмите Enter"
+msgid "Add group members by typing in their Rise address and pressing enter."
+msgstr "Добавьте членов группы, введя их адреса Rise, а затем нажмите Enter"
 
 #: partials/modals/secondPassphraseModal.html:126
 msgid "ADD SECOND PASSPHRASE"
@@ -114,7 +114,7 @@ msgstr ""
 "вашего делегата. Вознаграждение за форджинг получают только делегаты, "
 "пользующиеся максимальной поддержкой. Все вознаграждения делятся поровну "
 "между 101 участником из списка лучших.\n"
-"Стоимость регистрации: {{fee | liskFilter}} LISK."
+"Стоимость регистрации: {{fee | riseFilter}} RISE."
 
 #: js/controllers/blockchainController.js:41
 #: js/controllers/forgingController.js:115 partials/modals/blockInfo.html:7
@@ -337,8 +337,8 @@ msgstr "КОМИССИЯ"
 #: partials/modals/registrationDelegateModal.html:23
 #: partials/modals/secondPassphraseModal.html:28
 #: partials/modals/sendTransaction.html:31 partials/modals/vote.html:25
-msgid "Fee: {{fee | liskFilter}} LSK"
-msgstr "Комиссия: {{fee | liskFilter}} LSK"
+msgid "Fee: {{fee | riseFilter}} LSK"
+msgstr "Комиссия: {{fee | riseFilter}} LSK"
 
 #: partials/forging.html:74
 msgid "Forged Blocks"
@@ -454,23 +454,23 @@ msgid "LAUNCH"
 msgstr "ПУСК"
 
 #: wallet.html:20
-msgid "Lisk - Blockchain Application Platform"
-msgstr "Lisk - Платформа децентрализованных приложений"
+msgid "Rise - Blockchain Application Platform"
+msgstr "Rise - Платформа децентрализованных приложений"
 
 #: js/controllers/delegatesController.js:158
 #: js/controllers/votedDelegatesController.js:117
 #: js/controllers/walletPendingsController.js:43
 #: partials/modals/multisignatureModal.html:52
-msgid "Lisk Address"
-msgstr "Адрес Lisk"
+msgid "Rise Address"
+msgstr "Адрес Rise"
 
 #: partials/account.html:33
-msgid "Lisk Client"
-msgstr "Клиент LISK"
+msgid "Rise Client"
+msgstr "Клиент RISE"
 
 #: partials/account.html:43
-msgid "Lisk Client Outdated"
-msgstr "Версия LISK устарела!"
+msgid "Rise Client Outdated"
+msgstr "Версия RISE устарела!"
 
 #: js/controllers/dappController.js:7
 #: js/controllers/dappsCategoryController.js:7
@@ -891,8 +891,8 @@ msgstr "ОТПРАВИТЬ"
 #: partials/modals/sendTransaction.html:119
 #: partials/modals/sendTransaction.html:49
 #: partials/modals/sendTransaction.html:84
-msgid "send lisk"
-msgstr "отправить LISK"
+msgid "send rise"
+msgstr "отправить RISE"
 
 #: partials/delegates.html:120 partials/delegates.html:51
 #: partials/modals/sendTransaction.html:13 partials/modals/userInfo.html:28
@@ -986,19 +986,19 @@ msgstr "Итог"
 
 #: partials/modals/openDappModal.html:19
 msgid ""
-"The Lisk apps platform currently does not provide any protection against any "
+"The Rise apps platform currently does not provide any protection against any "
 "unauthorized system calls made from the running application. Therefore "
 "opening any untrusted applications is not yet advisable, and could "
 "potentially lead to loss of funds."
 msgstr ""
-"Lisk в настоящее время не обеспечивает защиту от несанкционированных "
+"Rise в настоящее время не обеспечивает защиту от несанкционированных "
 "системных вызовов, совершенных активным приложением. Поэтому запуск не "
 "доверенного приложения не рекомендуется и может привести к потере средств на "
 "счете."
 
 #: partials/modals/masterPassphraseModal.html:30
 msgid ""
-"The master passphrase is auto-generated upon first launching the Lisk "
+"The master passphrase is auto-generated upon first launching the Rise "
 "client. It can be found at the end of the config.json file. Therefore only "
 "node operators can install, launch or uninstall applications. Once "
 "applications are in a launched state, anyone is free to open and use them."
@@ -1035,7 +1035,7 @@ msgid ""
 "processed. The values M and N are specified in this walkthrough."
 "<br><br><b>Things you need to know for the multi-signature group setup:</"
 "b><br><br>• The number of group members (N).<br>• The number of needed "
-"confirmations (M).<br>• The addresses of the Lisk accounts you want to add "
+"confirmations (M).<br>• The addresses of the Rise accounts you want to add "
 "to the group."
 msgstr ""
 "Это руководство поможет вам пройти необходимые шаги для создания группы с "
@@ -1047,7 +1047,7 @@ msgstr ""
 "иначе операция будет отменена. Далее вы сможете определить необходимое "
 "количество подтверждений.<br><br><b>Для создания группы с мульта-подписью "
 "необходимы следующие данные:</b><br><br> ► Общее количество членов группы;"
-"<br> ► Необходимое количество подтверждений;<br> ► Адрес аккаунта LISK "
+"<br> ► Необходимое количество подтверждений;<br> ► Адрес аккаунта RISE "
 "каждого участника группы."
 
 #: js/controllers/blockchainController.js:43
@@ -1203,9 +1203,9 @@ msgid "Your Second Passphrase"
 msgstr "Ваш дополнительный пароль"
 
 #~ msgid ""
-#~ "Add group members by typing in their LISK address and pressing enter."
+#~ "Add group members by typing in their RISE address and pressing enter."
 #~ msgstr ""
-#~ "Введите адрес LISK, публичный ключ или имя участника для добавления в "
+#~ "Введите адрес RISE, публичный ключ или имя участника для добавления в "
 #~ "группу."
 
 #~ msgid "ADD NEW DAPP"
@@ -1226,23 +1226,23 @@ msgstr "Ваш дополнительный пароль"
 #~ msgid "Failed to uninstall Dapp"
 #~ msgstr "Не удалось удалить DApp"
 
-#~ msgid "Fee: {{fee | liskFilter}} LISK"
-#~ msgstr "Комиссия: {{fee | liskFilter}} LISK"
+#~ msgid "Fee: {{fee | riseFilter}} RISE"
+#~ msgstr "Комиссия: {{fee | riseFilter}} RISE"
 
 #~ msgid "Installed Dapps"
 #~ msgstr "Установленные DApp"
 
-#~ msgid "Lisk - Decentralized Application Platform"
-#~ msgstr "LISK - Платформа для децентрализованных приложений"
+#~ msgid "Rise - Decentralized Application Platform"
+#~ msgstr "RISE - Платформа для децентрализованных приложений"
 
-#~ msgid "LISK Address"
-#~ msgstr "Адресс LISK"
+#~ msgid "RISE Address"
+#~ msgstr "Адресс RISE"
 
-#~ msgid "LISK Amount"
-#~ msgstr "Количество LISK"
+#~ msgid "RISE Amount"
+#~ msgstr "Количество RISE"
 
-#~ msgid "LISK Earned"
-#~ msgstr "Заработано LISK"
+#~ msgid "RISE Earned"
+#~ msgstr "Заработано RISE"
 
 #~ msgid "Loading dapp"
 #~ msgstr "Загрузка DApp…"
@@ -1251,10 +1251,10 @@ msgstr "Ваш дополнительный пароль"
 #~ msgstr "Загрузка DApp…"
 
 #~ msgid ""
-#~ "Make sure you're sending LISK to the right address. This action can't be "
+#~ "Make sure you're sending RISE to the right address. This action can't be "
 #~ "undone later."
 #~ msgstr ""
-#~ "Убедитесь, что отправляете LISK на правильный адрес. Это действие "
+#~ "Убедитесь, что отправляете RISE на правильный адрес. Это действие "
 #~ "необратимо."
 
 #~ msgid "No dapps matching your search criteria were found."
@@ -1262,7 +1262,7 @@ msgstr "Ваш дополнительный пароль"
 
 #~ msgid ""
 #~ "Please check your input below and go back if necessary. Double-check the "
-#~ "group members, else you risk losing your LISK balance!"
+#~ "group members, else you risk losing your RISE balance!"
 #~ msgstr ""
 #~ "Пожалуйста проверьте введенные данные и при необходимости вернитесь "
 #~ "назад. \n"
@@ -1275,10 +1275,10 @@ msgstr "Ваш дополнительный пароль"
 #~ "отправлять подтверждение."
 
 #~ msgid ""
-#~ "Please enter the Recipient Address and LISK Amount that you would like "
+#~ "Please enter the Recipient Address and RISE Amount that you would like "
 #~ "send below."
 #~ msgstr ""
-#~ "Пожалуйста введите адрес получателя и количество LISK, которое вы хотите "
+#~ "Пожалуйста введите адрес получателя и количество RISE, которое вы хотите "
 #~ "отправить."
 
 #~ msgid "Please provide a specification for your dapp below."
@@ -1293,8 +1293,8 @@ msgstr "Ваш дополнительный пароль"
 #~ msgid "Search for Dapps"
 #~ msgstr "Поиск DApp"
 
-#~ msgid "Send LISK"
-#~ msgstr "Отправить LISK"
+#~ msgid "Send RISE"
+#~ msgstr "Отправить RISE"
 
 #~ msgid "This action will cost"
 #~ msgstr "Стоимость данного действия:"
@@ -1302,26 +1302,26 @@ msgstr "Ваш дополнительный пароль"
 #~ msgid ""
 #~ "This walkthrough will guide you through the necessary steps to create a "
 #~ "multi-signature group. It's very important that you know what multi-"
-#~ "signatures are, else you risk loosing your LISK balance.<br><br>A multi-"
+#~ "signatures are, else you risk loosing your RISE balance.<br><br>A multi-"
 #~ "signature group consists of N accounts, the one who created the group is "
 #~ "the group owner. When the owner wants to make a transaction, M of N "
 #~ "accounts within the group need to confirm it, otherwise the transaction "
 #~ "will not be processed. The values M and N are specified in this "
 #~ "walkthrough.<br><br><b>Things you need to know for the multi-signature "
 #~ "group setup:</b><br><br>• The number of group members (N).<br>• The "
-#~ "number of needed confirmations (M).<br>• The addresses of the Lisk "
+#~ "number of needed confirmations (M).<br>• The addresses of the Rise "
 #~ "accounts you want to add to the group."
 #~ msgstr ""
 #~ "Это руководство поможет вам пройти необходимые шаги для создания группы с "
 #~ "мульти-подписью. Крайне важно, чтобы вы осознавали цель и необходимость "
 #~ "этого действия, в противном случае вы рискуете потерять все ваши средства."
 #~ "<br><br>В группу с мульти-подписью входят несколько аккаунтов, при этом "
-#~ "создатель группы становится ее владельцем. Для отправки LISK кому-либо "
+#~ "создатель группы становится ее владельцем. Для отправки RISE кому-либо "
 #~ "потребуется дополнительное подтверждение от остальных участников группы, "
 #~ "иначе операция будет отменена. Далее вы сможете определить необходимое "
 #~ "количество подтверждений.<br><br><b>Для создания группы с мульти-подписью "
 #~ "необходимы следующие данные:</b><br><br> ► Общее количество членов группы;"
-#~ "<br> ► Необходимое количество подтверждений;<br> ► Адрес аккаунта LISK "
+#~ "<br> ► Необходимое количество подтверждений;<br> ► Адрес аккаунта RISE "
 #~ "каждого участника группы."
 
 #~ msgid "You do not have any dapps installed yet."

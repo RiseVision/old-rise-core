@@ -1,6 +1,6 @@
 require('angular');
 
-angular.module('liskApp').controller('walletPendingsController', ['$scope', '$rootScope', '$http', "userService", "$interval", "sendTransactionModal", "secondPassphraseModal", "delegateService", 'viewFactory', 'transactionsService', 'ngTableParams', 'transactionInfo', '$timeout', 'userInfo', 'gettextCatalog', function ($rootScope, $scope, $http, userService, $interval, sendTransactionModal, secondPassphraseModal, delegateService, viewFactory, transactionsService, ngTableParams, transactionInfo, $timeout, userInfo, gettextCatalog) {
+angular.module('riseApp').controller('walletPendingsController', ['$scope', '$rootScope', '$http', "userService", "$interval", "sendTransactionModal", "secondPassphraseModal", "delegateService", 'viewFactory', 'transactionsService', 'ngTableParams', 'transactionInfo', '$timeout', 'userInfo', 'gettextCatalog', function ($rootScope, $scope, $http, userService, $interval, sendTransactionModal, secondPassphraseModal, delegateService, viewFactory, transactionsService, ngTableParams, transactionInfo, $timeout, userInfo, gettextCatalog) {
 
     $scope.view = viewFactory;
     $scope.view.inLoading = true;
@@ -40,7 +40,7 @@ angular.module('liskApp').controller('walletPendingsController', ['$scope', '$ro
     });
 
     $scope.tableTransactions.cols = {
-        wallet : gettextCatalog.getString('Lisk Address'),
+        wallet : gettextCatalog.getString('Rise Address'),
         transactionId : gettextCatalog.getString('Transaction ID'),
         t_recipientId : gettextCatalog.getString('Recipient'),
         t_timestamp : gettextCatalog.getString('Time'),

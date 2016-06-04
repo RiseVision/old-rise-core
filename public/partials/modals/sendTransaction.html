@@ -28,7 +28,7 @@
                                     <input id="amount" type="text" ng-model="amount" ng-focus="focus == 'amount'" ng-class="{'invalid': errorMessage.amount}">
                                     <label for="amount"><translate>LSK Amount</translate></label>
                                 </div>
-                                <span class="fee-text flat-text pull-right"><translate>Fee: {{fee | liskFilter}} LSK</span>
+                                <span class="fee-text flat-text pull-right"><translate>Fee: {{fee | riseFilter}} LSK</span>
                                 <span class="pass-error" ng-show="errorMessage.amount">{{errorMessage.amount}}</span>
                             </div>
                             <p class="error-container" ng-show="errorMessage.fromServer">
@@ -46,7 +46,7 @@
                                 <input type="submit" value="{{'Cancel' | translate}}" ng-click="close()" class="btn-flat" />
                             </li>
                             <li>
-                                <input type="submit" value="{{'send lisk' | translate}}" ng-click="passcheck()" class="btn-flat blue-link" ng-class="{'disabled': sending}" ng-disabled="sending" />
+                                <input type="submit" value="{{'send rise' | translate}}" ng-click="passcheck()" class="btn-flat blue-link" ng-class="{'disabled': sending}" ng-disabled="sending" />
                             </li>
                         </ul>
                     </div>
@@ -81,7 +81,7 @@
                                 <input type="submit" value="{{'GO BACK' | translate}}" ng-click="passcheck()" class="btn-flat" />
                             </li>
                             <li>
-                                <input type="submit" value="{{'send lisk' | translate}}" ng-click="sendTransaction(secretPhrase)" class="btn-flat waves-blue" ng-class="{'disabled': sending}" ng-disabled="sending" />
+                                <input type="submit" value="{{'send rise' | translate}}" ng-click="sendTransaction(secretPhrase)" class="btn-flat waves-blue" ng-class="{'disabled': sending}" ng-disabled="sending" />
                             </li>
                         </ul>
                     </div>
@@ -116,7 +116,7 @@
                                 <input type="submit" value="{{'GO BACK' | translate}}" ng-click="passcheck(true)" class="btn-flat" />
                             </li>
                             <li>
-                                <input type="submit" value="{{'send lisk' | translate}}" ng-click="sendTransaction(secretPhrase, true)" class="btn-flat blue-link" ng-class="{'disabled': sending}" ng-disabled="sending" />
+                                <input type="submit" value="{{'send rise' | translate}}" ng-click="sendTransaction(secretPhrase, true)" class="btn-flat blue-link" ng-class="{'disabled': sending}" ng-disabled="sending" />
                             </li>
                         </ul>
                     </div>
