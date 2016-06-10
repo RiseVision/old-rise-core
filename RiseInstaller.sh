@@ -42,10 +42,15 @@ elif [[ `lsb_release -i -s` == 'Ubuntu' ]]; then
 
    	#Install pre-reqs
 	curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+	sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" >> /etc/apt/sources.list.d/pgdg.list'
+    wget -q https://www.postgresql.org/media/keys/ACCC4CF8.asc -O - | sudo apt-key add -
+
+    sudo apt-get purge -y nodejs
+    sudo apt-get purge -y postgresql*
 
 	# Install Postgres, Node, Git
 	sudo apt-get update
-	sudo apt-get install -y nodejs postgresql git
+	sudo apt-get install -y nodejs postgresql postgresql-contrib libpq-dev git build-essential
 
 	# Configure Postgres
 	sudo -u postgres psql -c "CREATE DATABASE rise_testnet;"
@@ -57,6 +62,7 @@ elif [[ `lsb_release -i -s` == 'Ubuntu' ]]; then
 	# Configure
 	echo "Installing Dependencies for Rise-Core"
 	cd rise-core
+	sudo npm install -g forever
 	npm install
 
 	echo "Installing Dependencies for Web-UI"
@@ -67,7 +73,8 @@ elif [[ `lsb_release -i -s` == 'Ubuntu' ]]; then
 
 	echo ""
 	echo ""
-	echo "Run node app.js to start Rise-Core on Testnet"
+	echo "Run the following command to start Rise-Core on Testnet"
+	echo "cd rise-core && npm start"
 fi
 
 echo ""
