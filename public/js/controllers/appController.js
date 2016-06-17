@@ -106,7 +106,7 @@ angular.module('riseApp').controller('appController', ['dappsService', '$scope',
     ];
 
     $scope.getPriceTicker = function () {
-        $http.get("https://explorer.rise.io/api/getPriceTicker")
+        $http.get("https://explorer.rise.vision/api/getPriceTicker")
             .then(function (response) {
                 $scope.btc_usd = response.data.btc_usd;
                 $scope.rise_btc = response.data.rise_btc;
@@ -118,7 +118,7 @@ angular.module('riseApp').controller('appController', ['dappsService', '$scope',
         $http.get("/api/peers/version").then(function (response) {
             if (response.data.success) {
                 $scope.version = response.data.version;
-                $http.get("https://login.rise.io/api/peers/version").then(function (response) {
+                $http.get("https://login.rise.vision/api/peers/version").then(function (response) {
                     $scope.latest = response.data.version;
                     $scope.diffVersion = compareVersion($scope.version, $scope.latest);
                 });

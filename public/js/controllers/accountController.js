@@ -98,7 +98,7 @@ angular.module('riseApp').controller('accountController', ['$state','$scope', '$
     }
 
     $scope.getCandles = function () {
-        $http.get("https://explorer.rise.io/api/candles/getCandles")
+        $http.get("https://explorer.rise.vision/api/candles/getCandles")
             .then(function (response) {
                 $scope.graphs.risePrice.data = [
                     response.data.candles.map(

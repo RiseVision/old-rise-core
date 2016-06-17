@@ -698,6 +698,10 @@ msgstr ""
 msgid "Please read carefully."
 msgstr ""
 
+#: partials/account.html:46
+msgid "Please Update your Node"
+msgstr ""
+
 #: partials/modals/multisignatureModal.html:84
 msgid "Pressing enter confirms each member."
 msgstr ""
@@ -1016,10 +1020,6 @@ msgstr ""
 #: partials/modals/userInfo.html:46
 #: partials/modals/userInfo.html:47
 msgid "Transactions"
-msgstr ""
-
-#: partials/account.html:46
-msgid "UPDATE"
 msgstr ""
 
 #: js/controllers/delegatesController.js:159
