@@ -7,7 +7,7 @@ var node = require("./../variables.js");
 var Dapp = {};
 var DappName = "";
 var DappToInstall = {};
-var randomLISK = 0;
+var randomRISE = 0;
 var transactionCount = 0;
 var transactionList = [];
 
@@ -99,14 +99,14 @@ before(function (done) {
 });
 
 before(function (done) {
-    // Send to LISK to account 1 address
+    // Send to RISE to account 1 address
     setTimeout(function () {
-        randomLISK = node.randomLISK();
+        randomRISE = node.randomRISE();
         node.api.put("/transactions")
             .set("Accept", "application/json")
             .send({
                 secret: node.Gaccount.password,
-                amount: randomLISK,
+                amount: randomRISE,
                 recipientId: Account1.address
             })
             .expect("Content-Type", /json/)
@@ -115,13 +115,13 @@ before(function (done) {
                 // console.log(JSON.stringify(res.body));
                 node.expect(res.body).to.have.property("success").to.be.true;
                 if (res.body.success == true && res.body.transactionId != null) {
-                    // console.log("Sent to " + Account1.address + " " + (randomLISK / node.normalizer) + " LISK");
+                    // console.log("Sent to " + Account1.address + " " + (randomRISE / node.normalizer) + " RISE");
                     transactionCount += 1;
                     Account1.transactions.push(transactionCount);
-                    Account1.balance += randomLISK;
+                    Account1.balance += randomRISE;
                 } else {
-                    console.log("Sending LISK to Account1 failed.");
-                    console.log("Sent: secret: " + node.Gaccount.password + ", amount: " + randomLISK + ", recipientId: " + Account1.address );
+                    console.log("Sending RISE to Account1 failed.");
+                    console.log("Sent: secret: " + node.Gaccount.password + ", amount: " + randomRISE + ", recipientId: " + Account1.address );
                     node.expect("TEST").to.equal("FAILED");
                 }
                 done();
@@ -131,40 +131,40 @@ before(function (done) {
 
 before(function (done) {
     setTimeout(function () {
-        randomLISK = node.randomLISK();
-        expectedFee = node.expectedFee(randomLISK);
+        randomRISE = node.randomRISE();
+        expectedFee = node.expectedFee(randomRISE);
         node.api.put("/transactions")
             .set("Accept", "application/json")
             .send({
                 secret: node.Gaccount.password,
-                amount: randomLISK,
+                amount: randomRISE,
                 recipientId: Account2.address
             })
             .expect("Content-Type", /json/)
             .expect(200)
             .end(function (err, res) {
                 // console.log(JSON.stringify(res.body));
-                // console.log("We send the LISK from genesis account to account. Recipient is: " + Account2.address);
-                console.log("Sent to " + Account2.address + " " + (randomLISK / node.normalizer) + " LISK");
-                // console.log("Expected fee (paid by sender): " + expectedFee / node.normalizer + " LISK");
+                // console.log("We send the RISE from genesis account to account. Recipient is: " + Account2.address);
+                console.log("Sent to " + Account2.address + " " + (randomRISE / node.normalizer) + " RISE");
+                // console.log("Expected fee (paid by sender): " + expectedFee / node.normalizer + " RISE");
                 node.expect(res.body).to.have.property("success").to.be.true;
                 if (res.body.success == true && res.body.transactionId != null) {
                     Account2.transactions.push(transactionCount);
                     transactionCount += 1;
                     totalTxFee += (expectedFee / node.normalizer);
-                    Account2.balance += randomLISK;
+                    Account2.balance += randomRISE;
                     transactionList[transactionCount - 1] = {
                         "sender": node.Gaccount.address,
                         "recipient": Account2.address,
-                        "brutoSent": (randomLISK + expectedFee) / node.normalizer,
+                        "brutoSent": (randomRISE + expectedFee) / node.normalizer,
                         "fee": expectedFee / node.normalizer,
-                        "nettoSent": randomLISK / node.normalizer,
+                        "nettoSent": randomRISE / node.normalizer,
                         "txId": res.body.transactionId,
                         "type":node.TxTypes.SEND
                     }
                 } else {
-                    console.log("Sending LISK to Account2 failed.");
-                    console.log("Sent: secret: " + node.Gaccount.password + ", amount: " + randomLISK + ", recipientId: " + Account2.address );
+                    console.log("Sending RISE to Account2 failed.");
+                    console.log("Sent: secret: " + node.Gaccount.password + ", amount: " + randomRISE + ", recipientId: " + Account2.address );
                     node.expect("TEST").to.equal("FAILED");
                 }
                 done();
@@ -377,7 +377,7 @@ describe("PUT /dapps", function () {
             });
     });
 
-    it("Using account with 0 LISK account. Should fail", function (done) {
+    it("Using account with 0 RISE account. Should fail", function (done) {
         node.api.put("/dapps")
             .set("Accept", "application/json")
             .send({

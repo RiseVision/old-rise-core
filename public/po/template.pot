@@ -24,7 +24,7 @@ msgstr ""
 msgid "{{voteList.length}} out of {{countStandby + countTop}} Delegates selected"
 msgstr ""
 
-#: partials/template.html:162
+#: partials/template.html:156
 msgid "2nd Passphrase"
 msgstr ""
 
@@ -74,7 +74,6 @@ msgid "Amount (Fee)"
 msgstr ""
 
 #: js/controllers/dappsController.js:8
-#: partials/template.html:90
 msgid "Applications"
 msgstr ""
 
@@ -106,7 +105,7 @@ msgid "Block ID"
 msgstr ""
 
 #: js/controllers/blockchainController.js:8
-#: partials/template.html:117
+#: partials/template.html:111
 msgid "Blockchain"
 msgstr ""
 
@@ -127,7 +126,7 @@ msgstr ""
 msgid "CANCEL"
 msgstr ""
 
-#: partials/template.html:260
+#: partials/template.html:254
 msgid "CATEGORIES"
 msgstr ""
 
@@ -267,12 +266,12 @@ msgstr ""
 msgid "Delegate Name"
 msgstr ""
 
-#: partials/template.html:240
+#: partials/template.html:234
 msgid "delegate registration"
 msgstr ""
 
-#: partials/template.html:104
-#: partials/template.html:232
+#: partials/template.html:226
+#: partials/template.html:98
 msgid "Delegates"
 msgstr ""
 
@@ -343,12 +342,12 @@ msgstr ""
 #: js/controllers/delegatesController.js:9
 #: js/controllers/forgingController.js:83
 #: js/controllers/votedDelegatesController.js:8
-#: partials/template.html:229
-#: partials/template.html:96
+#: partials/template.html:223
+#: partials/template.html:90
 msgid "Forging"
 msgstr ""
 
-#: partials/template.html:245
+#: partials/template.html:239
 msgid "FORGING"
 msgstr ""
 
@@ -388,7 +387,7 @@ msgstr ""
 msgid "GO BACK"
 msgstr ""
 
-#: partials/template.html:137
+#: partials/template.html:131
 msgid "Go to previous page"
 msgstr ""
 
@@ -404,7 +403,7 @@ msgstr ""
 msgid "Height"
 msgstr ""
 
-#: partials/template.html:276
+#: partials/template.html:270
 msgid "HOME"
 msgstr ""
 
@@ -412,7 +411,7 @@ msgstr ""
 msgid "If you are confident the application can be deemed trustworthy, click <strong>Open Anyway</strong>, otherwise click <strong>Cancel</strong> now."
 msgstr ""
 
-#: partials/template.html:282
+#: partials/template.html:276
 msgid "INSTALLED"
 msgstr ""
 
@@ -475,16 +474,8 @@ msgstr ""
 msgid "Loading..."
 msgstr ""
 
-#: partials/template.html:168
+#: partials/template.html:162
 msgid "Logout"
-msgstr ""
-
-#: partials/modals/sendTransaction.html:29
-msgid "RSE Amount"
-msgstr ""
-
-#: partials/forging.html:11
-msgid "RSE Earned"
 msgstr ""
 
 #: partials/modals/newUser.html:72
@@ -541,16 +532,16 @@ msgstr ""
 msgid "My Multi-Signature Groups"
 msgstr ""
 
-#: partials/template.html:159
+#: partials/template.html:153
 msgid "My Profile"
 msgstr ""
 
-#: partials/template.html:110
+#: partials/template.html:104
 #: partials/votes.html:24
 msgid "My Votes"
 msgstr ""
 
-#: partials/template.html:235
+#: partials/template.html:229
 msgid "My votes ({{myVotesCount||'0'}})"
 msgstr ""
 
@@ -603,7 +594,7 @@ msgstr ""
 msgid "Number of members"
 msgstr ""
 
-#: partials/template.html:248
+#: partials/template.html:242
 msgid "Off"
 msgstr ""
 
@@ -611,7 +602,7 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
-#: partials/template.html:251
+#: partials/template.html:245
 msgid "On"
 msgstr ""
 
@@ -805,6 +796,14 @@ msgstr ""
 msgid "Rise Client Outdated"
 msgstr ""
 
+#: partials/modals/sendTransaction.html:29
+msgid "RSE Amount"
+msgstr ""
+
+#: partials/forging.html:11
+msgid "RSE Earned"
+msgstr ""
+
 #: partials/modals/newUser.html:36
 #: partials/modals/secondPassphraseModal.html:40
 msgid "SAVE PASSPHRASE"
@@ -814,16 +813,16 @@ msgstr ""
 msgid "Saving new application"
 msgstr ""
 
-#: partials/template.html:308
-#: partials/template.html:333
+#: partials/template.html:302
+#: partials/template.html:327
 msgid "Search for applications"
 msgstr ""
 
-#: partials/template.html:208
+#: partials/template.html:202
 msgid "Search for blocks"
 msgstr ""
 
-#: partials/template.html:182
+#: partials/template.html:176
 msgid "Search for transactions (Transaction ID, Sender address, Recipient address)"
 msgstr ""
 
@@ -835,8 +834,14 @@ msgstr ""
 msgid "Security Warning"
 msgstr ""
 
-#: partials/template.html:149
+#: partials/template.html:143
 msgid "SEND"
+msgstr ""
+
+#: partials/modals/sendTransaction.html:119
+#: partials/modals/sendTransaction.html:49
+#: partials/modals/sendTransaction.html:84
+msgid "send rise"
 msgstr ""
 
 #: partials/delegates.html:120
@@ -847,19 +852,13 @@ msgstr ""
 msgid "Send RSE"
 msgstr ""
 
-#: partials/modals/sendTransaction.html:119
-#: partials/modals/sendTransaction.html:49
-#: partials/modals/sendTransaction.html:84
-msgid "send rise"
-msgstr ""
-
 #: js/controllers/transactionsController.js:63
 #: partials/account.html:70
 msgid "Sender"
 msgstr ""
 
 #: js/controllers/settingsController.js:6
-#: partials/template.html:165
+#: partials/template.html:159
 msgid "Settings"
 msgstr ""
 
@@ -974,7 +973,7 @@ msgstr ""
 msgid "To become a delegate, click on the \"Delegate Registration\" button."
 msgstr ""
 
-#: partials/template.html:130
+#: partials/template.html:124
 msgid "Toggle navigation"
 msgstr ""
 

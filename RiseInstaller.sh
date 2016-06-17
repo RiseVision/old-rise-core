@@ -24,19 +24,6 @@ if [[ $unamestr == 'Darwin' ]]; then
 	psql -U $USER -c "CREATE DATABASE rise_testnet;"
 	psql -U $USER -c "CREATE USER risetest WITH PASSWORD 'risetestpassword';"
 	psql -U $USER -c "GRANT ALL PRIVILEGES ON DATABASE rise_testnet TO risetest;"
-	# Download Release
-	git clone https://bitbucket.org/risevisionfoundation/rise-core.git
-
-	# Configure
-	cd rise-core
-	npm install
-
-	cd public
-	npm install
-
-	cd ../
-	npm start
-	
 elif [[ `lsb_release -i -s` == 'Ubuntu' ]]; then
     platform='ubuntu'
     echo "Ubuntu detected - installing Rise-Core"
@@ -57,24 +44,7 @@ elif [[ `lsb_release -i -s` == 'Ubuntu' ]]; then
 	sudo -u postgres psql -c "CREATE DATABASE rise_testnet;"
 	sudo -u postgres psql -c "CREATE USER risetest WITH PASSWORD 'risetestpassword';"
 	sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE rise_testnet TO risetest;"
-	# Download Release
-	git clone https://bitbucket.org/risevisionfoundation/rise-core.git
 
-	# Configure
-	echo "Installing Dependencies for Rise-Core"
-	cd rise-core
-	sudo npm install -g forever
-	sleep
-	npm install
-
-	echo "Installing Dependencies for Web-UI"
-	cd public
-	npm install
-
-	cd ../
-	npm start
-
-fi
 echo "configuring NTP"
 #Install NTP or Chrony for Time Management - Physical Machines only
 if [[ "$(uname)" == "Linux" ]]; then
@@ -109,22 +79,16 @@ if [[ "$(uname)" == "Linux" ]]; then
                 echo "√ Chrony is running"
             else
                 echo "X NTP and Chrony are not running"
-                read -r -n 1 -p "Would like to install NTP? (y/n): " $REPLY
-                if [[  $REPLY =~ ^[Yy]$ ]]; then
-                    echo -e "\nInstalling NTP, please provide sudo password.\n"
-                    sudo yum -yq install ntp ntpdate ntp-doc
-                    sudo chkconfig ntpd on
-                    sudo service ntpd stop
-                    sudo ntpdate pool.ntp.org
-                    sudo service ntpd start
-                    if pgrep -x "ntpd" > /dev/null; then
-                        echo "√ NTP is running"
-                    else
-                        echo -e "\nLisk requires NTP running on Debian based systems. Please check /etc/ntp.conf and correct any issues."
-                        exit 0
-                    fi
+                echo -e "\nInstalling NTP, please provide sudo password.\n"
+                sudo yum -yq install ntp ntpdate ntp-doc
+                sudo chkconfig ntpd on
+                sudo service ntpd stop
+                sudo ntpdate pool.ntp.org
+                sudo service ntpd start
+                if pgrep -x "ntpd" > /dev/null; then
+                    echo "√ NTP is running"
                 else
-                    echo -e "\nLisk requires NTP or Chrony on RHEL based systems, exiting."
+                    echo -e "\nLisk requires NTP running on Debian based systems. Please check /etc/ntp.conf and correct any issues."
                     exit 0
                 fi
             fi
@@ -137,43 +101,54 @@ if [[ "$(uname)" == "Linux" ]]; then
             echo "√ NTP is running"
         else
             echo "X NTP is not running"
-            read -r -n 1 -p "Would like to install NTP? (y/n): " $REPLY
-            if [[  $REPLY =~ ^[Yy]$ ]]; then
-                echo -e "\nInstalling NTP, please provide sudo password.\n"
-                sudo pkg install ntp
-                sudo sh -c "echo 'ntpd_enable=\"YES\"' >> /etc/rc.conf"
-                sudo ntpdate -u pool.ntp.org
-                sudo service ntpd start
-                    if pgrep -x "ntpd" > /dev/null; then
-                        echo "√ NTP is running"
-                    else
-                        echo -e "\nLisk requires NTP running on FreeBSD based systems. Please check /etc/ntp.conf and correct any issues."
-                        exit 0
-                    fi
-            else
-                echo -e "\nLisk requires NTP FreeBSD based systems, exiting."
-                exit 0
-            fi
-        fi #End FreeBSD Checks
-    elif [[ "$(uname)" == "Darwin" ]]; then
-        if pgrep -x "ntpd" > /dev/null; then
-            echo "√ NTP is running"
-        else
-            sudo launchctl load /System/Library/LaunchDaemons/org.ntp.ntpd.plist
-            sleep 1
+
+            echo -e "\nInstalling NTP, please provide sudo password.\n"
+            sudo pkg install ntp
+            sudo sh -c "echo 'ntpd_enable=\"YES\"' >> /etc/rc.conf"
+            sudo ntpdate -u pool.ntp.org
+            sudo service ntpd start
             if pgrep -x "ntpd" > /dev/null; then
                 echo "√ NTP is running"
             else
-                echo -e "\nNTP did not start, Please verify its configured on your system"
+                echo -e "\nLisk requires NTP running on FreeBSD based systems. Please check /etc/ntp.conf and correct any issues."
                 exit 0
             fi
-        fi  #End Darwin Checks
-    fi #End NTP Checks
+        fi
+    fi #End FreeBSD Checks
+elif [[ "$(uname)" == "Darwin" ]]; then
+    if pgrep -x "ntpd" > /dev/null; then
+        echo "√ NTP is running"
+    else
+        sudo launchctl load /System/Library/LaunchDaemons/org.ntp.ntpd.plist
+        sleep 1
+        if pgrep -x "ntpd" > /dev/null; then
+            echo "√ NTP is running"
+        else
+            echo -e "\nNTP did not start, Please verify its configured on your system"
+            exit 0
+        fi
+    fi  #End Darwin Checks
+fi #End NTP Checks
 echo ""
 echo ""
-sleep 5
+
+# Download Release
+git clone https://bitbucket.org/risevisionfoundation/rise-core.git
+
+# Configure
+echo "Installing Dependencies for Rise-Core"
+cd rise-core
+sudo npm install -g forever
+npm install
+
+echo "Installing Dependencies for Web-UI"
+cd public
+npm install
+
+cd ../
+npm start
+
 forever list
-ntp_checks
 echo "You should rise-core running in the above list"
 echo ""
 echo "Run the following command to start Rise-Core on Testnet if you need to start Rise-Core after a reboot. You will
@@ -181,3 +156,4 @@ echo "Run the following command to start Rise-Core on Testnet if you need to sta
 echo "npm start"
 echo ""
 echo "Exiting"
+exit 1
