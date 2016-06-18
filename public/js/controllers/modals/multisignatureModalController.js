@@ -56,7 +56,7 @@ angular.module('riseApp').controller('multisignatureModalController', ["$scope",
 
             }
             if (buffer.length == 32) {
-                var rise = require('rise-js');
+                var rise = require('lisk-js');
                 var address = rise.crypto.getAddress($scope.member);
                 if ($scope.members[$scope.address] || address == userService.address) {
                     return;
