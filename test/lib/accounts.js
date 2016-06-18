@@ -110,7 +110,7 @@ describe("GET /accounts/getBalance", function () {
                 // console.log(JSON.stringify(res.body));
                 node.expect(res.body).to.have.property("success").to.be.false;
                 node.expect(res.body).to.have.property("error");
-                // expect(res.body.error).to.contain("Provide valid Lisk address");
+                // expect(res.body.error).to.contain("Provide valid Rise address");
                 done();
             });
     });
@@ -155,7 +155,7 @@ describe("GET /accounts/getPublicKey", function () {
                 // console.log(JSON.stringify(res.body));
                 node.expect(res.body).to.have.property("success").to.be.false;
                 node.expect(res.body).to.have.property("error");
-                // expect(res.body.error).to.contain("Provide valid Lisk address");
+                // expect(res.body.error).to.contain("Provide valid Rise address");
                 done();
             });
     });
@@ -169,7 +169,7 @@ describe("GET /accounts/getPublicKey", function () {
                 // console.log(JSON.stringify(res.body));
                 node.expect(res.body).to.have.property("success").to.be.false;
                 node.expect(res.body).to.have.property("error");
-                // expect(res.body.error).to.contain("Provide valid Lisk address");
+                // expect(res.body.error).to.contain("Provide valid Rise address");
                 done();
             });
     });
@@ -269,7 +269,7 @@ describe("GET /accounts?address=", function() {
                 // console.log(JSON.stringify(res.body));
                 node.expect(res.body).to.have.property("success").to.be.false;
                 node.expect(res.body).to.have.property("error");
-                // expect(res.body.error).to.contain("Provide valid Lisk address");
+                // expect(res.body.error).to.contain("Provide valid Rise address");
                 done();
             });
     });

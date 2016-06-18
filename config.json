@@ -1,5 +1,5 @@
 {
-    "port": 7000,
+    "port": 4000,
     "address": "0.0.0.0",
     "serveHttpAPI": true,
     "serveHttpWallet": true,
@@ -29,7 +29,7 @@
         "list": [
             {
             "ip":"169.45.226.3",
-            "port": 7000
+            "port": 4000
             }
         ],
         "blackList": [],

@@ -1,5 +1,5 @@
 /**
- * Get time from Lisk epoch.
+ * Get time from Rise epoch.
  * @param {number|undefined} time Time in unix seconds
  * @returns {number}
  */
@@ -22,7 +22,7 @@ function getEpochTime (time) {
 }
 
 module.exports = {
-	interval: 10,
+	interval: 20,
 	delegates: 101,
 
 	getTime: function (time) {
