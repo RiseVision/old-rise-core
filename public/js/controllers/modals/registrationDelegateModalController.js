@@ -21,7 +21,7 @@ angular.module('riseApp').controller('registrationDelegateModalController', ["$s
     }
 
     function validateUsername (onValid) {
-        var isAddress = /^[0-9]+[L|l]$/g;
+        var isAddress = /^[0-9]+[R|r]$/g;
         var allowSymbols = /^[a-z0-9!@$&_.]+$/g;
 
         $scope.delegateData.username = $scope.delegateData.username.trim();

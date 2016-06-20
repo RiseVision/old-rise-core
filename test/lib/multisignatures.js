@@ -290,7 +290,7 @@ describe("PUT /multisignatures", function () {
         node.api.put("/multisignatures")
             .set("Accept", "application/json")
             .send({
-                secret: MultisigAccount.password + "inv4lid",
+                secret: MultisigAccount.password + "invalid",
                 lifetime: 1,
                 min: requiredSignatures,
                 keysgroup: Keys

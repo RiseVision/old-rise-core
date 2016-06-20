@@ -3,7 +3,7 @@
     "address": "0.0.0.0",
     "serveHttpAPI": true,
     "serveHttpWallet": true,
-    "version": "0.2.3",
+    "version": "0.5.1",
     "fileLogLevel": "info",
     "logFileName": "logs.log",
     "consoleLogLevel": "log",
@@ -39,9 +39,7 @@
     },
 
     "forging": {
-        "secret": [
-
-        ],
+        "secret": [],
         "access": {
             "whiteList": [
                 "0.0.0.0"

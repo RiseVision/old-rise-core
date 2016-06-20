@@ -22,7 +22,7 @@ function getEpochTime (time) {
 }
 
 module.exports = {
-	interval: 20,
+	interval: 30,
 	delegates: 101,
 
 	getTime: function (time) {
@@ -63,6 +63,6 @@ module.exports = {
 	},
 
 	roundTime: function (date) {
-		Math.floor(date.getTime() / 1000) * 1000;
+		return Math.floor(date.getTime() / 1000) * 1000;
 	}
 }
