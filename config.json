@@ -28,7 +28,7 @@
     "peers": {
         "list": [
             {
-            "ip":"169.45.226.3",
+            "ip":"23.101.133.115",
             "port": 4000
             }
         ],
@@ -51,12 +51,12 @@
         "loadPerIteration": 5000
     },
     "ssl": {
-        "enabled": false,
+        "enabled": true,
         "options": {
             "port": 443,
             "address": "0.0.0.0",
-            "key": "./ssl/lisk.key",
-            "cert": "./ssl/lisk.crt"
+            "key": "./ssl/rise.key",
+            "cert": "./ssl/rise.crt"
         }
     },
     "nethash": "410f7d96a65932feb3b288c27c890135bf44846b08de6c3e9d77d675a6c695ce"
