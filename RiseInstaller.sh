@@ -53,21 +53,15 @@ if [[ "$(uname)" == "Linux" ]]; then
             echo "√ NTP is running"
         else
             echo "X NTP is not running"
-            read -r -n 1 -p "Would like to install NTP? (y/n): " $REPLY
-            if [[  $REPLY =~ ^[Yy]$ ]]; then
-                echo -e "\nInstalling NTP, please provide sudo password.\n"
-                sudo apt-get install ntp -yyq
-                sudo service ntp stop
-                sudo ntpdate pool.ntp.org
-                sudo service ntp start
-                if sudo pgrep -x "ntpd" > /dev/null; then
-                    echo "√ NTP is running"
-                else
-                    echo -e "\nLisk requires NTP running on Debian based systems. Please check /etc/ntp.conf and correct any issues."
-                    exit 0
-                fi
+            echo -e "\nInstalling NTP, please provide sudo password.\n"
+            sudo apt-get install ntp -yyq
+            sudo service ntp stop
+            sudo ntpdate pool.ntp.org
+            sudo service ntp start
+            if sudo pgrep -x "ntpd" > /dev/null; then
+                echo "√ NTP is running"
             else
-                echo -e "\nLisk requires NTP on Debian based systems, exiting."
+                echo -e "\nLisk requires NTP running on Debian based systems. Please check /etc/ntp.conf and correct any issues."
                 exit 0
             fi
         fi #End Debian Checks
@@ -139,11 +133,11 @@ git clone https://bitbucket.org/risevisionfoundation/rise-core.git
 echo "Installing Dependencies for Rise-Core"
 cd rise-core
 sudo npm install -g forever
-npm install
+npm install --production
 
 echo "Installing Dependencies for Web-UI"
 cd public
-npm install
+npm install --production
 
 cd ../
 npm start
