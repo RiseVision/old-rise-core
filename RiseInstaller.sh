@@ -2,6 +2,7 @@
 
 platform='unknown'
 unamestr=`uname`
+hostname=`hostname`
 if [[ $unamestr == 'Darwin' ]]; then
     platform='dawrin'
    	echo "OS X detected - installing Rise-Core"
@@ -38,8 +39,16 @@ elif [[ `lsb_release -i -s` == 'Ubuntu' ]]; then
 
 	# Install Postgres, Node, Git
 	sudo apt-get update
-	sudo apt-get install -y nodejs postgresql postgresql-contrib libpq-dev git build-essential
+	sudo apt-get install -y nodejs postgresql
+    sudo apt-get install -y postgresql-contrib libpq-dev git build-essential
 
+    # Configure Firewall
+    sudo apt-get install -y ufw
+
+    sudo ufw deny all
+    sudo ufw allow ssh
+    sudo ufw allow http
+    sudo ufw allow https
 	# Configure Postgres
 	sudo -u postgres psql -c "CREATE DATABASE rise_testnet;"
 	sudo -u postgres psql -c "CREATE USER risetest WITH PASSWORD 'risetestpassword';"
@@ -66,49 +75,14 @@ if [[ "$(uname)" == "Linux" ]]; then
             fi
         fi #End Debian Checks
     elif [[ -f "/etc/redhat-release" &&  ! -f "/proc/user_beancounters" ]]; then
-        if sudo pgrep -x "ntpd" > /dev/null; then
-            echo "√ NTP is running"
-        else
-            if sudo pgrep -x "chronyd" > /dev/null; then
-                echo "√ Chrony is running"
-            else
-                echo "X NTP and Chrony are not running"
-                echo -e "\nInstalling NTP, please provide sudo password.\n"
-                sudo yum -yq install ntp ntpdate ntp-doc
-                sudo chkconfig ntpd on
-                sudo service ntpd stop
-                sudo ntpdate pool.ntp.org
-                sudo service ntpd start
-                if pgrep -x "ntpd" > /dev/null; then
-                    echo "√ NTP is running"
-                else
-                    echo -e "\nLisk requires NTP running on Debian based systems. Please check /etc/ntp.conf and correct any issues."
-                    exit 0
-                fi
-            fi
-        fi #End Redhat Checks
+        echo "RedHat is not currently supported"
+        exit 0
     elif [[ -f "/proc/user_beancounters" ]]; then
-        echo "_ Running OpenVZ VM, NTP and Chrony are not required"
-    fi
+        echo "OpenVZ is not currently supported"
+        exit 0
     elif [[ "$(uname)" == "FreeBSD" ]]; then
-        if sudo pgrep -x "ntpd" > /dev/null; then
-            echo "√ NTP is running"
-        else
-            echo "X NTP is not running"
-
-            echo -e "\nInstalling NTP, please provide sudo password.\n"
-            sudo pkg install ntp
-            sudo sh -c "echo 'ntpd_enable=\"YES\"' >> /etc/rc.conf"
-            sudo ntpdate -u pool.ntp.org
-            sudo service ntpd start
-            if pgrep -x "ntpd" > /dev/null; then
-                echo "√ NTP is running"
-            else
-                echo -e "\nLisk requires NTP running on FreeBSD based systems. Please check /etc/ntp.conf and correct any issues."
-                exit 0
-            fi
-        fi
-    fi #End FreeBSD Checks
+       echo "FreeBSD is not currently Supported"
+       exit 0;
 elif [[ "$(uname)" == "Darwin" ]]; then
     if pgrep -x "ntpd" > /dev/null; then
         echo "√ NTP is running"
@@ -140,6 +114,8 @@ cd public
 npm install --production
 
 cd ../
+
+echo "Configuring LetsEncrypt - This will use your hostname
 npm start
 
 forever list
