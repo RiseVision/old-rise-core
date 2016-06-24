@@ -10,9 +10,9 @@
     "db": {
         "host": "localhost",
         "port": 5432,
-        "database": "rise_testnet",
-        "user": "risetest",
-        "password": "risetestpassword",
+        "database": "rise_mainnet",
+        "user": "rise",
+        "password": "8E&)J}pzHt=4sHya",
         "poolSize": 20,
         "poolIdleTimeout": 30000,
         "reapIntervalMillis": 1000,
@@ -22,26 +22,28 @@
     },
     "api": {
         "access": {
-            "whiteList": []
+            "whiteList": [
+                "0.0.0.0"
+            ]
         }
     },
     "peers": {
         "list": [
             {
             "ip":"169.55.126.36",
-            "port": 443
+            "port": 4242
             },
             {
             "ip":"158.85.96.227",
-            "port": 443
+            "port": 4242
             },
             {
             "ip":"161.202.112.35",
-            "port": 443
+            "port": 4242
             },
             {
             "ip":"168.1.41.234",
-            "port": 443
+            "port": 4242
             }
         ],
         "blackList": [],
