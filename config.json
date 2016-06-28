@@ -23,7 +23,6 @@
     "api": {
         "access": {
             "whiteList": [
-                "0.0.0.0"
             ]
         }
     },
