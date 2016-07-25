@@ -3,13 +3,13 @@
 // Requires and node configuration
 var node = require("./../variables.js");
 
-// Account info for a RANDOM account (which we create later) - 0 LISK amount | Will act as delegate
+// Account info for a RANDOM account (which we create later) - 0 RISE amount | Will act as delegate
 var Raccount = node.randomAccount();
 while (Raccount.username === Raccount.username.toUpperCase()) {
     Raccount = node.randomAccount();
 }
 
-// second RANDOM account - 0 LISK amount | Will test registration with same delegate name, changing case
+// second RANDOM account - 0 RISE amount | Will test registration with same delegate name, changing case
 var R2account = node.randomAccount();
 R2account.username=Raccount.username.toUpperCase();
 // console.log(JSON.stringify(R2account));
@@ -46,7 +46,7 @@ describe("PUT /accounts/delegates without funds", function () {
                             // console.log(JSON.stringify(res.body));
                             node.expect(res.body).to.have.property("success").to.be.false;
                             node.expect(res.body).to.have.property("error");
-                            node.expect(res.body.error).to.match(/Account has no LISK: [0-9]+/);
+                            node.expect(res.body.error).to.match(/Account has no RISE: [0-9]+/);
                             done();
                         });
                 });
@@ -77,13 +77,13 @@ describe("PUT /accounts/delegates without funds", function () {
 describe("PUT /accounts/delegates with funds", function () {
 
     before(function(done) {
-        // Send random LISK amount from genesis account to Random account
+        // Send random RISE amount from genesis account to Random account
 
         node.api.put("/transactions")
             .set("Accept", "application/json")
             .send({
                 secret: node.Gaccount.password,
-                amount: node.LISK,
+                amount: node.RISE,
                 recipientId: Raccount.address
             })
             .expect("Content-Type", /json/)
@@ -94,10 +94,10 @@ describe("PUT /accounts/delegates with funds", function () {
                 node.expect(res.body).to.have.property("transactionId");
                 if (res.body.success == true && res.body.transactionId != null) {
                     node.expect(res.body.transactionId).to.be.above(1);
-                    Raccount.amount += node.LISK;
+                    Raccount.amount += node.RISE;
                 } else {
                     // console.log("Transaction failed or transactionId is null");
-                    // console.log("Sent: secret: " + node.Gaccount.password + ", amount: " + node.LISK + ", recipientId: " + Raccount.address);
+                    // console.log("Sent: secret: " + node.Gaccount.password + ", amount: " + node.RISE + ", recipientId: " + Raccount.address);
                     node.expect("TEST").to.equal("FAILED");
                 }
                 done();
@@ -105,7 +105,7 @@ describe("PUT /accounts/delegates with funds", function () {
     });
 
     before(function (done) {
-        // Check that Raccount has the LISK we sent
+        // Check that Raccount has the RISE we sent
 
         node.onNewBlock(function(err) {
             node.expect(err).to.be.not.ok;
@@ -121,7 +121,7 @@ describe("PUT /accounts/delegates with funds", function () {
                     // console.log(JSON.stringify(res.body));
                     node.expect(res.body).to.have.property("success").to.be.true;
                     if (res.body.success == true && res.body.account != null) {
-                        node.expect(res.body.account.balance).to.be.equal(String(node.LISK));
+                        node.expect(res.body.account.balance).to.be.equal(String(node.RISE));
                     } else {
                         // console.log("Failed to open account or account object is null");
                         // console.log("Sent: secret: " + Raccount.password);
@@ -420,7 +420,7 @@ describe("PUT /delegates without funds", function () {
                 node.expect(res.body).to.have.property("success").to.be.false;
                 node.expect(res.body).to.have.property("error");
                 if (res.body.success == false && res.body.error != null) {
-                    node.expect(res.body.error).to.match(/Account has no LISK: [0-9]+/);
+                    node.expect(res.body.error).to.match(/Account has no RISE: [0-9]+/);
                 } else {
                     // console.log("Expected error and got success");
                     // console.log("Sent: secret: " + Raccount.password + ", username: " + Raccount.username);
@@ -434,7 +434,7 @@ describe("PUT /delegates without funds", function () {
 describe("PUT /delegates with funds",function () {
 
     before(function (done) {
-        // Send random LISK amount from foundation account to second Random account
+        // Send random RISE amount from foundation account to second Random account
 
         node.api.post("/accounts/open")
         .set("Accept", "application/json")
@@ -457,7 +457,7 @@ describe("PUT /delegates with funds",function () {
                     .set('Accept', 'application/json')
                     .send({
                         secret: node.Gaccount.password,
-                        amount: node.LISK,
+                        amount: node.RISE,
                         recipientId: R2account.address
                     })
                     .expect('Content-Type', /json/)
@@ -468,10 +468,10 @@ describe("PUT /delegates with funds",function () {
                         node.expect(res.body).to.have.property("transactionId");
                         if (res.body.success == true && res.body.transactionId != null) {
                             node.expect(res.body.transactionId).to.be.above(1);
-                            R2account.amount += node.LISK;
+                            R2account.amount += node.RISE;
                         } else {
                             // console.log("Transaction failed or transactionId is null");
-                            // console.log("Sent: secret: " + node.Gaccount.password + ", amount: " + node.LISK + ", recipientId: " + R2account.address);
+                            // console.log("Sent: secret: " + node.Gaccount.password + ", amount: " + node.RISE + ", recipientId: " + R2account.address);
                             node.expect("TEST").to.equal("FAILED");
                         }
                         done();
@@ -480,7 +480,7 @@ describe("PUT /delegates with funds",function () {
     });
 
     before(function (done) {
-        // Check that R2account has the LISK we sent
+        // Check that R2account has the RISE we sent
 
         node.onNewBlock(function (err) {
             node.expect(err).to.be.not.ok;
@@ -495,7 +495,7 @@ describe("PUT /delegates with funds",function () {
                     // console.log(JSON.stringify(res.body));
                     node.expect(res.body).to.have.property("success").to.be.true;
                     if (res.body.success == true && res.body.account != null) {
-                        node.expect(res.body.account.balance).to.be.equal(''+node.LISK);
+                        node.expect(res.body.account.balance).to.be.equal(''+node.RISE);
                     } else {
                         // console.log("Failed to open account or account object is null");
                         // console.log("Sent: secret: " + R2account.password);

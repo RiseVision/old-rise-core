@@ -50,7 +50,7 @@ describe("POST /peer/transactions", function () {
                         .set("port", node.config.port)
                         .send({
                             secret: node.Gaccount.password,
-                            amount: node.Fees.secondPasswordFee + 100000000, // Testing 1 delegate registration + 1 transaction sending 1Lisk
+                            amount: node.Fees.secondPasswordFee + 100000000, // Testing 1 delegate registration + 1 transaction sending 1Rise
                             recipientId: account.address
                         })
                         .expect("Content-Type", /json/)
@@ -110,7 +110,7 @@ describe("POST /peer/transactions", function () {
         });
 
         it("Using blank second signature. Should fail", function (done) {
-            var transaction = node.lisk.transaction.createTransaction("1L", 1, account.password, ""); // Send 1 Lisk to address 1L
+            var transaction = node.lisk.transaction.createTransaction("1L", 1, account.password, ""); // Send 1 Rise to address 1L
             node.peer.post("/transactions")
                 .set("Accept", "application/json")
                 .set("version", node.version)
@@ -129,7 +129,7 @@ describe("POST /peer/transactions", function () {
         });
 
         it("Using fake second signature. Should fail", function (done) {
-            var transaction = node.lisk.transaction.createTransaction("1L", 1, account.password, account2.secondPassword); // Send 1 Lisk to address 1L
+            var transaction = node.lisk.transaction.createTransaction("1L", 1, account.password, account2.secondPassword); // Send 1 Rise to address 1L
             transaction.signSignature = crypto.randomBytes(64).toString("hex");
             transaction.id = node.lisk.crypto.getId(transaction);
             node.peer.post("/transactions")
@@ -150,7 +150,7 @@ describe("POST /peer/transactions", function () {
         });
 
         it("Using valid second signature. Should be ok", function (done) {
-            var transaction = node.lisk.transaction.createTransaction("1L", 1, account.password, account.secondPassword); // Send 1 Lisk to address 1L
+            var transaction = node.lisk.transaction.createTransaction("1L", 1, account.password, account.secondPassword); // Send 1 Rise to address 1L
             node.peer.post("/transactions")
                 .set("Accept", "application/json")
                 .set("version", node.version)

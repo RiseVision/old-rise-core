@@ -21,11 +21,11 @@ module.exports = {
 	maxPayloadLength: 1024 * 1024,
 	maxRequests: 10000 * 12,
 	maxSignaturesLength: 196 * 256,
-	maxTxsPerBlock: 25,
+	maxTxsPerBlock: 150,
 	numberLength: 100000000,
 	requestLength: 104,
 	rewards: {
-		offset: 1451520,   // Start rewards at block (n)
+		offset: 0,   // Start rewards at block (n)
 		distance: 3000000, // Distance between each milestone
 	},
 	signatureLength: 196,

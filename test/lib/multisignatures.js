@@ -6,8 +6,8 @@ var node = require("./../variables.js");
 var totalMembers = node.randomNumber(2,16);
 var requiredSignatures = node.randomNumber(2,totalMembers+1);
 
-var NoLISKAccount = node.randomAccount();
-NoLISKAccount.name = "nolisk";
+var NoRISEAccount = node.randomAccount();
+NoRISEAccount.name = "nolisk";
 
 var MultisigAccount = node.randomAccount();
 MultisigAccount.name = "multi";
@@ -45,8 +45,8 @@ function openAccount (account, i) {
                   Accounts[i].address = res.body.account.address;
                   Accounts[i].publicKey = res.body.account.publicKey;
             } else if (account.name == "nolisk") {
-                NoLISKAccount.address = res.body.account.address;
-                NoLISKAccount.publicKey = res.body.account.publicKey;
+                NoRISEAccount.address = res.body.account.address;
+                NoRISEAccount.publicKey = res.body.account.publicKey;
             } else if (account.name == "multi") {
                 MultisigAccount.address = res.body.account.address;
                 MultisigAccount.publicKey = res.body.account.publicKey;
@@ -54,34 +54,34 @@ function openAccount (account, i) {
         });
 }
 
-// Used for sending LISK to accounts
+// Used for sending RISE to accounts
 var accountSendTurn = 0;
 
-function sendLISK (account, i) {
+function sendRISE (account, i) {
     node.onNewBlock(function (err) {
-        var randomLISK = node.randomLISK();
+        var randomRISE = node.randomRISE();
 
         node.api.put("/transactions")
             .set("Accept", "application/json")
             .send({
                 secret: node.Gaccount.password,
-                amount: randomLISK,
+                amount: randomRISE,
                 recipientId: account.address
             })
             .expect("Content-Type", /json/)
             .expect(200)
             .end(function (err, res) {
                 // console.log(JSON.stringify(res.body));
-                // console.log("Sending " + randomLISK + " LISK to " + account.address);
+                // console.log("Sending " + randomRISE + " RISE to " + account.address);
                 node.expect(res.body).to.have.property("success").to.be.true;
                 if (res.body.success == true && i != null) {
-                    Accounts[i].balance = randomLISK / node.normalizer;
+                    Accounts[i].balance = randomRISE / node.normalizer;
                 }
             });
     });
 }
 
-function sendLISKfromMultisigAccount (amount, recipient) {
+function sendRISEfromMultisigAccount (amount, recipient) {
     node.api.put("/transactions")
         .set("Accept", "application/json")
         .send({
@@ -93,7 +93,7 @@ function sendLISKfromMultisigAccount (amount, recipient) {
         .expect(200)
         .end(function (err, res) {
             // console.log(JSON.stringify(res.body));
-            // console.log("Sending " + amount + " LISK to " + recipient);
+            // console.log("Sending " + amount + " RISE to " + recipient);
             node.expect(res.body).to.have.property("success").to.be.true;
             if (res.body.success == true) {
                 node.expect(res.body).to.have.property("transactionId");
@@ -139,7 +139,7 @@ before(function (done) {
             }, 2000);
         }
     }
-    openAccount(NoLISKAccount, null);
+    openAccount(NoRISEAccount, null);
     openAccount(MultisigAccount, null);
     done();
 });
@@ -147,10 +147,10 @@ before(function (done) {
 before(function (done) {
    for (var i = 0; i < (Accounts.length); i++) {
        if(Accounts[i] != null) {
-           sendLISK(Accounts[i], i);
+           sendRISE(Accounts[i], i);
        }
    }
-   sendLISK(MultisigAccount, null);
+   sendRISE(MultisigAccount, null);
    done();
 });
 
@@ -191,11 +191,11 @@ describe("PUT /multisignatures", function () {
             });
     });
 
-    it("When account has 0 LISK. Should fail", function (done) {
+    it("When account has 0 RISE. Should fail", function (done) {
         node.api.put("/multisignatures")
             .set("Accept", "application/json")
             .send({
-                secret: NoLISKAccount.password,
+                secret: NoRISEAccount.password,
                 lifetime: 1,
                 min: requiredSignatures,
                 keysgroup: Keys
@@ -290,7 +290,7 @@ describe("PUT /multisignatures", function () {
         node.api.put("/multisignatures")
             .set("Accept", "application/json")
             .send({
-                secret: MultisigAccount.password + "inv4lid",
+                secret: MultisigAccount.password + "invalid",
                 lifetime: 1,
                 min: requiredSignatures,
                 keysgroup: Keys
@@ -714,7 +714,7 @@ describe("Sending another transaction", function () {
 
     it("When other transactions are still pending. Should be ok", function (done) {
         node.onNewBlock(function (err) {
-            sendLISKfromMultisigAccount(100000000, node.Gaccount.address);
+            sendRISEfromMultisigAccount(100000000, node.Gaccount.address);
             done();
         });
     });

@@ -1,0 +1,5 @@
+psql << EOF
+		CREATE DATABASE rise_testnet;
+		CREATE USER risetest WITH PASSWORD 'risetestpassword';
+		GRANT ALL PRIVILEGES ON DATABASE rise_testnet TO risetest;
+	EOF

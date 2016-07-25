@@ -283,7 +283,7 @@ Accounts.prototype.generateAddressByPublicKey = function (publicKey) {
 		temp[i] = publicKeyHash[7 - i];
 	}
 
-	var address = bignum.fromBuffer(temp).toString() + 'L';
+	var address = bignum.fromBuffer(temp).toString() + 'R';
 
 	if (!address) {
 		throw Error("Invalid public key: " + publicKey);
@@ -410,7 +410,7 @@ shared.getBalance = function (req, cb) {
 			return cb(err[0].message);
 		}
 
-		var isAddress = /^[0-9]{1,21}[L|l]$/g;
+		var isAddress = /^[0-9]{1,21}[R|r]$/g;
 		if (!isAddress.test(query.address)) {
 			return cb("Invalid address");
 		}

@@ -19,7 +19,7 @@ var config = require("../config.json"),
     peer = supertest(baseUrl + "/peer"),
     constants = require("../helpers/constants.js");
 
-var normalizer = 100000000; // Use this to convert LISK amount to normal value
+var normalizer = 100000000; // Use this to convert RISE amount to normal value
 var blockTime = 10000; // Block time in miliseconds
 var blockTimePlus = 12000; // Block time + 2 seconds in miliseconds
 var version = "0.2.1" // Node version
@@ -66,8 +66,8 @@ var Gaccount = {
   "balance": 10000000000000000
 };
 
-// Random LISK Amount
-var LISK = Math.floor(Math.random() * (100000 * 100000000)) + 1; // Remove 1 x 0 for reduced fees (delegate + Tx)
+// Random RISE Amount
+var RISE = Math.floor(Math.random() * (100000 * 100000000)) + 1; // Remove 1 x 0 for reduced fees (delegate + Tx)
 
 // Used to create random delegates names
 function randomDelegateName() {
@@ -92,8 +92,8 @@ function randomProperty(obj, needKey) {
   }
 };
 
-// Randomizes LISK amount
-function randomLISK() {
+// Randomizes RISE amount
+function randomRISE() {
   return Math.floor(Math.random() * (10000 * 100000000)) + (1000 * 100000000);
 }
 
@@ -275,7 +275,7 @@ module.exports = {
   supertest: supertest,
   expect: expect,
   version: version,
-  LISK: LISK,
+  RISE: RISE,
   Gaccount: Gaccount,
   Daccount: Daccount,
   Eaccount: Eaccount,
@@ -289,7 +289,7 @@ module.exports = {
   blockTimePlus: blockTimePlus,
   randomProperty: randomProperty,
   randomDelegateName: randomDelegateName,
-  randomLISK: randomLISK,
+  randomRISE: randomRISE,
   randomPassword: randomPassword,
   randomAccount: randomAccount,
   randomTxAccount: randomTxAccount,
