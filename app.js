@@ -46,8 +46,10 @@ if (program.port) {
 if (program.address) {
 	appConfig.address = program.address;
 }
-
-if (program.peers) {
+if (process.env.NODE_ENV != 'production') {
+	appConfig.port = 4444
+}
+if (process.env.NODE_ENV === 'production' && program.peers) {
 	if (typeof program.peers === "string") {
 		appConfig.peers.list = program.peers.split(",").map(function (peer) {
 			peer = peer.split(":");
