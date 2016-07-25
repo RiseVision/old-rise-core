@@ -36,6 +36,9 @@ if (program.config) {
 	appConfig = require(path.resolve(process.cwd(), program.config));
 }
 
+if (process.env.NODE_ENV != production) {
+	appConfig.port = 4444
+} else
 if (program.port) {
 	appConfig.port = program.port;
 }
