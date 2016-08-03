@@ -21,6 +21,7 @@ var modules, library, self, private = {}, shared = {};
 private.lastBlock = {};
 private.blockReward = new blockReward();
 
+//values from Views.full_blocks_list
 // @formatter:off
 private.blocksDataFields = {
 	'b_id': String,

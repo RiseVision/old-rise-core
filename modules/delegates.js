@@ -579,6 +579,7 @@ private.loadMyDelegates = function (cb) {
 
 // Public methods
 Delegates.prototype.generateDelegateList = function (height, cb) {
+	//library.logger.info(cb);
 	private.getKeysSortByVote(function (err, truncDelegateList) {
 		if (err) {
 			return cb(err);
@@ -619,7 +620,6 @@ Delegates.prototype.getDelegates = function (query, cb) {
 
 		orderField = orderField ? orderField.split(':') : null;
 		limit = limit > constants.activeDelegates ? constants.activeDelegates : limit;
-
 		var orderBy = orderField ? orderField[0] : null;
 		var sortMode = orderField && orderField.length == 2 ? orderField[1] : 'asc';
 
@@ -642,6 +642,7 @@ Delegates.prototype.getDelegates = function (query, cb) {
 			delegates[i].productivity = (!outsider) ? Math.round(percent * 1e2) / 1e2 : 0;
 		}
 
+		//library.logger.info(cb);
 		return cb(null, {
 			delegates: delegates,
 			sortMode: sortMode,
