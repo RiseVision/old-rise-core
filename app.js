@@ -12,46 +12,46 @@ var z_schema = require("z-schema");
 var util = require("util");
 var Sequence = require("./helpers/sequence.js");
 
-process.stdin.resume();
+process.stdin.resume(); // Switches to old stream mode a resumes the stream.
 
-var versionBuild = fs.readFileSync(path.join(__dirname, "build"), "utf8");
+var versionBuild = fs.readFileSync(path.join(__dirname, "build"), "utf8"); // Reads the build file.
 
-if (typeof gc !== "undefined") {
+if (typeof gc !== "undefined") { // Changes the garbage collection to a 60 second interval.
 	setInterval(function () {
 		gc();
 	}, 60000);
 }
 
 program
-	.version(packageJson.version)
-	.option("-c, --config <path>", "Config file path")
+	.version(packageJson.version) // Sets version number for command-line output
+	.option("-c, --config <path>", "Config file path") // Adds options for the application and adds them to the --help output.
 	.option("-p, --port <port>", "Listening port number")
 	.option("-a, --address <ip>", "Listening host name or ip")
 	.option("-b, --blockchain <path>", "Blockchain db path")
 	.option("-x, --peers [peers...]", "Peers list")
 	.option("-l, --log <level>", "Log level")
-	.parse(process.argv);
+	.parse(process.argv);  // process.argv is the input parsed for these options.
 
+// If the path specified for config is a full path then it will require that instead of the default. Otherwise it will resolve the path as the working directory + the path specified.
 if (program.config) {
 	appConfig = require(path.resolve(process.cwd(), program.config));
 }
 
+// Sets the port the application is running on as the one specified. Replaces what is set in the config file.
 if (process.env.NODE_ENV != 'production') {
 	appConfig.port = 4444
-} else
-if (program.port) {
+} else if (program.port) {
 	appConfig.port = program.port;
 }
 
+// Sets the address/hostname the application is running on as the one specified. Replaces what is set in the config file.
 if (program.address) {
 	appConfig.address = program.address;
 }
-if (process.env.NODE_ENV != 'production') {
-	appConfig.port = 4444
-}
+
 if (process.env.NODE_ENV === 'production' && program.peers) {
-	if (typeof program.peers === "string") {
-		appConfig.peers.list = program.peers.split(",").map(function (peer) {
+	if (typeof program.peers === "string") { // If the peers option is a string then go through and return the ip and ports listed as a json object and add that object the the peers.list array otherwise peers.list is an empty array
+		appConfig.peers.list = program.peers.split(",").map(function (peer) { // TODO make this accept normal JSON.
 			peer = peer.split(":");
 			return {
 				ip: peer.shift(),
@@ -63,11 +63,11 @@ if (process.env.NODE_ENV === 'production' && program.peers) {
 	}
 }
 
-if (program.log) {
-	appConfig.consoleLogLevel = program.log;
+if (program.log) { // if the log option is flagged on run
+	appConfig.consoleLogLevel = program.log; // Changes the log level. Replaces what is set in the config file.
 }
 
-var config = {
+var config = { // Stores the DB information which is a JSON object. Also stores the module paths.
 	"db": appConfig.db,
 	"modules": {
 		"server": "./modules/server.js",
