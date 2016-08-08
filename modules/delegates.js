@@ -15,13 +15,25 @@ var MilestoneBlocks = require("../helpers/milestoneBlocks.js");
 var sql = require("../sql/delegates.js");
 var _ = require("underscore");
 
+//debugging function
+function objToString (obj) {
+	var str = '';
+	for (var p in obj) {
+			if (obj.hasOwnProperty(p)) {
+					str += p + '::' + obj[p] + '\n';
+			}
+	}
+	return str;
+}
+
 // Private fields
 var modules, library, self, private = {}, shared = {};
 
 private.loaded = false;
-private.blockReward = new blockReward();
+private.blockReward = new blockReward(); //function from helper/blockReward.js (TO DO: lookup more on this function)
 private.keypairs = {};
 
+//next function used for creating delegates
 function Delegate() {
 	this.create = function (data, trs) {
 		trs.recipientId = null;
@@ -267,12 +279,14 @@ function Delegate() {
 }
 
 // Constructor
+// attaches 'private methods' from this page to self.__private and then launches attachApi function
 function Delegates(cb, scope) {
 	library = scope;
 	self = this;
 	self.__private = private;
 	private.attachApi();
-
+	//next function 'new Dele.' used to create dele. from function on same page
+	//TO DO: write more detail on this next line
 	library.logic.transaction.attachAssetType(transactionTypes.DELEGATE, new Delegate());
 
 	setImmediate(cb, null, self);
@@ -609,6 +623,7 @@ Delegates.prototype.getDelegates = function (query, cb) {
 		isDelegate: 1,
 		sort: { "vote": -1, "publicKey": 1 }
 	}, ["username", "address", "publicKey", "vote", "missedblocks", "producedblocks"], function (err, delegates) {
+		library.logger.info(delegates);
 		if (err) {
 			return cb(err);
 		}
