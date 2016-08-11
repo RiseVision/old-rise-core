@@ -90,6 +90,10 @@ private.attachApi = function () {
 			}
 
 			if ((req.peer.version == library.config.version) && (req.headers['nethash'] == library.config.nethash)) {
+				if (!modules.blocks.lastReceipt()) {
+					modules.delegates.enableForging();
+				}
+
 				modules.peer.update(req.peer);
 			}
 
@@ -451,13 +455,6 @@ private.hashsum = function (obj) {
 
 // Public methods
 Transport.prototype.broadcast = function (config, options, cb) {
-	// When client is not loaded, is syncing or round is ticking
-	// Skip broadcast as client is not ready to make them
-	if (!private.loaded || modules.loader.syncing() || modules.round.ticking()) {
-		library.logger.debug("Skipping broadcast, client is not ready");
-		return cb && setImmediate(cb);
-	}
-
 	config.limit = config.limit || 1;
 	modules.peer.list(config, function (err, peers) {
 		if (!err) {
@@ -545,14 +542,14 @@ Transport.prototype.getFromPeer = function (peer, options, cb) {
 				if (err && (err.code == "ETIMEDOUT" || err.code == "ESOCKETTIMEDOUT" || err.code == "ECONNREFUSED")) {
 					modules.peer.remove(peer.ip, peer.port, function (err) {
 						if (!err) {
-							library.logger.info('Removing peer ' + req.method + ' ' + req.url)
+							library.logger.warn('Removing peer ' + req.method + ' ' + req.url)
 						}
 					});
 				} else {
 					if (!options.not_ban) {
 						modules.peer.state(peer.ip, peer.port, 0, 600, function (err) {
 							if (!err) {
-								library.logger.info('Ban 10 min ' + req.method + ' ' + req.url);
+								library.logger.warn('Ban 10 min ' + req.method + ' ' + req.url);
 							}
 						});
 					}

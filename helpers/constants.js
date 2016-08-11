@@ -14,6 +14,7 @@ module.exports = {
 	feeStart: 1,
 	feeStartVolume: 10000 * 100000000,
 	fixedPoint : Math.pow(10, 8),
+	forgingTimeOut: 500, // 50 blocks
 	maxAddressesLength: 208 * 128,
 	maxAmount: 100000000,
 	maxClientConnections: 100,
@@ -30,4 +31,10 @@ module.exports = {
 	},
 	signatureLength: 196,
 	totalAmount: 10000000000000000
+	unconfirmedTransactionTimeOut: 10800, // 1080 blocks
+	voteExceptions: [
+		"5524930565698900323",  // 20407
+		"11613486949732674475", // 123300
+		"14164134775432642506"  // 123333
+	]
 }

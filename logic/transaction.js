@@ -164,6 +164,7 @@ Transaction.prototype.getBytes = function (trs, skipSignature, skipSecondSignatu
 	} catch (e) {
 		throw Error(e.toString());
 	}
+
 	return bb.toBuffer();
 }
 
@@ -195,7 +196,7 @@ Transaction.prototype.process = function (trs, sender, requester, cb) {
 	try {
 		var txId = this.getId(trs);
 	} catch (e) {
-		library.logger.error(e.toString());
+		this.scope.logger.error(e.toString());
 		return setImmediate(cb, "Invalid transaction id");
 	}
 
@@ -222,8 +223,7 @@ Transaction.prototype.process = function (trs, sender, requester, cb) {
 		if (!this.verifySignature(trs, trs.requesterPublicKey, trs.signature)) {
 			return setImmediate(cb, "Failed to verify signature");
 		}
-	}
-	else {
+	} else {
 		if (!this.verifySignature(trs, trs.senderPublicKey, trs.signature)) {
 			return setImmediate(cb, "Failed to verify signature");
 		}
@@ -239,15 +239,15 @@ Transaction.prototype.process = function (trs, sender, requester, cb) {
 				return cb("Ignoring already confirmed transaction");
 			}
 
-			cb(null, trs);
+			return cb(null, trs);
 		}).catch(function (err) {
-			library.logger.error(err.toString());
+			this.scope.logger.error(err.toString());
 			return cb("Transaction#process error");
 		});
 	}.bind(this));
 }
 
-Transaction.prototype.verify = function (trs, sender, requester, cb) { //inheritance
+Transaction.prototype.verify = function (trs, sender, requester, cb) {
 	if (typeof requester === 'function') {
 		cb = requester;
 	}
@@ -281,7 +281,7 @@ Transaction.prototype.verify = function (trs, sender, requester, cb) { //inherit
 			valid = this.verifySignature(trs, trs.senderPublicKey, trs.signature);
 		}
 	} catch (e) {
-		library.logger.error(e.toString());
+		this.scope.logger.error(e.toString());
 		return setImmediate(cb, e.toString());
 	}
 
@@ -357,7 +357,7 @@ Transaction.prototype.verify = function (trs, sender, requester, cb) { //inherit
 	}
 
 	// Check sender
-	if (trs.senderId != sender.address) {
+	if (String(trs.senderId).toUpperCase() != String(sender.address).toUpperCase()) {
 		return setImmediate(cb, "Invalid sender id: " + trs.id);
 	}
 
@@ -366,10 +366,12 @@ Transaction.prototype.verify = function (trs, sender, requester, cb) { //inherit
 	if (!fee || trs.fee != fee) {
 		return setImmediate(cb, "Invalid transaction type/fee: " + trs.id);
 	}
+
 	// Check amount
 	if (trs.amount < 0 || trs.amount > constants.totalAmount || String(trs.amount).indexOf('.') >= 0 || trs.amount.toString().indexOf('e') >= 0) {
 		return setImmediate(cb, "Invalid transaction amount: " + trs.id);
 	}
+
 	// Check timestamp
 	if (slots.getSlotNumber(trs.timestamp) > slots.getSlotNumber()) {
 		return setImmediate(cb, "Invalid transaction timestamp");
@@ -377,7 +379,7 @@ Transaction.prototype.verify = function (trs, sender, requester, cb) { //inherit
 
 	// Spec
 	private.types[trs.type].verify.call(this, trs, sender, function (err) {
-		cb(err);
+		return cb(err);
 	});
 }
 
@@ -446,7 +448,7 @@ Transaction.prototype.apply = function (trs, block, sender, cb) {
 	var amount = trs.amount + trs.fee;
 
 	if (trs.blockId != genesisblock.block.id && sender.balance < amount) {
-		return setImmediate(cb, "Account has no RISE: " + trs.id);
+		return setImmediate(cb, "Account has no LISK: " + trs.id);
 	}
 
 	this.scope.account.merge(sender.address, {
@@ -534,7 +536,7 @@ Transaction.prototype.applyUnconfirmed = function (trs, sender, requester, cb) {
 	var amount = trs.amount + trs.fee;
 
 	if (sender.u_balance < amount && trs.blockId != genesisblock.block.id) {
-		return setImmediate(cb, "Account has no RISE: " + trs.id);
+		return setImmediate(cb, "Account has no LISK: " + trs.id);
 	}
 
 	this.scope.account.merge(sender.address, {u_balance: -amount}, function (err, sender) {
@@ -754,7 +756,7 @@ Transaction.prototype.dbRead = function (raw) {
 			fee: parseInt(raw.t_fee),
 			signature: raw.t_signature,
 			signSignature: raw.t_signSignature,
-			signatures: raw.t_signatures ? raw.t_signatures.split(',') : null,
+			signatures: raw.t_signatures ? raw.t_signatures.split(',') : [],
 			confirmations: parseInt(raw.confirmations),
 			asset: {}
 		}

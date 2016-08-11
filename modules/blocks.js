@@ -7,6 +7,7 @@ var genesisblock = null;
 var blockReward = require("../helpers/blockReward.js");
 var constants = require("../helpers/constants.js");
 var Inserts = require("../helpers/inserts.js");
+var OrderBy = require("../helpers/orderBy.js");
 var Router = require("../helpers/router.js");
 var slots = require("../helpers/slots.js");
 var util = require("util");
@@ -19,6 +20,7 @@ var _ = require("underscore");
 var modules, library, self, private = {}, shared = {};
 
 private.lastBlock = {};
+private.lastReceipt = null;
 private.blockReward = new blockReward();
 
 // @formatter:off
@@ -123,9 +125,6 @@ private.saveGenesisBlock = function (cb) {
 
 		if (!blockId) {
 			private.saveBlock(genesisblock.block, function (err) {
-				if (err) {
-				}
-
 				return cb(err);
 			});
 		} else {
@@ -147,8 +146,7 @@ private.deleteBlock = function (blockId, cb) {
 }
 
 private.list = function (filter, cb) {
-	var sortFields = sql.sortFields;
-	var params = {}, where = [], sortMethod = '', sortBy = '';
+	var params = {}, where = [];
 
 	if (filter.generatorPublicKey) {
 		where.push('"b_generatorPublicKey"::bytea = ${generatorPublicKey}');
@@ -185,25 +183,6 @@ private.list = function (filter, cb) {
 		params.reward = filter.reward;
 	}
 
-	if (filter.orderBy) {
-		var sort = filter.orderBy.split(':');
-
-		sortBy = sort[0].replace(/[^\w\s]/gi, '');
-		sortBy = '"b_' + sortBy + '"';
-
-		if (sort.length == 2) {
-			sortMethod = sort[1] == 'desc' ? 'DESC' : 'ASC'
-		} else {
-			sortMethod = 'DESC';
-		}
-	}
-
-	if (sortBy) {
-		if (sortFields.indexOf(sortBy) < 0) {
-			return cb("Invalid sort field");
-		}
-	}
-
 	if (!filter.limit) {
 		params.limit = 100;
 	} else {
@@ -220,6 +199,17 @@ private.list = function (filter, cb) {
 		return cb("Invalid limit. Maximum is 100");
 	}
 
+	var orderBy = OrderBy(
+		filter.orderBy, {
+			sortFields: sql.sortFields,
+			fieldPrefix: "b_"
+		}
+	);
+
+	if (orderBy.error) {
+		return cb(orderBy.error);
+	}
+
 	library.db.query(sql.countList({
 		where: where
 	}), params).then(function (rows) {
@@ -227,21 +217,21 @@ private.list = function (filter, cb) {
 
 		library.db.query(sql.list({
 			where: where,
-			sortBy: sortBy,
-			sortMethod: sortMethod
+			sortField: orderBy.sortField,
+			sortMethod: orderBy.sortMethod
 		}), params).then(function (rows) {
-				var blocks = [];
+			var blocks = [];
 
-				for (var i = 0; i < rows.length; i++) {
-					blocks.push(library.logic.block.dbRead(rows[i]));
-				}
+			for (var i = 0; i < rows.length; i++) {
+				blocks.push(library.logic.block.dbRead(rows[i]));
+			}
 
-				var data = {
-					blocks: blocks,
-					count: count
-				}
+			var data = {
+				blocks: blocks,
+				count: count
+			}
 
-				cb(null, data);
+			return cb(null, data);
 		}).catch(function (err) {
 			library.logger.error(err.toString());
 			return cb("Blocks#list error");
@@ -477,6 +467,14 @@ private.applyTransaction = function (block, transaction, sender, cb) {
 }
 
 // Public methods
+Blocks.prototype.lastReceipt = function (lastReceipt) {
+	if (lastReceipt) {
+		private.lastReceipt = lastReceipt;
+	}
+
+	return private.lastReceipt;
+}
+
 Blocks.prototype.getCommonBlock = function (peer, height, cb) {
 	var commonBlock = null;
 	var lastBlockHeight = height;
@@ -1095,16 +1093,16 @@ Blocks.prototype.generateBlock = function (keypair, timestamp, cb) {
 	async.eachSeries(transactions, function (transaction, cb) {
 		modules.accounts.getAccount({ publicKey: transaction.senderPublicKey }, function (err, sender) {
 			if (err || !sender) {
-				return cb("Invalid sender");
+				return setImmediate(cb, "Invalid sender");
 			}
 
 			if (library.logic.transaction.ready(transaction, sender)) {
 				library.logic.transaction.verify(transaction, sender, function (err) {
 					ready.push(transaction);
-					cb();
+					return setImmediate(cb);
 				});
 			} else {
-				setImmediate(cb);
+				return setImmediate(cb);
 			}
 		});
 	}, function () {
@@ -1124,17 +1122,23 @@ Blocks.prototype.generateBlock = function (keypair, timestamp, cb) {
 	});
 }
 
+Blocks.prototype.sandboxApi = function (call, args, cb) {
+	sandboxHelper.callMethod(shared, call, args, cb);
+}
+
 // Events
 Blocks.prototype.onReceiveBlock = function (block) {
 	// When client is not loaded, is syncing or round is ticking
 	// Do not receive new blocks as client is not ready to receive them
 	if (!private.loaded || modules.loader.syncing() || modules.round.ticking()) {
+		library.logger.debug('onReceiveBlock:', 'client not ready');
 		return;
 	}
 
 	library.sequence.add(function (cb) {
 		if (block.previousBlock == private.lastBlock.id && private.lastBlock.height + 1 == block.height) {
 			library.logger.info('Received new block id: ' + block.id + ' height: ' + block.height + ' round: ' + modules.round.calc(modules.blocks.getLastBlock().height) + ' slot: ' + slots.getSlotNumber(block.timestamp) + ' reward: ' + modules.blocks.getLastBlock().reward)
+			self.lastReceipt(new Date());
 			self.processBlock(block, true, cb);
 		} else if (block.previousBlock != private.lastBlock.id && private.lastBlock.height + 1 == block.height) {
 			// Fork: Same height but different previous block id

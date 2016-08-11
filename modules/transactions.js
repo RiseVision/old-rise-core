@@ -6,6 +6,7 @@ var genesisblock = null;
 var constants = require("../helpers/constants.js");
 var slots = require("../helpers/slots.js");
 var extend = require("extend");
+var OrderBy = require("../helpers/orderBy.js");
 var Router = require("../helpers/router.js");
 var async = require("async");
 var transactionTypes = require("../helpers/transactionTypes.js");
@@ -41,7 +42,7 @@ function Transfer() {
 			return cb("Invalid transaction amount");
 		}
 
-		cb(null, trs);
+		return cb(null, trs);
 	}
 
 	this.process = function (trs, sender, cb) {
@@ -65,7 +66,7 @@ function Transfer() {
 				blockId: block.id,
 				round: modules.round.calc(block.height)
 			}, function (err) {
-				cb(err);
+				return cb(err);
 			});
 		});
 	}
@@ -83,7 +84,7 @@ function Transfer() {
 				blockId: block.id,
 				round: modules.round.calc(block.height)
 			}, function (err) {
-				cb(err);
+				return cb(err);
 			});
 		});
 	}
@@ -110,12 +111,11 @@ function Transfer() {
 	}
 
 	this.ready = function (trs, sender) {
-		if (util.isArray(sender.multisignatures) && sender.multisignatures.length) {
-			if (!trs.signatures) {
+		if (Array.isArray(sender.multisignatures) && sender.multisignatures.length) {
+			if (!Array.isArray(trs.signatures)) {
 				return false;
 			}
-
-			return trs.signatures.length >= sender.multimin - 1;
+			return trs.signatures.length >= sender.multimin;
 		} else {
 			return true;
 		}
@@ -199,25 +199,6 @@ private.list = function (filter, cb) {
 		params.type = filter.type;
 	}
 
-	if (filter.orderBy) {
-		var sort = filter.orderBy.split(':');
-		var sortBy = sort[0].replace(/[^\w_]/gi, '');
-
-		if (sort.length == 2) {
-			var sortMethod = sort[1] == 'desc' ? 'DESC' : 'ASC'
-		} else {
-			sortMethod = 'DESC';
-		}
-	}
-
-	if (sortBy) {
-		if (sortFields.indexOf(sortBy) < 0) {
-			return cb("Invalid sort field");
-		} else {
-			sortBy = '"' + sortBy + '"';
-		}
-	}
-
 	if (!filter.limit) {
 		params.limit = 100;
 	} else {
@@ -234,6 +215,23 @@ private.list = function (filter, cb) {
 		return cb("Invalid limit. Maximum is 100");
 	}
 
+	var orderBy = OrderBy(
+		filter.orderBy, {
+			sortFields: sql.sortFields,
+			fieldPrefix: function (sortField) {
+				if (["height", "blockId", "confirmations"].indexOf(sortField) > -1) {
+					return "b_" + sortField;
+				} else {
+					return "t_" + sortField;
+				}
+			}
+		}
+	);
+
+	if (orderBy.error) {
+		return cb(orderBy.error);
+	}
+
 	library.db.query(sql.countList({
 		where: where,
 		owner: owner
@@ -243,8 +241,8 @@ private.list = function (filter, cb) {
 		library.db.query(sql.list({
 			where: where,
 			owner: owner,
-			sortBy: sortBy,
-			sortMethod: sortMethod
+			sortField: orderBy.sortField,
+			sortMethod: orderBy.sortMethod
 		}), params).then(function (rows) {
 			var transactions = [];
 
@@ -255,9 +253,9 @@ private.list = function (filter, cb) {
 			var data = {
 				transactions: transactions,
 				count: count
-			}
+			};
 
-			cb(null, data);
+			return cb(null, data);
 		}).catch(function (err) {
 			library.logger.error(err.toString());
 			return cb("Transactions#list error");
@@ -276,7 +274,7 @@ private.getById = function (id, cb) {
 
 		var transacton = library.logic.transaction.dbRead(rows[0]);
 
-		cb(null, transacton);
+		return cb(null, transacton);
 	}).catch(function (err) {
 		library.logger.error(err.toString());
 		return cb("Transactions#getById error");
@@ -290,6 +288,7 @@ private.addUnconfirmedTransaction = function (transaction, sender, cb) {
 			return setImmediate(cb, err);
 		}
 
+		transaction.receivedAt = new Date();
 		private.unconfirmedTransactions.push(transaction);
 		var index = private.unconfirmedTransactions.length - 1;
 		private.unconfirmedTransactionsIdIndex[transaction.id] = index;
@@ -369,7 +368,7 @@ Transactions.prototype.processUnconfirmedTransaction = function (transaction, br
 
 				library.bus.message('unconfirmedTransaction', transaction, broadcast);
 
-				cb();
+				return cb();
 			});
 		}
 
@@ -377,7 +376,7 @@ Transactions.prototype.processUnconfirmedTransaction = function (transaction, br
 			return done(err);
 		}
 
-		if (transaction.requesterPublicKey && sender && sender.multisignatures && sender.multisignatures.length) {
+		if (transaction.requesterPublicKey && sender && Array.isArray(sender.multisignatures) && sender.multisignatures.length) {
 			modules.accounts.getAccount({publicKey: transaction.requesterPublicKey}, function (err, requester) {
 				if (err) {
 					return done(err);
@@ -438,8 +437,40 @@ Transactions.prototype.undoUnconfirmedList = function (cb) {
 			setImmediate(cb);
 		}
 	}, function (err) {
-		cb(err, ids);
-	})
+		return cb(err, ids);
+	});
+}
+
+Transactions.prototype.expireUnconfirmedList = function (cb) {
+	var standardTimeOut = Number(constants.unconfirmedTransactionTimeOut);
+	var ids = [];
+
+	async.eachSeries(private.unconfirmedTransactions, function (transaction, cb) {
+		if (transaction == false) {
+			return cb();
+		}
+
+		var timeNow = new Date();
+		var timeOut = (transaction.type == 4) ? (transaction.asset.multisignature.lifetime * 3600) : standardTimeOut;
+		var seconds = Math.floor((timeNow.getTime() - transaction.receivedAt.getTime()) / 1000);
+
+		if (seconds > timeOut) {
+			self.undoUnconfirmed(transaction, function (err) {
+				if (err) {
+					return cb(err);
+				} else {
+					ids.push(transaction.id);
+					self.removeUnconfirmedTransaction(transaction.id);
+					library.logger.log("Expired unconfirmed transaction: " + transaction.id + " received at: " + transaction.receivedAt.toUTCString());
+					return cb();
+				}
+			});
+		} else {
+			setImmediate(cb);
+		}
+	}, function (err) {
+		return cb(err, ids);
+	});
 }
 
 Transactions.prototype.apply = function (transaction, block, sender, cb) {
@@ -485,8 +516,12 @@ Transactions.prototype.receiveTransactions = function (transactions, cb) {
 	async.eachSeries(transactions, function (transaction, cb) {
 		self.processUnconfirmedTransaction(transaction, true, cb);
 	}, function (err) {
-		cb(err, transactions);
+		return cb(err, transactions);
 	});
+}
+
+Transactions.prototype.sandboxApi = function (call, args, cb) {
+	sandboxHelper.callMethod(shared, call, args, cb);
 }
 
 // Events
@@ -494,9 +529,22 @@ Transactions.prototype.onBind = function (scope) {
 	modules = scope;
 }
 
+Transactions.prototype.onPeerReady = function () {
+	setImmediate(function nextUnconfirmedExpiry () {
+		self.expireUnconfirmedList(function (err, ids) {
+			if (err) {
+				library.logger.error("Unconfirmed transactions timer:", err);
+			}
+
+			setTimeout(nextUnconfirmedExpiry, 14 * 1000);
+		});
+	});
+}
+
 // Shared
 shared.getTransactions = function (req, cb) {
 	var query = req.body;
+
 	library.scheme.validate(query, {
 		type: "object",
 		properties: {
@@ -555,10 +603,10 @@ shared.getTransactions = function (req, cb) {
 
 		private.list(query, function (err, data) {
 			if (err) {
-				return cb("Failed to get transactions");
+				return cb("Failed to get transactions: " + err);
 			}
 
-			cb(null, {transactions: data.transactions, count: data.count});
+			return cb(null, {transactions: data.transactions, count: data.count});
 		});
 	});
 }
@@ -583,7 +631,7 @@ shared.getTransaction = function (req, cb) {
 			if (!transaction || err) {
 				return cb("Transaction not found");
 			}
-			cb(null, {transaction: transaction});
+			return cb(null, {transaction: transaction});
 		});
 	});
 }
@@ -610,7 +658,7 @@ shared.getUnconfirmedTransaction = function (req, cb) {
 			return cb("Transaction not found");
 		}
 
-		cb(null, {transaction: unconfirmedTransaction});
+		return cb(null, {transaction: unconfirmedTransaction});
 	});
 }
 
@@ -647,7 +695,7 @@ shared.getUnconfirmedTransactions = function (req, cb) {
 			}
 		}
 
-		cb(null, {transactions: toSend});
+		return cb(null, {transactions: toSend});
 	});
 }
 
@@ -814,7 +862,7 @@ shared.addTransactions = function (req, cb) {
 				return cb(err);
 			}
 
-			cb(null, {transactionId: transaction[0].id});
+			return cb(null, {transactionId: transaction[0].id});
 		});
 	});
 }

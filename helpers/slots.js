@@ -63,6 +63,6 @@ module.exports = {
 	},
 
 	roundTime: function (date) {
-		return Math.floor(date.getTime() / 1000) * 1000;
+		Math.floor(date.getTime() / 1000) * 1000;
 	}
 }

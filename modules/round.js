@@ -93,6 +93,10 @@ function RoundPromiser (scope, t) {
 		return t.none(sql.flush, { round: scope.round });
 	}
 
+	this.truncateBlocks = function () {
+		return t.none(sql.truncateBlocks, { height: scope.block.height });
+	}
+
 	this.applyRound = function () {
 		var roundChanges = new RoundChanges(scope.round);
 		var queries = "";
@@ -257,6 +261,10 @@ Round.prototype.tick = function (block, done) {
 		delegates: private.delegatesByRound[round]
 	};
 
+	scope.snapshotRound = (
+		library.config.loading.snapshot > 0 && library.config.loading.snapshot == round
+	);
+
 	scope.finishRound = (
 		(round !== nextRound && private.delegatesByRound[round].length == slots.delegates) ||
 		(block.height == 1 || block.height == 101)
@@ -272,6 +280,11 @@ Round.prototype.tick = function (block, done) {
 					delete private.rewardsByRound[round];
 					delete private.delegatesByRound[round];
 					library.bus.message("finishRound", round);
+					if (scope.snapshotRound) {
+						promised.truncateBlocks().then(function () {
+							scope.finishSnapshot = true;
+						});
+					}
 				});
 			}
 		});
@@ -294,7 +307,11 @@ Round.prototype.tick = function (block, done) {
 			});
 		}
 	], function (err) {
-		return done(err);
+		if (scope.finishSnapshot) {
+			process.emit("SIGTERM");
+		} else {
+			return done(err);
+		}
 	});
 }
 

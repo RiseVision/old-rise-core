@@ -22,9 +22,9 @@ private.syncIntervalId = null;
 // Constructor
 function Loader(cb, scope) {
 	library = scope;
-	private.genesisBlock = private.loadingLastBlock = library.genesisblock;
 	self = this;
 	self.__private = private;
+	self.__private.genesisBlock = self.__private.loadingLastBlock = library.genesisblock;
 	private.attachApi();
 
 	setImmediate(cb, null, self);
@@ -408,93 +408,103 @@ private.loadBlockChain = function () {
 		});
 	}
 
-	library.logic.account.createTables(function (err) {
-		function reload (count, message) {
-			if (message) {
-				library.logger.warn(message);
-				library.logger.warn("Recreating memory tables");
+	function reload (count, message) {
+		if (message) {
+			library.logger.warn(message);
+			library.logger.warn("Recreating memory tables");
+		}
+		load(count);
+	}
+
+	function checkMemTables (t) {
+		var promises = [
+			t.one(sql.countBlocks),
+			t.one(sql.countMemAccounts),
+			t.query(sql.getMemRounds)
+		];
+
+		return t.batch(promises);
+	}
+
+	library.db.task(checkMemTables).then(function (results) {
+		var count = results[0].count;
+		var missed = !(results[1].count);
+
+		library.logger.info("Blocks " + count);
+
+		var round = modules.round.calc(count);
+
+		if (library.config.loading.snapshot > 0) {
+			library.logger.info("Snapshot mode enabled");
+			verify = true;
+
+			if (library.config.loading.snapshot >= round) {
+				library.config.loading.snapshot = round;
+
+				if ((count == 1) || (count % constants.activeDelegates > 0)) {
+					library.config.loading.snapshot = (round > 1) ? (round - 1) : 1;
+				}
 			}
-			load(count);
+
+			library.logger.info("Snapshotting to end of round: " + library.config.loading.snapshot);
 		}
 
-		if (err) {
-			throw err;
+		if (count == 1) {
+			return reload(count);
 		}
 
-		function checkMemTables (t) {
+		if (verify) {
+			return reload(count, "Blocks verification enabled");
+		}
+
+		if (missed) {
+			return reload(count, "Detected missed blocks in mem_accounts");
+		}
+
+		var unapplied = results[2].filter(function (row) {
+			return (row.round != round);
+		});
+
+		if (unapplied.length > 0) {
+			return reload(count, "Detected unapplied rounds in mem_round");
+		}
+
+		function updateMemAccounts (t) {
 			var promises = [
-				t.one(sql.countBlocks),
-				t.one(sql.countMemAccounts),
-				t.query(sql.getMemRounds)
+				t.none(sql.updateMemAccounts),
+				t.query(sql.getOrphanedMemAccounts),
+				t.query(sql.getDelegates)
 			];
 
 			return t.batch(promises);
 		}
 
-		library.db.task(checkMemTables).then(function (results) {
-			var count = results[0].count,
-			    missed = !(results[1].count);
-
-			library.logger.info("Blocks " + count);
-
-			if (count == 1) {
-				return reload(count);
+		library.db.task(updateMemAccounts).then(function (results) {
+			if (results[1].length > 0) {
+				return reload(count, "Detected orphaned blocks in mem_accounts");
 			}
 
-			if (verify) {
-				return reload(count, "Blocks verification enabled");
+			if (results[2].length == 0) {
+				return reload(count, "No delegates found");
 			}
 
-			if (missed) {
-				return reload(count, "Detected missed blocks in mem_accounts");
-			}
-
-			var round = modules.round.calc(count);
-			var unapplied = results[2].filter(function (row) {
-				return (row.round != round);
-			});
-
-			if (unapplied.length > 0) {
-				return reload(count, "Detected unapplied rounds in mem_round");
-			}
-
-			function updateMemAccounts (t) {
-				var promises = [
-					t.none(sql.updateMemAccounts),
-					t.query(sql.getOrphanedMemAccounts),
-					t.query(sql.getDelegates)
-				];
-
-				return t.batch(promises);
-			}
-
-			library.db.task(updateMemAccounts).then(function (results) {
-				if (results[1].length > 0) {
-					return reload(count, "Detected orphaned blocks in mem_accounts");
+			modules.blocks.loadBlocksOffset(1, count, verify, function (err, lastBlock) {
+				if (err) {
+					return reload(count, err || "Failed to load blocks offset");
+				} else {
+					modules.blocks.loadLastBlock(function (err, block) {
+						if (err) {
+							return load(count);
+						}
+						private.lastBlock = block;
+						library.logger.info("Blockchain ready");
+						library.bus.message("blockchainReady");
+					});
 				}
-
-				if (results[2].length == 0) {
-					return reload(count, "No delegates found");
-				}
-
-				modules.blocks.loadBlocksOffset(1, count, verify, function (err, lastBlock) {
-					if (err) {
-						return reload(count, err || "Failed to load blocks offset");
-					} else {
-						modules.blocks.loadLastBlock(function (err, block) {
-							if (err) {
-								return load(count);
-							}
-							private.lastBlock = block;
-							library.logger.info("Blockchain ready");
-							library.bus.message("blockchainReady");
-						});
-					}
-				});
 			});
-		}).catch(function (err) {
-			return reload(count, err);
 		});
+	}).catch(function (err) {
+		return reload(count, err);
 	});
 }
 
@@ -505,9 +515,10 @@ Loader.prototype.syncing = function () {
 
 // Events
 Loader.prototype.onPeerReady = function () {
-	setImmediate(function nextLoadBlock() {
+	setImmediate(function nextLoadBlock () {
 		if (!private.loaded) return;
 		private.isActive = true;
+
 		library.sequence.add(function (cb) {
 			private.syncTrigger(true);
 			var lastBlock = modules.blocks.getLastBlock();
@@ -520,25 +531,25 @@ Loader.prototype.onPeerReady = function () {
 			private.isActive = false;
 			if (!private.loaded) return;
 
-			setTimeout(nextLoadBlock, 9 * 1000)
+			setTimeout(nextLoadBlock, 9 * 1000);
 		});
 	});
 
-	setImmediate(function nextLoadUnconfirmedTransactions() {
+	setImmediate(function nextLoadUnconfirmedTransactions () {
 		if (!private.loaded || self.syncing()) return;
+
 		private.loadUnconfirmedTransactions(function (err) {
 			err && library.logger.error("Unconfirmed transactions timer:", err);
 			setTimeout(nextLoadUnconfirmedTransactions, 14 * 1000)
 		});
-
 	});
 
-	setImmediate(function nextLoadSignatures() {
-		if (!private.loaded) return;
+	setImmediate(function nextLoadSignatures () {
+		if (!private.loaded || self.syncing()) return;
+
 		private.loadSignatures(function (err) {
 			err && library.logger.error("Signatures timer:", err);
-
-			setTimeout(nextLoadSignatures, 14 * 1000)
+			setTimeout(nextLoadSignatures, 14 * 1000);
 		});
 	});
 }

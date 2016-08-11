@@ -42,7 +42,12 @@ function Vote() {
 		}
 
 		modules.delegates.checkDelegates(trs.senderPublicKey, trs.asset.votes, function (err) {
-			setImmediate(cb, err, trs);
+			if (err && constants.voteExceptions.indexOf(trs.id) > -1) {
+				library.logger.debug(err);
+				library.logger.debug(JSON.stringify(trs));
+				err = null;
+			}
+			return setImmediate(cb, err, trs);
 		});
 	}
 
@@ -87,7 +92,13 @@ function Vote() {
 	this.applyUnconfirmed = function (trs, sender, cb) {
 		modules.delegates.checkUnconfirmedDelegates(trs.senderPublicKey, trs.asset.votes, function (err) {
 			if (err) {
-				return setImmediate(cb, err);
+				if (constants.voteExceptions.indexOf(trs.id) > -1) {
+					library.logger.debug(err);
+					library.logger.debug(JSON.stringify(trs));
+					err = null;
+				} else {
+					return setImmediate(cb, err);
+				}
 			}
 
 			this.scope.account.merge(sender.address, {
@@ -123,7 +134,7 @@ function Vote() {
 		});
 
 		if (!report) {
-			throw new Error("Incorrect votes in transactions: " + library.scheme.getLastError());
+			throw new Error("Invalid votes in transaction: " + library.scheme.getLastError());
 		}
 
 		return trs;
@@ -133,7 +144,7 @@ function Vote() {
 		// console.log(raw.v_votes);
 
 		if (!raw.v_votes) {
-			return null
+			return null;
 		} else {
 			var votes = raw.v_votes.split(',');
 
@@ -153,18 +164,18 @@ function Vote() {
 			table: this.dbTable,
 			fields: this.dbFields,
 			values: {
-				votes: util.isArray(trs.asset.votes) ? trs.asset.votes.join(",") : null,
+				votes: Array.isArray(trs.asset.votes) ? trs.asset.votes.join(",") : null,
 				transactionId: trs.id
 			}
 		};
 	}
 
 	this.ready = function (trs, sender) {
-		if (util.isArray(sender.multisignatures) && sender.multisignatures.length) {
-			if (!trs.signatures) {
+		if (Array.isArray(sender.multisignatures) && sender.multisignatures.length) {
+			if (!Array.isArray(trs.signatures)) {
 				return false;
 			}
-			return trs.signatures.length >= sender.multimin - 1;
+			return trs.signatures.length >= sender.multimin;
 		} else {
 			return true;
 		}
@@ -227,21 +238,23 @@ private.attachApi = function () {
 			}, function (err, report, query) {
 				if (err) return next(err);
 				if (!report.isValid) return res.json({success: false, error: report.issues});
+
 				self.getAccounts({
 					sort: {
 						balance: -1
 					},
 					offset: query.offset,
-					limit: query.limit
+					limit: (query.limit || 100)
 				}, function (err, raw) {
 					if (err) {
 						return res.json({success: false, error: err});
 					}
-					var accounts = raw.map(function (fullAccount) {
+
+					var accounts = raw.map(function (account) {
 						return {
-							address: fullAccount.address,
-							balance: fullAccount.balance,
-							publicKey: fullAccount.publicKey
+							address: account.address,
+							balance: account.balance,
+							publicKey: account.publicKey
 						}
 					});
 
@@ -344,6 +357,10 @@ Accounts.prototype.mergeAccountAndGet = function (data, cb) {
 	}
 
 	return library.logic.account.merge(address, data, cb);
+}
+
+Accounts.prototype.sandboxApi = function (call, args, cb) {
+	sandboxHelper.callMethod(shared, call, args, cb);
 }
 
 // Events

@@ -7,18 +7,20 @@ var bignum = require("../helpers/bignum.js");
 var Router = require("../helpers/router.js");
 var slots = require("../helpers/slots.js");
 var schedule = require("node-schedule");
-var util = require("util");
 var blockReward = require("../helpers/blockReward.js");
 var constants = require("../helpers/constants.js");
 var transactionTypes = require("../helpers/transactionTypes.js");
 var MilestoneBlocks = require("../helpers/milestoneBlocks.js");
+var OrderBy = require("../helpers/orderBy.js");
 var sql = require("../sql/delegates.js");
+var checkIpInList = require("../helpers/checkIpInList.js");
 var _ = require("underscore");
 
 // Private fields
 var modules, library, self, private = {}, shared = {};
 
 private.loaded = false;
+private.forging = false;
 private.blockReward = new blockReward();
 private.keypairs = {};
 
@@ -255,11 +257,11 @@ function Delegate() {
 	}
 
 	this.ready = function (trs, sender) {
-		if (util.isArray(sender.multisignatures) && sender.multisignatures.length) {
-			if (!trs.signatures) {
+		if (Array.isArray(sender.multisignatures) && sender.multisignatures.length) {
+			if (!Array.isArray(trs.signatures)) {
 				return false;
 			}
-			return trs.signatures.length >= sender.multimin - 1;
+			return trs.signatures.length >= sender.multimin;
 		} else {
 			return true;
 		}
@@ -289,6 +291,7 @@ private.attachApi = function () {
 
 	router.map(shared, {
 		"get /count": "count",
+		"get /search": "search",
 		"get /voters": "getVoters",
 		"get /get": "getDelegate",
 		"get /": "getDelegates",
@@ -344,7 +347,7 @@ private.attachApi = function () {
 
 			var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
-			if (library.config.forging.access.whiteList.length > 0 && library.config.forging.access.whiteList.indexOf(ip) < 0) {
+			if (!checkIpInList(library.config.forging.access.whiteList, ip)) {
 				return res.json({success: false, error: "Access denied"});
 			}
 
@@ -398,7 +401,7 @@ private.attachApi = function () {
 
 			var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
-			if (library.config.forging.access.whiteList.length > 0 && library.config.forging.access.whiteList.indexOf(ip) < 0) {
+			if (!checkIpInList(library.config.forging.access.whiteList, ip)) {
 				return res.json({success: false, error: "Access denied"});
 			}
 
@@ -506,6 +509,11 @@ private.loop = function (cb) {
 		return setImmediate(cb);
 	}
 
+	if (!private.forging) {
+		library.logger.debug('Loop:', 'forging disabled');
+		return setImmediate(cb);
+	}
+
 	// When client is not loaded, is syncing or round is ticking
 	// Do not try to forge new blocks as client is not ready
 	if (!private.loaded || modules.loader.syncing() || !modules.round.loaded() || modules.round.ticking()) {
@@ -530,8 +538,9 @@ private.loop = function (cb) {
 		library.sequence.add(function (cb) {
 			if (slots.getSlotNumber(currentBlockData.time) == slots.getSlotNumber()) {
 				modules.blocks.generateBlock(currentBlockData.keypair, currentBlockData.time, function (err) {
+					modules.blocks.lastReceipt(new Date());
 					library.logger.info('Forged new block id: ' + modules.blocks.getLastBlock().id + ' height: ' + modules.blocks.getLastBlock().height + ' round: ' + modules.round.calc(modules.blocks.getLastBlock().height) + ' slot: ' + slots.getSlotNumber(currentBlockData.time) + ' reward: ' + modules.blocks.getLastBlock().reward);
-					return cb(err);
+					return setImmediate(cb, err);
 				});
 			} else {
 				// library.logger.debug('Loop:', _activeDelegates[slots.getSlotNumber() % slots.delegates] + ' delegate slot');
@@ -546,10 +555,87 @@ private.loop = function (cb) {
 	});
 }
 
+private.checkDelegates = function (publicKey, votes, state, cb) {
+	if (!Array.isArray(votes)) {
+		return setImmediate(cb, "Votes must be an array");
+	}
+
+	modules.accounts.getAccount({publicKey: publicKey}, function (err, account) {
+		if (err) {
+			return cb(err);
+		}
+
+		if (!account) {
+			return cb("Account not found");
+		}
+
+		var delegates = (state == 'confirmed') ? account.delegates : account.u_delegates;
+		var existing_votes = Array.isArray(delegates) ? delegates.length : 0;
+		var additions = 0, removals = 0;
+
+		async.eachSeries(votes, function (action, cb) {
+			var math = action[0];
+
+			if (math !== '+' && math !== '-') {
+				return cb("Invalid math operator");
+			}
+
+			if (math == '+') {
+				additions += 1;
+			} else if (math == '+') {
+				removals += 1;
+			}
+
+			var publicKey = action.slice(1);
+
+			try {
+				new Buffer(publicKey, "hex");
+			} catch (e) {
+				library.logger.error(e.toString());
+				return cb("Invalid public key");
+			}
+
+			if (math == "+" && (delegates !== null && delegates.indexOf(publicKey) != -1)) {
+				return cb("Failed to add vote, account has already voted for this delegate");
+			}
+
+			if (math == "-" && (delegates === null || delegates.indexOf(publicKey) === -1)) {
+				return cb("Failed to remove vote, account has not voted for this delegate");
+			}
+
+			modules.accounts.getAccount({ publicKey: publicKey, isDelegate: 1 }, function (err, account) {
+				if (err) {
+					return cb(err);
+				}
+
+				if (!account) {
+					return cb("Delegate not found");
+				}
+
+				return cb();
+			});
+		}, function (err) {
+			if (err) {
+				return cb(err);
+			}
+
+			var total_votes = (existing_votes + additions) - removals;
+
+			if (total_votes > constants.activeDelegates) {
+				var exceeded = total_votes - constants.activeDelegates;
+
+				return cb("Maximum number of " + constants.activeDelegates + " votes exceeded (" + exceeded + " too many).");
+			} else {
+				return cb();
+			}
+		});
+	});
+}
+
 private.loadMyDelegates = function (cb) {
 	var secrets = null;
 	if (library.config.forging.secret) {
-		secrets = util.isArray(library.config.forging.secret) ? library.config.forging.secret : [library.config.forging.secret];
+		secrets = Array.isArray(library.config.forging.secret) ? library.config.forging.secret : [library.config.forging.secret];
 	}
 
 	async.eachSeries(secrets, function (secret, cb) {
@@ -570,7 +656,7 @@ private.loadMyDelegates = function (cb) {
 				private.keypairs[keypair.publicKey.toString('hex')] = keypair;
 				library.logger.info("Forging enabled on account: " + account.address);
 			} else {
-				library.logger.info("Delegate with this public key not found: " + keypair.publicKey.toString('hex'));
+				library.logger.warn("Delegate with this public key not found: " + keypair.publicKey.toString('hex'));
 			}
 			cb();
 		});
@@ -614,14 +700,9 @@ Delegates.prototype.getDelegates = function (query, cb) {
 
 		var limit = query.limit || constants.activeDelegates,
 		    offset = query.offset || 0,
-		    orderField = query.orderBy,
 		    active = query.active;
 
-		orderField = orderField ? orderField.split(':') : null;
 		limit = limit > constants.activeDelegates ? constants.activeDelegates : limit;
-
-		var orderBy = orderField ? orderField[0] : null;
-		var sortMode = orderField && orderField.length == 2 ? orderField[1] : 'asc';
 
 		var count = delegates.length;
 		var length = Math.min(limit, count);
@@ -642,10 +723,16 @@ Delegates.prototype.getDelegates = function (query, cb) {
 			delegates[i].productivity = (!outsider) ? Math.round(percent * 1e2) / 1e2 : 0;
 		}
 
+		var orderBy = OrderBy(query.orderBy, { quoteField: false });
+
+		if (orderBy.error) {
+			return cb(orderBy.error);
+		}
+
 		return cb(null, {
 			delegates: delegates,
-			sortMode: sortMode,
-			orderBy: orderBy,
+			sortField: orderBy.sortField,
+			sortMethod: orderBy.sortMethod,
 			count: count,
 			offset: offset,
 			limit: realLimit
@@ -654,129 +741,11 @@ Delegates.prototype.getDelegates = function (query, cb) {
 }
 
 Delegates.prototype.checkDelegates = function (publicKey, votes, cb) {
-	if (util.isArray(votes)) {
-		modules.accounts.getAccount({publicKey: publicKey}, function (err, account) {
-			if (err) {
-				return cb(err);
-			}
-			if (!account) {
-				return cb("Account not found");
-			}
-
-			var existing_votes = account.delegates ? account.delegates.split(',').length : 0;
-			var additions = 0, removals = 0;
-
-			async.eachSeries(votes, function (action, cb) {
-				var math = action[0];
-
-				if (math !== '+' && math !== '-') {
-					return cb("Invalid math operator");
-				}
-
-				if (math == '+') {
-					additions += 1;
-				} else if (math == '+') {
-					removals += 1;
-				}
-
-				var publicKey = action.slice(1);
-
-				try {
-					new Buffer(publicKey, "hex");
-				} catch (e) {
-					library.logger.error(e.toString());
-					return cb("Invalid public key");
-				}
-
-				if (math == "+" && (account.delegates !== null && account.delegates.indexOf(publicKey) != -1)) {
-					return cb("Failed to add vote, account has already voted for this delegate");
-				}
-				if (math == "-" && (account.delegates === null || account.delegates.indexOf(publicKey) === -1)) {
-					return cb("Failed to remove vote, account has not voted for this delegate");
-				}
-
-				modules.accounts.getAccount({ publicKey: publicKey, isDelegate: 1 }, function (err, account) {
-					if (err) {
-						return cb(err);
-					}
-
-					if (!account) {
-						return cb("Delegate not found");
-					}
-
-					cb();
-				});
-			}, function (err) {
-				if (err) {
-					return cb(err);
-				}
-
-				var total_votes = (existing_votes + additions) - removals;
-
-				if (total_votes > constants.activeDelegates) {
-					var exceeded = total_votes - constants.activeDelegates;
-
-					return cb("Maximum number of " + constants.activeDelegates + " votes exceeded (" + exceeded + " too many).");
-				} else {
-					return cb();
-				}
-			});
-		});
-	} else {
-		setImmediate(cb, "Votes must be an array");
-	}
+	return private.checkDelegates(publicKey, votes, 'confirmed', cb);
 }
 
 Delegates.prototype.checkUnconfirmedDelegates = function (publicKey, votes, cb) {
-	if (util.isArray(votes)) {
-		modules.accounts.getAccount({publicKey: publicKey}, function (err, account) {
-			if (err) {
-				return cb(err);
-			}
-			if (!account) {
-				return cb("Account not found");
-			}
-
-			async.eachSeries(votes, function (action, cb) {
-				var math = action[0];
-
-				if (math !== '+' && math !== '-') {
-					return cb("Invalid math operator");
-				}
-
-				var publicKey = action.slice(1);
-
-
-				try {
-					new Buffer(publicKey, "hex");
-				} catch (e) {
-					library.logger.error(e.toString());
-					return cb("Invalid public key");
-				}
-
-				if (math == "+" && (account.u_delegates !== null && account.u_delegates.indexOf(publicKey) != -1)) {
-					return cb("Failed to add vote, account has already voted for this delegate");
-				}
-				if (math == "-" && (account.u_delegates === null || account.u_delegates.indexOf(publicKey) === -1)) {
-					return cb("Failed to remove vote, account has not voted for this delegate");
-				}
-
-				modules.accounts.getAccount({ publicKey: publicKey, isDelegate: 1 }, function (err, account) {
-					if (err) {
-						return cb(err);
-					}
-
-					if (!account) {
-						return cb("Delegate not found");
-					}
-
-					cb();
-				});
-			}, cb)
-		});
-	} else {
-		return setImmediate(cb, "Please provide an array of votes");
-	}
+	return private.checkDelegates(publicKey, votes, 'unconfirmed', cb);
 }
 
 Delegates.prototype.fork = function (block, cause) {
@@ -785,6 +754,9 @@ Delegates.prototype.fork = function (block, cause) {
 		block: { id: block.id, timestamp: block.timestamp, height: block.height, previousBlock: block.previousBlock },
 		cause: cause
 	});
+
+	self.disableForging("fork");
+
 	library.db.none(sql.insertFork, {
 		delegatePublicKey: block.generatorPublicKey,
 		blockTimestamp: block.timestamp,
@@ -828,16 +800,59 @@ Delegates.prototype.onBlockchainReady = function () {
 			library.logger.error("Failed to load delegates:", err.toString());
 		}
 
+		private.toggleForgingOnReceipt();
+
 		private.loop(function () {
 			setTimeout(nextLoop, 1000);
 		});
-
 	});
 }
 
 Delegates.prototype.cleanup = function (cb) {
 	private.loaded = false;
 	cb();
+}
+
+Delegates.prototype.enableForging = function () {
+	if (!private.forging) {
+		library.logger.debug("Enabling forging");
+		private.forging = true;
+	}
+
+	return private.forging;
+}
+
+Delegates.prototype.disableForging = function (reason) {
+	if (private.forging) {
+		library.logger.debug("Disabling forging due to:", reason);
+		private.forging = false;
+	}
+
+	return private.forging;
+}
+
+// Private
+private.toggleForgingOnReceipt = function () {
+	var lastReceipt = modules.blocks.lastReceipt();
+
+	// Enforce local forging if configured
+	if (!lastReceipt && library.config.forging.force) {
+		lastReceipt = modules.blocks.lastReceipt(new Date());
+	}
+
+	if (lastReceipt) {
+		var timeOut = Number(constants.forgingTimeOut);
+		var timeNow = new Date();
+		var seconds = Math.floor((timeNow.getTime() - lastReceipt.getTime()) / 1000);
+
+		library.logger.debug("Last block received: " + seconds + " seconds ago");
+
+		if (seconds > timeOut) {
+			return self.disableForging("timeout");
+		} else {
+			return self.enableForging();
+		}
+	}
 }
 
 // Shared
@@ -847,9 +862,6 @@ shared.getDelegate = function (req, cb) {
 	library.scheme.validate(query, {
 		type: "object",
 		properties: {
-			transactionId: {
-				type: "string"
-			},
 			publicKey: {
 				type: "string"
 			},
@@ -868,13 +880,9 @@ shared.getDelegate = function (req, cb) {
 			}
 
 			var delegate = _.find(result.delegates, function (delegate) {
-				// if (query.transactionId) {
-					// TODO: Store transactionId
-				// }
 				if (query.publicKey) {
 					return delegate.publicKey == query.publicKey;
-				}
-				if (query.username) {
+				} else if (query.username) {
 					return delegate.username == query.username;
 				}
 
@@ -882,10 +890,58 @@ shared.getDelegate = function (req, cb) {
 			});
 
 			if (delegate) {
-				cb(null, {delegate: delegate});
+				return cb(null, {delegate: delegate});
 			} else {
-				cb("Delegate not found");
+				return cb("Delegate not found");
 			}
+		});
+	});
+}
+
+shared.search = function (req, cb) {
+	var query = req.body;
+
+	library.scheme.validate(query, {
+		type: "object",
+		properties: {
+			q: {
+				type: "string",
+				minLength: 1,
+				maxLength: 20
+			},
+			limit: {
+				type: "integer",
+				minimum: 1,
+				maximum: 100
+			}
+		},
+		required: ["q"]
+	}, function (err) {
+		if (err) {
+			return cb(err[0].message);
+		}
+
+		var orderBy = OrderBy(
+			query.orderBy, {
+				sortFields: sql.sortFields,
+				sortField: "username"
+			}
+		);
+
+		if (orderBy.error) {
+			return cb(orderBy.error);
+		}
+
+		library.db.query(sql.search({
+			q: query.q,
+			limit: query.limit || 100,
+			sortField: orderBy.sortField,
+			sortMethod: orderBy.sortMethod
+		})).then(function (rows) {
+			return cb(null, { delegates: rows });
+		}).catch(function (err) {
+			library.logger.error(err.toString());
+			return cb("Database search failed");
 		});
 	});
 }
@@ -964,16 +1020,35 @@ shared.getDelegates = function (req, cb) {
 				return cb(err);
 			}
 
-			result.delegates.sort(function compare(a, b) {
-				var sorta=parseInt(a[result.orderBy]);
-				var sortb=parseInt(b[result.orderBy]);
-				if (result.sortMode == 'asc') {
-					return sorta < sortb ? -1 : 1;
-				} else if (result.sortMode == 'desc') {
-					return sorta > sortb ? -1 : 1
+			function compareNumber(a, b) {
+				var sorta = parseFloat(a[result.sortField]);
+				var sortb = parseFloat(b[result.sortField]);
+				if (result.sortMethod == 'ASC') {
+					return sorta - sortb;
+				} else {
+				 	return sortb - sorta;
 				}
-				return 0;
-			});
+			};
+
+			function compareString(a, b) {
+				var sorta = a[result.sortField];
+				var sortb = b[result.sortField];
+				if (result.sortMethod == 'ASC') {
+				  return sorta.localeCompare(sortb);
+				} else {
+				  return sortb.localeCompare(sorta);
+				}
+			};
+
+			if (result.sortField) {
+				if (["approval", "productivity", "rate", "vote", "missedblocks", "producedblocks"].indexOf(result.sortField) > -1) {
+					result.delegates = result.delegates.sort(compareNumber);
+				} else {
+					result.delegates = result.delegates.sort(compareString);
+				}
+			}
+
+			library.logger.debug(result.delegates);
 
 			var delegates = result.delegates.slice(result.offset, result.limit);
 
@@ -1015,18 +1090,6 @@ shared.getForgedByAccount = function (req, cb) {
 			cb(null, {fees: account.fees, rewards: account.rewards, forged: forged});
 		});
 	});
-}
-
-private.enableForging = function (req, cb) {
-
-}
-
-private.disableForging = function (req, cb) {
-
-}
-
-private.forgingStatus = function (req, cb) {
-
 }
 
 shared.addDelegate = function (req, cb) {

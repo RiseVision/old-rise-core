@@ -1,5 +1,6 @@
 var async = require("async");
 var pgp = require("pg-promise");
+var path = require("path");
 var jsonSql = require("json-sql")();
     jsonSql.setDialect("postgresql");
 var constants = require("../helpers/constants.js");
@@ -20,7 +21,6 @@ function Account(scope, cb) {
 		{
 			name: "username",
 			type: "String",
-			length: 20,
 			filter: {
 				type: "string",
 				case: "lower",
@@ -36,8 +36,7 @@ function Account(scope, cb) {
 			filter: {
 				type: "boolean"
 			},
-			conv: Boolean,
-			default: 0
+			conv: Boolean
 		},
 		{
 			name: "u_isDelegate",
@@ -45,8 +44,7 @@ function Account(scope, cb) {
 			filter: {
 				type: "boolean"
 			},
-			conv: Boolean,
-			default: 0
+			conv: Boolean
 		},
 		{
 			name: "secondSignature",
@@ -54,8 +52,7 @@ function Account(scope, cb) {
 			filter: {
 				type: "boolean"
 			},
-			conv: Boolean,
-			default: 0
+			conv: Boolean
 		},
 		{
 			name: "u_secondSignature",
@@ -63,13 +60,11 @@ function Account(scope, cb) {
 			filter: {
 				type: "boolean"
 			},
-			conv: Boolean,
-			default: 0
+			conv: Boolean
 		},
 		{
 			name: "u_username",
 			type: "String",
-			length: 20,
 			filter: {
 				type: "string",
 				case: "lower",
@@ -82,18 +77,16 @@ function Account(scope, cb) {
 		{
 			name: "address",
 			type: "String",
-			length: 22,
-			not_null: true,
-			unique: true,
-			primary_key: true,
 			filter: {
 				required: true,
 				type: "string",
+				case: "upper",
 				minLength: 1,
 				maxLength: 22
 			},
 			conv: String,
-			constante: true
+			constante: true,
+			expression: "UPPER(\"address\")"
 		},
 		{
 			name: "publicKey",
@@ -127,8 +120,7 @@ function Account(scope, cb) {
 				maximum: constants.totalAmount
 			},
 			conv: Number,
-			expression: "(\"balance\")::bigint",
-			default: 0
+			expression: "(\"balance\")::bigint"
 		},
 		{
 			name: "u_balance",
@@ -140,8 +132,7 @@ function Account(scope, cb) {
 				maximum: constants.totalAMount
 			},
 			conv: Number,
-			expression: "(\"u_balance\")::bigint",
-			default: 0
+			expression: "(\"u_balance\")::bigint"
 		},
 		{
 			name: "vote",
@@ -150,8 +141,7 @@ function Account(scope, cb) {
 				type: "integer"
 			},
 			conv: Number,
-			expression: "(\"vote\")::bigint",
-			default: 0
+			expression: "(\"vote\")::bigint"
 		},
 		{
 			name: "rate",
@@ -160,8 +150,7 @@ function Account(scope, cb) {
 				type: "integer"
 			},
 			conv: Number,
-			expression: "(\"rate\")::bigint",
-			default: 0
+			expression: "(\"rate\")::bigint"
 		},
 		{
 			name: "delegates",
@@ -171,7 +160,7 @@ function Account(scope, cb) {
 				uniqueItems: true
 			},
 			conv: Array,
-			expression: "(SELECT STRING_AGG(\"dependentId\", ',') FROM " + this.table + "2delegates WHERE \"accountId\" = a.\"address\")"
+			expression: "(SELECT ARRAY_AGG(\"dependentId\") FROM " + this.table + "2delegates WHERE \"accountId\" = a.\"address\")"
 		},
 		{
 			name: "u_delegates",
@@ -181,7 +170,7 @@ function Account(scope, cb) {
 				uniqueItems: true
 			},
 			conv: Array,
-			expression: "(SELECT STRING_AGG(\"dependentId\", ',') FROM " + this.table + "2u_delegates WHERE \"accountId\" = a.\"address\")"
+			expression: "(SELECT ARRAY_AGG(\"dependentId\") FROM " + this.table + "2u_delegates WHERE \"accountId\" = a.\"address\")"
 		},
 		{
 			name: "multisignatures",
@@ -191,7 +180,7 @@ function Account(scope, cb) {
 				uniqueItems: true
 			},
 			conv: Array,
-			expression: "(SELECT STRING_AGG(\"dependentId\", ',') FROM " + this.table + "2multisignatures WHERE \"accountId\" = a.\"address\")"
+			expression: "(SELECT ARRAY_AGG(\"dependentId\") FROM " + this.table + "2multisignatures WHERE \"accountId\" = a.\"address\")"
 		},
 		{
 			name: "u_multisignatures",
@@ -201,67 +190,57 @@ function Account(scope, cb) {
 				uniqueItems: true
 			},
 			conv: Array,
-			expression: "(SELECT STRING_AGG(\"dependentId\", ',') FROM " + this.table + "2u_multisignatures WHERE \"accountId\" = a.\"address\")"
+			expression: "(SELECT ARRAY_AGG(\"dependentId\") FROM " + this.table + "2u_multisignatures WHERE \"accountId\" = a.\"address\")"
 		},
 		{
 			name: "multimin",
-			type: "BigInt",
+			type: "SmallInt",
 			filter: {
 				type: "integer",
 				minimum: 0,
 				maximum: 17
 			},
-			conv: Number,
-			expression: "(\"multimin\")::bigint",
-			default: 0
+			conv: Number
 		},
 		{
 			name: "u_multimin",
-			type: "BigInt",
+			type: "SmallInt",
 			filter: {
 				type: "integer",
 				minimum: 0,
 				maximum: 17
 			},
-			conv: Number,
-			expression: "(\"u_multimin\")::bigint",
-			default: 0
+			conv: Number
 		},
 		{
 			name: "multilifetime",
-			type: "BigInt",
+			type: "SmallInt",
 			filter: {
 				type: "integer",
 				minimum: 1,
 				maximum: 72
 			},
-			conv: Number,
-			expression: "(\"multilifetime\")::bigint",
-			default: 0
+			conv: Number
 		},
 		{
 			name: "u_multilifetime",
-			type: "BigInt",
+			type: "SmallInt",
 			filter: {
 				type: "integer",
 				minimum: 1,
 				maximum: 72
 			},
-			conv: Number,
-			expression: "(\"u_multilifetime\")::bigint",
-			default: 0
+			conv: Number
 		},
 		{
 			name: "blockId",
 			type: "String",
-			length: 20,
 			filter: {
 				type: "string",
 				minLength: 1,
 				maxLength: 20
 			},
-			conv: String,
-			default: genesisBlock.id
+			conv: String
 		},
 		{
 			name: "nameexist",
@@ -269,8 +248,7 @@ function Account(scope, cb) {
 			filter: {
 				type: "boolean"
 			},
-			conv: Boolean,
-			default: 0
+			conv: Boolean
 		},
 		{
 			name: "u_nameexist",
@@ -278,8 +256,7 @@ function Account(scope, cb) {
 			filter: {
 				type: "boolean"
 			},
-			conv: Boolean,
-			default: 0
+			conv: Boolean
 		},
 		{
 			name: "producedblocks",
@@ -289,8 +266,7 @@ function Account(scope, cb) {
 				minimum: -1,
 				maximum: 1
 			},
-			conv: Number,
-			default: 0
+			conv: Number
 		},
 		{
 			name: "missedblocks",
@@ -300,8 +276,7 @@ function Account(scope, cb) {
 				minimum: -1,
 				maximum: 1
 			},
-			conv: Number,
-			default: 0
+			conv: Number
 		},
 		{
 			name: "fees",
@@ -310,8 +285,7 @@ function Account(scope, cb) {
 				type: "integer"
 			},
 			conv: Number,
-			expression: "(\"fees\")::bigint",
-			default: 0
+			expression: "(\"fees\")::bigint"
 		},
 		{
 			name: "rewards",
@@ -320,8 +294,7 @@ function Account(scope, cb) {
 				type: "integer"
 			},
 			conv: Number,
-			expression: "(\"rewards\")::bigint",
-			default: 0
+			expression: "(\"rewards\")::bigint"
 		}
 	];
 
@@ -371,166 +344,9 @@ function Account(scope, cb) {
 }
 
 Account.prototype.createTables = function (cb) {
-	var sqles = [];
+	var sql = new pgp.QueryFile(path.join("sql", "memoryTables.sql"), { minify: true });
 
-	var sql = jsonSql.build({
-		type: 'create',
-		table: this.table,
-		tableFields: this.model
-	});
-	sqles.push(sql.query);
-
-	var sql = jsonSql.build({
-		type: 'create',
-		table: "mem_round",
-		tableFields: [
-			{
-				"name": "address",
-				"type": "String",
-				"length": 22
-			},
-			{
-				"name": "amount",
-				"type": "BigInt"
-			},
-			{
-				"name": "delegate",
-				"type": "String",
-				"length": 64
-			},
-			{
-				"name": "blockId",
-				"type": "String",
-				"length": 20
-			},
-			{
-				"name": "round",
-				"type": "BigInt"
-			}
-		]
-	});
-	sqles.push(sql.query);
-
-	var sql = jsonSql.build({
-		type: 'create',
-		table: this.table + "2delegates",
-		tableFields: [
-			{
-				name: "accountId",
-				type: "String",
-				length: 22,
-				not_null: true
-			}, {
-				name: "dependentId",
-				type: "String",
-				length: 64,
-				not_null: true
-			}
-		],
-		foreignKeys: [
-			{
-				field: "accountId",
-				table: this.table,
-				table_field: "address",
-				on_delete: "cascade"
-			}
-		]
-	});
-	sqles.push(sql.query);
-
-	var sql = jsonSql.build({
-		type: 'create',
-		table: this.table + "2u_delegates",
-		tableFields: [
-			{
-				name: "accountId",
-				type: "String",
-				length: 22,
-				not_null: true
-			}, {
-				name: "dependentId",
-				type: "String",
-				length: 64,
-				not_null: true
-			}
-		],
-		foreignKeys: [
-			{
-				field: "accountId",
-				table: this.table,
-				table_field: "address",
-				on_delete: "cascade"
-			}
-		]
-	});
-	sqles.push(sql.query);
-
-	var sql = jsonSql.build({
-		type: 'create',
-		table: this.table + "2multisignatures",
-		tableFields: [
-			{
-				name: "accountId",
-				type: "String",
-				length: 22,
-				not_null: true
-			}, {
-				name: "dependentId",
-				type: "String",
-				length: 64,
-				not_null: true
-			}
-		],
-		foreignKeys: [
-			{
-				field: "accountId",
-				table: this.table,
-				table_field: "address",
-				on_delete: "cascade"
-			}
-		]
-	});
-	sqles.push(sql.query);
-
-	var sql = jsonSql.build({
-		type: 'create',
-		table: this.table + "2u_multisignatures",
-		tableFields: [
-			{
-				name: "accountId",
-				type: "String",
-				length: 22,
-				not_null: true
-			}, {
-				name: "dependentId",
-				type: "String",
-				length: 64,
-				not_null: true
-			}
-		],
-		foreignKeys: [
-			{
-				field: "accountId",
-				table: this.table,
-				table_field: "address",
-				on_delete: "cascade"
-			}
-		]
-	});
-	sqles.push(sql.query);
-
-	sqles.push("DELETE FROM mem_accounts2u_delegates;");
-	// sqles.push("DELETE FROM mem_accounts2u_multisignatures;");
-	sqles.push("INSERT INTO mem_accounts2u_delegates SELECT * FROM mem_accounts2delegates;");
-	// sqles.push("INSERT INTO mem_accounts2u_multisignatures SELECT * FROM mem_accounts2multisignatures;");
-
-	var i, concatenated = "";
-
-	for (i = 0; i < sqles.length; i++) {
-		concatenated += sqles[i];
-	}
-
-	this.scope.db.query(concatenated).then(function () {
+	this.scope.db.query(sql).then(function () {
 		return cb();
 	}).catch(function (err) {
 		library.logger.error(err.toString());
@@ -554,13 +370,7 @@ Account.prototype.removeTables = function (cb) {
 		sqles.push(sql.query);
 	});
 
-	var i, concatenated = "";
-
-	for (i = 0; i < sqles.length; i++) {
-		concatenated += sqles[i];
-	}
-
-	this.scope.db.query(concatenated).then(function () {
+	this.scope.db.query(sqles.join('')).then(function () {
 		return cb();
 	}).catch(function (err) {
 		library.logger.error(err.toString());
@@ -587,6 +397,9 @@ Account.prototype.toDB = function (raw) {
 			raw[field] = new Buffer(raw[field], "hex");
 		}
 	});
+
+	// Normalize address
+	raw.address = String(raw.address).toUpperCase();
 
 	return raw;
 }
@@ -640,6 +453,12 @@ Account.prototype.getAll = function (filter, fields, cb) {
 	}
 	delete filter.sort;
 
+	if (typeof filter.address === 'string') {
+		filter.address = {
+			$upper: ['address', filter.address]
+		};
+	}
+
 	var sql = jsonSql.build({
 		type: 'select',
 		table: this.table,
@@ -664,33 +483,21 @@ Account.prototype.set = function (address, fields, cb) {
 		console.log("!!!!!!!!!!!!!!!!!!!!!!!", address, diff);
 	}
 
+	// Normalize address
+	address = String(address).toUpperCase();
+
 	fields.address = address;
 	var account = fields;
-	var sqles = []
 
 	var sql = jsonSql.build({
-		type: 'insertornothing',
+		type: 'insertorupdate',
 		table: this.table,
-		values: this.toDB(account)
-	});
-	sqles.push(sql);
-
-	var sql = jsonSql.build({
-		type: 'update',
-		table: this.table,
-		modifier: this.toDB(account),
-		condition: {
-			address: address
-		}
+		conflictFields: ["address"],
+		values: this.toDB(account),
+		modifier: this.toDB(account)
 	});
 
-	sqles.push(sql);
-
-	var queries = sqles.map(function (sql) {
-		return pgp.as.format(sql.query, sql.values);
-	}).join('');
-
-	this.scope.db.none(queries).then(function () {
+	this.scope.db.none(sql.query, sql.values).then(function () {
 		return cb();
 	}).catch(function (err) {
 		library.logger.error(err.toString());
@@ -706,6 +513,9 @@ Account.prototype.merge = function (address, diff, cb) {
 	if (diff.publicKey !== undefined && !diff.publicKey) {
 		console.log("!!!!!!!!!!!!!!!!!!!!!!!", address, diff);
 	}
+
+	// Normalize address
+	address = String(address).toUpperCase();
 
 	this.editable.forEach(function (value) {
 		if (diff[value] !== undefined) {
@@ -761,11 +571,11 @@ Account.prototype.merge = function (address, diff, cb) {
 							} else if (val.action == "+") {
 								delete val.action;
 								insert_object[value] = insert_object[value] || [];
-								insert_object[value].push(val)
+								insert_object[value].push(val);
 							} else {
 								delete val.action;
 								insert_object[value] = insert_object[value] || [];
-								insert_object[value].push(val)
+								insert_object[value].push(val);
 							}
 						}
 					} else {
@@ -790,7 +600,7 @@ Account.prototype.merge = function (address, diff, cb) {
 							} else if (math == "+") {
 								val = trueValue[i].slice(1);
 								insert[value] = insert[value] || [];
-								insert[value].push(val)
+								insert[value].push(val);
 								if (value == "delegates") {
 									round.push({
 										query: "INSERT INTO mem_round (\"address\", \"amount\", \"delegate\", \"blockId\", \"round\") SELECT ${address}, (balance)::bigint, ${delegate}, ${blockId}, ${round} FROM mem_accounts WHERE address = ${address};",
@@ -805,7 +615,7 @@ Account.prototype.merge = function (address, diff, cb) {
 							} else {
 								val = trueValue[i];
 								insert[value] = insert[value] || [];
-								insert[value].push(val)
+								insert[value].push(val);
 								if (value == "delegates") {
 									round.push({
 										query: "INSERT INTO mem_round (\"address\", \"amount\", \"delegate\", \"blockId\", \"round\") SELECT ${address}, (balance)::bigint, ${delegate}, ${blockId}, ${round} FROM mem_accounts WHERE address = ${address};",
@@ -935,10 +745,10 @@ Account.prototype.remove = function (address, cb) {
 		}
 	});
 	this.scope.db.none(sql.query, sql.values).then(function () {
-		cb(null, address);
+		return cb(null, address);
 	}).catch(function (err) {
 		library.logger.error(err.toString());
-		cb("Account#remove error");
+		return cb("Account#remove error");
 	});
 }
 
