@@ -27,7 +27,8 @@
         }
     },
     "peers": {
-        "list": [],
+        "list": [
+        ],
         "blackList": [],
         "options": {
             "timeout": 4000
@@ -35,7 +36,8 @@
     },
 
     "forging": {
-        "secret": [],
+        "secret": [
+        ],
         "access": {
             "whiteList": [
                 "127.0.0.1"
