@@ -28,6 +28,10 @@
     },
     "peers": {
         "list": [
+          {
+          "ip":"104.196.167.41",
+          "port": 4242
+          },
         ],
         "blackList": [],
         "options": {
