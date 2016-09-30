@@ -11,7 +11,7 @@
         "host": "localhost",
         "port": 5432,
         "database": "rise_testnet",
-        "user": "risetest",
+        "user": "rise",
         "password": "risetestpassword",
         "poolSize": 20,
         "poolIdleTimeout": 30000,
