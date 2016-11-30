@@ -6,9 +6,9 @@ export const Peers = defineCollection('peers', new SimpleSchema({
         type: Number,
         autoValue: function() {
             if (this.isInsert) {
-                return Meteor.call("getCollectionCount", "Blocks") + 1;
+                return Meteor.call("getCollectionCount", "Peers") + 1;
             } else if (this.isUpsert) {
-                return { $setOnInsert: Meteor.call("getCollectionCount", "Blocks") + 1 };
+                return { $setOnInsert: Meteor.call("getCollectionCount", "Peers") + 1 };
             } else {
                 this.unset();
             }
