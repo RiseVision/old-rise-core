@@ -10,6 +10,7 @@ export const MultiSignatures = defineCollection('multiSignatures', new SimpleSch
     keysgroup: {
         type: String
     },
+    // TODO: Validate that the id exists in the transactions collection.
     transactionId: {
         type: String
     }

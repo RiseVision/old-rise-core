@@ -7,12 +7,14 @@ export const ForksStats = defineCollection('forksStat', new SimpleSchema({
     blockTimestamp: {
         type: Date
     },
+    // TODO: Validate that the id exists in the blocks collection.
     blockId: {
         type: String
     },
     blockHeight: {
         type: Number
     },
+    // TODO: Autovalue (Last block id)
     previousBlock: {
         type: String
     },

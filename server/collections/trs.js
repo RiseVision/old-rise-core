@@ -13,9 +13,11 @@ export const Trs = defineCollection('trs', new SimpleSchema({
             }
         }
     },
+    // TODO: Autovalue (Total count of items in Trs Collection +1)
     rowId: {
         type: Number
     },
+    // TODO: Validate that the id exists in the blocks collection.
     blockId: {
         type: String
     },
@@ -25,11 +27,14 @@ export const Trs = defineCollection('trs', new SimpleSchema({
     senderPublicKey: {
         type: Uint8Array
     },
+    // TODO: Validate that the id exists in the memAccounts collection.
     senderId: {
         type: String
     },
+    // TODO: Validate that the id exists in the memAccounts collection.
     recipientId: {
-        type: String
+        type: String,
+        optional: true
     },
     amount: {
         type: Number
@@ -41,12 +46,15 @@ export const Trs = defineCollection('trs', new SimpleSchema({
         type: Uint8Array
     },
     signSignature: {
-        type: Uint8Array
+        type: Uint8Array,
+        optional: true
     },
     requesterPublicKey: {
-        type: Uint8Array
+        type: Uint8Array,
+        optional: true
     },
     signatures: {
-        type: String
+        type: String,
+        optional: true
     }
 }));

@@ -13,6 +13,7 @@ export const Blocks = defineCollection('blocks', new SimpleSchema({
             }
         }
     },
+    // TODO: Autovalue (Total count of items in Blocks Collection +1)
     rowId: {
         type: Number
     },
@@ -22,6 +23,7 @@ export const Blocks = defineCollection('blocks', new SimpleSchema({
     height: {
         type: Number
     },
+    // TODO: Autovalue (Last block id)
     previousBlock: {
         type: String
     },
