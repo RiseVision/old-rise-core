@@ -14,7 +14,7 @@ export const Peers = defineCollection('peers', new SimpleSchema({
             }
         },
         unique: true
-    }
+    },
     ip: {
         type: String
     },
