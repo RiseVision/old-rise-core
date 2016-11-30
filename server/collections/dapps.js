@@ -5,7 +5,6 @@ export const DApps = defineCollection('dapps', new SimpleSchema({
     transactionId: {
         type: String
     },
-
     name: {
         type: String
     },

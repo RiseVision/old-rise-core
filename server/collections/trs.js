@@ -3,7 +3,7 @@ import { defineCollection } from './helpers.js';
 export const Trs = defineCollection('trs', new SimpleSchema({
     timestamp: {
         type: Date,
-        autoValue: () => {
+        autoValue: function() {
             if (this.isInsert) {
                 return new Date();
             } else if (this.isUpsert) {
@@ -13,9 +13,18 @@ export const Trs = defineCollection('trs', new SimpleSchema({
             }
         }
     },
-    // TODO: Autovalue (Total count of items in Trs Collection +1)
     rowId: {
-        type: Number
+        type: Number,
+        autoValue: function() {
+            if (this.isInsert) {
+                return Meteor.call("getCollectionCount", "Trs") + 1;
+            } else if (this.isUpsert) {
+                return { $setOnInsert: Meteor.call("getCollectionCount", "Trs") + 1 };
+            } else {
+                this.unset();
+            }
+        },
+        unique: true
     },
     // TODO: Validate that the id exists in the blocks collection.
     blockId: {
