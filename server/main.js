@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { DB } from './collections.js';
-// TODO: Test.
+
 Meteor.methods({
     getCollectionCount: (collection) => {
         return DB[collection].find().count();
