@@ -1,4 +1,5 @@
 import { defineCollection } from './helpers.js';
+import { Blocks } from './blocks.js'
 
 export const ForksStats = defineCollection('forksStat', new SimpleSchema({
     delegatePublicKey: {
@@ -14,9 +15,29 @@ export const ForksStats = defineCollection('forksStat', new SimpleSchema({
     blockHeight: {
         type: Number
     },
-    // TODO: Autovalue (Last block id)
     previousBlock: {
-        type: String
+        type: String,
+        unique: true,
+        autoValue: function(){
+            let block;
+            if (this.isInsert) {
+                block = Blocks.findOne({
+                    _id: {
+                        $eq: id
+                    }
+                });
+                return block.previousBlock;
+            } else if (this.isUpsert) {
+                block = Blocks.findOne({
+                    _id: {
+                        $eq: id
+                    }
+                });
+                return { $setOnInsert: block.previousBlock };
+            } else {
+                this.unset();
+            }
+        }
     },
     cause: {
         type: Number
