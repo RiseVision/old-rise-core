@@ -1,7 +1,6 @@
 import { defineCollection } from './helpers.js';
 
 export const Peers = defineCollection('peers', new SimpleSchema({
-    // TODO: Validate with IP regex.
     rowId: {
         type: Number,
         autoValue: function() {
@@ -16,7 +15,8 @@ export const Peers = defineCollection('peers', new SimpleSchema({
         unique: true
     },
     ip: {
-        type: String
+        type: String,
+        regEx: SimpleSchema.RegEx.IP
     },
     port: {
         type: Number,
