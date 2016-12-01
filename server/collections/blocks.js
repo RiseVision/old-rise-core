@@ -32,9 +32,10 @@ export const Blocks = defineCollection('blocks', new SimpleSchema({
     height: {
         type: Number
     },
-    // TODO: Autovalue (Last block id)
     previousBlock: {
-        type: String
+        type: String,
+        unique: true,
+        optional: true
     },
     numberOfTransactions: {
         type: Number
@@ -57,4 +58,17 @@ export const Blocks = defineCollection('blocks', new SimpleSchema({
     blockSignature: {
         type: Uint8Array
     },
-}));
+}), [
+    {
+        timing: "after",
+        type: "insert",
+        func: function(userId, doc){
+            let prevBlockId = Meteor.call("getPreviousId", "Blocks", doc._id);
+            Meteor.call("updateCollection", "Blocks", {
+                _id: doc._id
+            }, {
+                $set: { previousBlock: prevBlockId }
+            });
+        }
+    }
+]);
