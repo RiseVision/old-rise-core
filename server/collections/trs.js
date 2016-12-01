@@ -27,7 +27,7 @@ export const Trs = defineCollection('trs', new SimpleSchema({
         unique: true
     },
     blockId: {
-        type: String
+        type: String,
         custom: function(){
             Meteor.call("isExistent", "Blocks", this.value, function(error, result){
                 if(error){
