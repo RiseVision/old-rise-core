@@ -8,9 +8,19 @@ export const ForksStats = defineCollection('forksStat', new SimpleSchema({
     blockTimestamp: {
         type: Date
     },
-    // TODO: Validate that the id exists in the blocks collection.
     blockId: {
-        type: String
+        type: String,
+        custom: function(){
+            Meteor.call("isExistent", "Blocks", this.value, function(error, result){
+                if(error){
+                    console.error(error);
+                    return "blockId query error."
+                }
+                if(!result){
+                    return "blockId not found."
+                }
+            });
+        }
     },
     blockHeight: {
         type: Number

@@ -1,10 +1,20 @@
 import { defineCollection } from './helpers.js';
 
 export const Signatures = defineCollection('signatures', new SimpleSchema({
-    // TODO: Validate that the id exists in the transactions collection.
     transactionId: {
         type: String,
-        unique: true
+        unique: true,
+        custom: function(){
+            Meteor.call("isExistent", "Trs", this.value, function(error, result){
+                if(error){
+                    console.error(error);
+                    return "transactionId query error."
+                }
+                if(!result){
+                    return "transactionId not found."
+                }
+            });
+        }
     },
     publicKey: {
         type: Uint8Array

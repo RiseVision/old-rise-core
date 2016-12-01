@@ -26,9 +26,19 @@ export const Trs = defineCollection('trs', new SimpleSchema({
         },
         unique: true
     },
-    // TODO: Validate that the id exists in the blocks collection.
     blockId: {
         type: String
+        custom: function(){
+            Meteor.call("isExistent", "Blocks", this.value, function(error, result){
+                if(error){
+                    console.error(error);
+                    return "blockId query error."
+                }
+                if(!result){
+                    return "blockId not found."
+                }
+            });
+        }
     },
     type: {
         type: Number
@@ -36,14 +46,36 @@ export const Trs = defineCollection('trs', new SimpleSchema({
     senderPublicKey: {
         type: Uint8Array
     },
-    // TODO: Validate that the id exists in the memAccounts collection.
     senderId: {
-        type: String
+        type: String,
+        custom: function(){
+            Meteor.call("isExistent", "MemAccounts", this.value, function(error, result){
+                if(error){
+                    console.error(error);
+                    return "accountId query error."
+                }
+                if(!result){
+                    return "accountId not found."
+                }
+            });
+        }
     },
-    // TODO: Validate that the id exists in the memAccounts collection.
     recipientId: {
         type: String,
-        optional: true
+        optional: true,
+        custom: function(){
+            if(this.isSet){
+                Meteor.call("isExistent", "MemAccounts", this.value, function(error, result){
+                    if(error){
+                        console.error(error);
+                        return "accountId query error."
+                    }
+                    if(!result){
+                        return "accountId not found."
+                    }
+                });
+            }
+        }
     },
     amount: {
         type: Number

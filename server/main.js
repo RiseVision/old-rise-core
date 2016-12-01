@@ -25,6 +25,14 @@ Meteor.methods({
                 console.log(error);
             }
         });
+    },
+    isExistent: (collection, id) => {
+        let idQuery = DB[collection].findOne({
+            _id: {
+                $eq: id
+            }
+        });
+        return idQuery ? true : false;
     }
 });
 

@@ -5,8 +5,18 @@ export const Votes = defineCollection('votes', new SimpleSchema({
         type: String,
         optional: true
     },
-    // TODO: Validate that the id exists in the transactions collection.
     transactionId: {
-        type: String
+        type: String,
+        custom: function(){
+            Meteor.call("isExistent", "Trs", this.value, function(error, result){
+                if(error){
+                    console.error(error);
+                    return "transactionId query error."
+                }
+                if(!result){
+                    return "transactionId not found."
+                }
+            });
+        }
     }
 }));

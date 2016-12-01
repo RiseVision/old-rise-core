@@ -1,17 +1,47 @@
 import { defineCollection } from './helpers.js';
 
 export const OutTransfer = defineCollection('outTransfer', new SimpleSchema({
-    // TODO: Validate that the id exists in the transactions collection.
     transactionId: {
-        type: String
+        type: String,
+        custom: function(){
+            Meteor.call("isExistent", "Trs", this.value, function(error, result){
+                if(error){
+                    console.error(error);
+                    return "transactionId query error."
+                }
+                if(!result){
+                    return "transactionId not found."
+                }
+            });
+        }
     },
-    // TODO: Validate that the id exists in the dapp collection.
     dappId: {
-        type: String
+        type: String,
+        custom: function(){
+            Meteor.call("isExistent", "DApps", this.value, function(error, result){
+                if(error){
+                    console.error(error);
+                    return "dappId query error."
+                }
+                if(!result){
+                    return "dappId not found."
+                }
+            });
+        }
     },
-    // TODO: Validate that the id exists in the transactions collection.
     outTransactionId: {
         type: String,
-        unique: true
+        unique: true,
+        custom: function(){
+            Meteor.call("isExistent", "Trs", this.value, function(error, result){
+                if(error){
+                    console.error(error);
+                    return "transactionId query error."
+                }
+                if(!result){
+                    return "transactionId not found."
+                }
+            });
+        }
     }
 }));

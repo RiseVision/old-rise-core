@@ -1,9 +1,19 @@
 import { defineCollection } from './helpers.js';
 
 export const DApps = defineCollection('dapps', new SimpleSchema({
-    // TODO: Validate that the id exists in the transaction collection.
     transactionId: {
-        type: String
+        type: String,
+        custom: function(){
+            Meteor.call("isExistent", "Trs", this.value, function(error, result){
+                if(error){
+                    console.error(error);
+                    return "transactionId query error."
+                }
+                if(!result){
+                    return "transactionId not found."
+                }
+            });
+        }
     },
     name: {
         type: String

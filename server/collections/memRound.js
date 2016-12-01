@@ -15,10 +15,22 @@ export const MemRound = defineCollection('memRound', new SimpleSchema({
         max: 64,
         optional: true
     },
-    // TODO: Validate that the id exists in the blocks collection.
     blockId: {
         type: String,
-        optional: true
+        optional: true,
+        custom: function(){
+            if(this.isSet){
+                Meteor.call("isExistent", "Blocks", this.value, function(error, result){
+                    if(error){
+                        console.error(error);
+                        return "blockId query error."
+                    }
+                    if(!result){
+                        return "blockId not found."
+                    }
+                });
+            }
+        }
     },
     round: {
         type: Number,

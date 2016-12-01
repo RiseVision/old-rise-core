@@ -1,12 +1,32 @@
 import { defineCollection } from './helpers.js';
 
 export const PeersDApp = defineCollection('peersDApp', new SimpleSchema({
-    // TODO: Validate that the id exists in the peers collection.
     peerId: {
-        type: Number
+        type: Number,
+        custom: function(){
+            Meteor.call("isExistent", "Peers", this.value, function(error, result){
+                if(error){
+                    console.error(error);
+                    return "peerId query error."
+                }
+                if(!result){
+                    return "peerId not found."
+                }
+            });
+        }
     },
-    // TODO: Validate that the id exists in the dapps collection.
     dappId: {
-        type: String
+        type: String,
+        custom: function(){
+            Meteor.call("isExistent", "DApps", this.value, function(error, result){
+                if(error){
+                    console.error(error);
+                    return "dappId query error."
+                }
+                if(!result){
+                    return "dappId not found."
+                }
+            });
+        }
     }
 }));

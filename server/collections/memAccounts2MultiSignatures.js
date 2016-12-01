@@ -1,9 +1,19 @@
 import { defineCollection } from './helpers.js';
 
 export const MemAccounts2MultiSignatures = defineCollection('memAccounts2MultiSignatures', new SimpleSchema({
-    // TODO: Validate that the id exists in the mem_accounts collection.
     accountId: {
-        type: String
+        type: String,
+        custom: function(){
+            Meteor.call("isExistent", "MemAccounts", this.value, function(error, result){
+                if(error){
+                    console.error(error);
+                    return "accountId query error."
+                }
+                if(!result){
+                    return "accountId not found."
+                }
+            });
+        }
     },
     dependentId: {
         type: String

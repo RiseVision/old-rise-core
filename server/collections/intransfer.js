@@ -1,12 +1,32 @@
 import { defineCollection } from './helpers.js';
 
 export const Intransfer = defineCollection('intransfer', new SimpleSchema({
-    // TODO: Validate that the id exists in the dapps collection.
     dappId: {
-        type: String
+        type: String,
+        custom: function(){
+            Meteor.call("isExistent", "Peers", this.value, function(error, result){
+                if(error){
+                    console.error(error);
+                    return "peerId query error."
+                }
+                if(!result){
+                    return "peerId not found."
+                }
+            });
+        }
     },
-    // TODO: Validate that the id exists in the transactions collection.
     transactionId: {
-        type: String
+        type: String,
+        custom: function(){
+            Meteor.call("isExistent", "Trs", this.value, function(error, result){
+                if(error){
+                    console.error(error);
+                    return "transactionId query error."
+                }
+                if(!result){
+                    return "transactionId not found."
+                }
+            });
+        }
     }
 }));
