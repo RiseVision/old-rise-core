@@ -1,16 +1,16 @@
-import { defineCollection } from './helpers.js';
+import { defineCollection } from "./helpers.js";
 
-export const Intransfer = defineCollection('intransfer', new SimpleSchema({
+export const Intransfer = defineCollection("intransfer", new SimpleSchema({
     dappId: {
         type: String,
         custom: function(){
             Meteor.call("isExistent", "Peers", this.value, function(error, result){
                 if(error){
                     console.error(error);
-                    return "peerId query error."
+                    return "peerId query error.";
                 }
                 if(!result){
-                    return "peerId not found."
+                    return "peerId not found.";
                 }
             });
         }
@@ -21,10 +21,10 @@ export const Intransfer = defineCollection('intransfer', new SimpleSchema({
             Meteor.call("isExistent", "Trs", this.value, function(error, result){
                 if(error){
                     console.error(error);
-                    return "transactionId query error."
+                    return "transactionId query error.";
                 }
                 if(!result){
-                    return "transactionId not found."
+                    return "transactionId not found.";
                 }
             });
         }

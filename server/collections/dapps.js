@@ -1,16 +1,16 @@
-import { defineCollection } from './helpers.js';
+import { defineCollection } from "./helpers.js";
 
-export const DApps = defineCollection('dapps', new SimpleSchema({
+export const DApps = defineCollection("dapps", new SimpleSchema({
     transactionId: {
         type: String,
         custom: function(){
             Meteor.call("isExistent", "Trs", this.value, function(error, result){
                 if(error){
                     console.error(error);
-                    return "transactionId query error."
+                    return "transactionId query error.";
                 }
                 if(!result){
-                    return "transactionId not found."
+                    return "transactionId not found.";
                 }
             });
         }

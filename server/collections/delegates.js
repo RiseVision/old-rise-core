@@ -1,6 +1,6 @@
-import { defineCollection } from './helpers.js';
+import { defineCollection } from "./helpers.js";
 
-export const Delegates = defineCollection('delegates', new SimpleSchema({
+export const Delegates = defineCollection("delegates", new SimpleSchema({
     username: {
         type: String,
         max: 20
@@ -11,10 +11,10 @@ export const Delegates = defineCollection('delegates', new SimpleSchema({
             Meteor.call("isExistent", "Trs", this.value, function(error, result){
                 if(error){
                     console.error(error);
-                    return "transactionId query error."
+                    return "transactionId query error.";
                 }
                 if(!result){
-                    return "transactionId not found."
+                    return "transactionId not found.";
                 }
             });
         }

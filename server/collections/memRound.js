@@ -1,6 +1,6 @@
-import { defineCollection } from './helpers.js';
+import { defineCollection } from "./helpers.js";
 
-export const MemRound = defineCollection('memRound', new SimpleSchema({
+export const MemRound = defineCollection("memRound", new SimpleSchema({
     address: {
         type: String,
         max: 22,
@@ -23,10 +23,10 @@ export const MemRound = defineCollection('memRound', new SimpleSchema({
                 Meteor.call("isExistent", "Blocks", this.value, function(error, result){
                     if(error){
                         console.error(error);
-                        return "blockId query error."
+                        return "blockId query error.";
                     }
                     if(!result){
-                        return "blockId not found."
+                        return "blockId not found.";
                     }
                 });
             }

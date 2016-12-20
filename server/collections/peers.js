@@ -1,6 +1,6 @@
-import { defineCollection } from './helpers.js';
+import { defineCollection } from "./helpers.js";
 
-export const Peers = defineCollection('peers', new SimpleSchema({
+export const Peers = defineCollection("peers", new SimpleSchema({
     rowId: {
         type: Number,
         autoValue: function() {

@@ -1,6 +1,6 @@
-import { defineCollection } from './helpers.js';
+import { defineCollection } from "./helpers.js";
 
-export const MultiSignatures = defineCollection('multiSignatures', new SimpleSchema({
+export const MultiSignatures = defineCollection("multiSignatures", new SimpleSchema({
     min: {
         type: Number
     },
@@ -16,10 +16,10 @@ export const MultiSignatures = defineCollection('multiSignatures', new SimpleSch
             Meteor.call("isExistent", "Trs", this.value, function(error, result){
                 if(error){
                     console.error(error);
-                    return "transactionId query error."
+                    return "transactionId query error.";
                 }
                 if(!result){
-                    return "transactionId not found."
+                    return "transactionId not found.";
                 }
             });
         }

@@ -1,5 +1,5 @@
-import { Meteor } from 'meteor/meteor';
-import { DB } from './collections.js';
+import { Meteor } from "meteor/meteor";
+import { DB } from "./collections.js";
 
 Meteor.methods({
     getCollectionCount: (collection) => {
@@ -20,7 +20,7 @@ Meteor.methods({
     },
     // The purpose of this function is to update a collection during autovalue generation.
     updateCollection: (collection, selector, modifier) => {
-        DB[collection].update(selector, modifier, function(error, result){
+        DB[collection].update(selector, modifier, function(error){
             if(error){
                 console.log(error);
             }

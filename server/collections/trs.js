@@ -1,6 +1,6 @@
-import { defineCollection } from './helpers.js';
+import { defineCollection } from "./helpers.js";
 
-export const Trs = defineCollection('trs', new SimpleSchema({
+export const Trs = defineCollection("trs", new SimpleSchema({
     timestamp: {
         type: Date,
         autoValue: function() {
@@ -32,10 +32,10 @@ export const Trs = defineCollection('trs', new SimpleSchema({
             Meteor.call("isExistent", "Blocks", this.value, function(error, result){
                 if(error){
                     console.error(error);
-                    return "blockId query error."
+                    return "blockId query error.";
                 }
                 if(!result){
-                    return "blockId not found."
+                    return "blockId not found.";
                 }
             });
         }
@@ -52,10 +52,10 @@ export const Trs = defineCollection('trs', new SimpleSchema({
             Meteor.call("isExistent", "MemAccounts", this.value, function(error, result){
                 if(error){
                     console.error(error);
-                    return "accountId query error."
+                    return "accountId query error.";
                 }
                 if(!result){
-                    return "accountId not found."
+                    return "accountId not found.";
                 }
             });
         }
@@ -68,10 +68,10 @@ export const Trs = defineCollection('trs', new SimpleSchema({
                 Meteor.call("isExistent", "MemAccounts", this.value, function(error, result){
                     if(error){
                         console.error(error);
-                        return "accountId query error."
+                        return "accountId query error.";
                     }
                     if(!result){
-                        return "accountId not found."
+                        return "accountId not found.";
                     }
                 });
             }

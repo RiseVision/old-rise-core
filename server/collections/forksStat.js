@@ -1,7 +1,7 @@
-import { defineCollection } from './helpers.js';
-import { Blocks } from './blocks.js'
+import { defineCollection } from "./helpers.js";
+import { Blocks } from "./blocks.js";
 
-export const ForksStats = defineCollection('forksStat', new SimpleSchema({
+export const ForksStats = defineCollection("forksStat", new SimpleSchema({
     delegatePublicKey: {
         type: Uint8Array
     },
@@ -14,10 +14,10 @@ export const ForksStats = defineCollection('forksStat', new SimpleSchema({
             Meteor.call("isExistent", "Blocks", this.value, function(error, result){
                 if(error){
                     console.error(error);
-                    return "blockId query error."
+                    return "blockId query error.";
                 }
                 if(!result){
-                    return "blockId not found."
+                    return "blockId not found.";
                 }
             });
         }
@@ -30,17 +30,18 @@ export const ForksStats = defineCollection('forksStat', new SimpleSchema({
         unique: true,
         autoValue: function(){
             let block;
+            let blockId = this.field("blockId");
             if (this.isInsert) {
                 block = Blocks.findOne({
                     _id: {
-                        $eq: id
+                        $eq: blockId
                     }
                 });
                 return block.previousBlock;
             } else if (this.isUpsert) {
                 block = Blocks.findOne({
                     _id: {
-                        $eq: id
+                        $eq: blockId
                     }
                 });
                 return { $setOnInsert: block.previousBlock };

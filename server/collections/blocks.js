@@ -1,6 +1,6 @@
-import { defineCollection } from './helpers.js';
+import { defineCollection } from "./helpers.js";
 
-export const Blocks = defineCollection('blocks', new SimpleSchema({
+export const Blocks = defineCollection("blocks", new SimpleSchema({
     timestamp: {
         type: Date,
         autoValue: function() {

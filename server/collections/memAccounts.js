@@ -1,6 +1,6 @@
-import { defineCollection } from './helpers.js';
+import { defineCollection } from "./helpers.js";
 
-export const MemAccounts = defineCollection('memAccounts', new SimpleSchema({
+export const MemAccounts = defineCollection("memAccounts", new SimpleSchema({
     username: {
         type: String,
         optional: true,

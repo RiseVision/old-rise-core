@@ -1,4 +1,4 @@
-import { Mongo } from 'meteor/mongo';
+import { Mongo } from "meteor/mongo";
 
 export const defineCollection = function(name, schema, triggers){
     let collection = new Mongo.Collection(name);
@@ -10,4 +10,4 @@ export const defineCollection = function(name, schema, triggers){
         });
     }
     return collection;
-}
+};
