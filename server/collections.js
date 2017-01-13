@@ -15,6 +15,7 @@ import { OutTransfer } from "./collections/outTransfer.js";
 import { Peers } from "./collections/peers.js";
 import { PeersDApp } from "./collections/peersDApp.js";
 import { Signatures } from "./collections/signatures.js";
+import { TestingCollection } from "./collections/testingCollection.js";
 import { Trs } from "./collections/trs.js";
 import { Votes } from "./collections/votes.js";
 
@@ -36,6 +37,7 @@ export const DB = {
     Peers,
     PeersDApp,
     Signatures,
+    TestingCollection,
     Trs,
     Votes
 };
