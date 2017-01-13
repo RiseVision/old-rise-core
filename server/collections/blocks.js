@@ -57,7 +57,7 @@ export const Blocks = defineCollection("blocks", new SimpleSchema({
     },
     blockSignature: {
         type: Uint8Array
-    },
+    }
 }), [
     {
         timing: "after",
