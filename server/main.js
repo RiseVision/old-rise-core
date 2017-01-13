@@ -5,6 +5,8 @@ import { DDP } from "meteor/ddp-client";
 let serverIPs = ["192.168.56.101", "192.168.56.102", "192.168.56.103"];
 let myIP = "";
 let servers = [];
+let remoteCollections = [];
+
 Meteor.methods({
     getCollectionCount: (collection) => {
         return DB[collection].find().count();
@@ -47,6 +49,13 @@ Meteor.startup(() => {
         }
     });
     servers.forEach(function(server){
-        server.subscribe("testingCollection");
+        remoteCollections.push(new Meteor.Collection("testingCollection", { connection: server }));
+    });
+    remoteCollections.forEach(function(collection){
+        collection.find().observe({
+            added: function(item){
+                DB.TestingCollection.insert(item);
+            }
+        });
     });
 });
