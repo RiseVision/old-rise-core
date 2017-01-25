@@ -2,7 +2,7 @@ import { Meteor } from "meteor/meteor";
 import { DB } from "./collections.js";
 import { DDP } from "meteor/ddp-client";
 
-let serverIPs = ["192.168.56.101", "192.168.56.102", "192.168.56.103"];
+let serverIPs = ["192.168.56.101", "192.168.56.102", "192.168.56.103", "192.168.56.104"];
 let myIP = "";
 let servers = [];
 let remoteCollections = [];
@@ -54,7 +54,7 @@ Meteor.startup(() => {
     remoteCollections.forEach(function(collection){
         collection.find().observe({
             added: function(item){
-                DB.TestingCollection.insert(item);
+                DB.TestingCollection.upsert(item);
             }
         });
     });
