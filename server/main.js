@@ -54,6 +54,7 @@ Meteor.startup(() => {
     remoteCollections.forEach(function(collection){
         collection.find().observe({
             added: function(item){
+                console.log(item);
                 DB.TestingCollection.upsert(item);
             }
         });
